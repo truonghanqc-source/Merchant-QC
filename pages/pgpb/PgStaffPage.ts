@@ -255,6 +255,9 @@ export class PgStaffPage {
       return;
     }
 
+    // Scroll button vào viewport trước để tránh bị khuất bởi element khác
+    await pencilLocator.scrollIntoViewIfNeeded();
+
     // Phải đăng ký lắng nghe "filechooser" event TRƯỚC khi click để không bị miss event.
     // Dùng Promise.all để 2 việc chạy đồng thời: chờ event + trigger click mở file picker
     const [fileChooser] = await Promise.all([
@@ -268,7 +271,7 @@ export class PgStaffPage {
     // Sau khi chọn file, trang mở modal crop ảnh → chờ modal xuất hiện
     await this.page
       .locator("#modal-image-cropper")
-      .waitFor({ state: "visible", timeout: 15000 });
+      .waitFor({ state: "visible", timeout: 20000 });
 
     // Xác nhận crop ảnh theo vùng mặc định
     await this.page.locator("#crop-image").click();

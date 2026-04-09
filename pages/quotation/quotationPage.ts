@@ -5,6 +5,7 @@ export class QuotationPage {
   readonly saveQuotationButton: Locator;
   readonly requestToConfirmButton: Locator;
   readonly confirmSaveButtonQuotation: Locator;
+  readonly quotationConfigButton: Locator;
 
   constructor(public readonly page: Page) {
     this.noteInput = page.locator("#quotationNote");
@@ -13,6 +14,7 @@ export class QuotationPage {
     this.requestToConfirmButton = page.locator(
       "a:has-text('Request to confirm'), button:has-text('Request to confirm')",
     );
+    this.quotationConfigButton = page.locator("#quotationConfig");
   }
 
   async goto(baseUrl: string) {
@@ -254,6 +256,16 @@ export class QuotationPage {
     await this.confirmSaveButtonQuotation.click();
   }
 
+  // Flow: click Save → SweetAlert lỗi hiện ra → đọc text → click OK đóng popup
+  async saveQuotationExpectErrorVAT(): Promise<string> {
+    await this.saveQuotationButton.click();
+    const alert = this.page.locator("#swal2-html-container");
+    await alert.waitFor({ state: "visible", timeout: 15000 });
+    const text = (await alert.textContent())?.trim() ?? "";
+    await this.page.locator(".swal2-confirm").click();
+    return text;
+  }
+
   async requestToConfirm() {
     await this.requestToConfirmButton.waitFor({
       state: "visible",
@@ -308,6 +320,11 @@ export class QuotationPage {
 
     // Chờ badge "Waiting For Confirm" xuất hiện
     await badge.waitFor({ state: "visible", timeout: 30000 });
+  }
+
+  // Click vào nút cấu hình SKU sử dụng cho quotation không có VAT
+  async quotationConfigCLick() {
+    await this.quotationConfigButton.click();
   }
 
   // Lấy text hiển thị tổng tiền (Summary Total)

@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { QuotationPage } from "../pages/quotation/quotationPage.js";
 import { PgStaffPage } from "../pages/pgpb/PgStaffPage.js";
+import { ProductPage } from "../pages/product/ProductPage.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUTH_FILE = path.resolve(__dirname, "../playwright/.auth/admin.json");
@@ -27,6 +28,7 @@ type AuthFixtures = {
   };
   quotationPage: QuotationPage;
   pgStaffPage: PgStaffPage;
+  productPage: ProductPage;
   baseUrl: string;
 };
 
@@ -59,5 +61,11 @@ export const test = base.extend<AuthFixtures>({
     const pgStaff = new PgStaffPage(authenticatedPage.page);
     await pgStaff.goto(baseUrl);
     await use(pgStaff);
+  },
+
+  productPage: async ({ authenticatedPage, baseUrl }, use) => {
+    const product = new ProductPage(authenticatedPage.page);
+    await product.goto(baseUrl);
+    await use(product);
   },
 });

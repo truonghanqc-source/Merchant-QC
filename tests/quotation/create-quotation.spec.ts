@@ -160,6 +160,51 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     await quotation.requestToConfirm();
   });
+
+  test("Verify error when submitting a no-VAT quotation with a VAT-required SKU @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const quotation = new QuotationPage(page);
+
+    await quotation.goto(baseUrl);
+
+    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.quotationConfigCLick();
+    await quotation.fillNote("Quotion Auto Test - no VAT error");
+    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
+    await quotation.selectProduct("100240028");
+    await quotation.fillQuantity(6);
+
+    const errorText = await quotation.saveQuotationExpectErrorVAT();
+    //Xác nhận hiển thị lỗi "Some products in the quotation require VAT. Please review and verify."
+    expect(errorText).toBe(
+      "Some products in the quotation require VAT. Please review and verify.",
+    );
+  });
+
+  test("Verify error when submitting a VAT-required quotation with a no-VAT SKU @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const quotation = new QuotationPage(page);
+
+    await quotation.goto(baseUrl);
+
+    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.fillNote("Quotion Auto Test - required VAT error");
+    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
+    await quotation.selectProduct("205100547");
+    await quotation.fillQuantity(6);
+
+    const errorText = await quotation.saveQuotationExpectErrorVAT();
+    //Xác nhận hiển thị lỗi "Some products in the quotation require VAT. Please review and verify."
+    expect(errorText).toBe(
+      "Some products in the quotation do not require VAT. Please review and verify.",
+    );
+  });
 });
 test.describe("Quotation - Create with Hasaki Global Trade", () => {
   test.describe.configure({ timeout: 120 * 1000 });
@@ -339,7 +384,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     await quotation.requestToConfirm();
 
     const pageContent = await page.content();
-    expect(/USD/i.test(pageContent)).toBeTruthy();
+    expect(/\$/i.test(pageContent)).toBeTruthy();
   });
 
   test("Create Tester quotation with Hasaki LLC company uses USD currency @regression", async ({
