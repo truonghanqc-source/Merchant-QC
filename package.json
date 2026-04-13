@@ -14,7 +14,8 @@
     "test:regression": "playwright test --grep @regression",
     "test:auth": "playwright test tests/auth/",
     "test:pg": "playwright test tests/pgpb/",
-    "test:quotation": "playwright test tests/quotation/"
+    "test:quotation": "playwright test tests/quotation/",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
