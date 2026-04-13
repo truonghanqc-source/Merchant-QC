@@ -5,11 +5,17 @@ import { test, expect } from "../../fixtures/index.js";
 import { PgStaffPage } from "../../pages/pgpb/PgStaffPage.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const avatarFilePath = path.resolve(__dirname, "../resources/avatar-black.png");
+const avatarFilePath = path.resolve(
+  __dirname,
+  "../resources/pgpb/avatar-black.png",
+);
 
 // Field "name" does not accept " - " or hyphen characters
 const fakeName = () =>
-  (faker.person.firstName() + " " + faker.person.lastName()).replace(/-`/g, "");
+  `${faker.person.firstName()} ${faker.person.lastName()}`
+    .replace(/[^\p{L}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
 const listVendor = {
   V220065: "V220065 - QC Test Vendor 2",
@@ -20,6 +26,15 @@ const listVendor = {
 
 test.describe("PG Staff - Create", () => {
   test.describe.configure({ timeout: 120 * 1000 });
+
+  test("Navigate to create PG staff page @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const pgStaff = new PgStaffPage(page);
+    await pgStaff.goto(baseUrl);
+  });
 
   test("Create new PG staff with valid data @regression", async ({
     authenticatedPage,
@@ -187,7 +202,7 @@ test.describe("PG Staff - Create", () => {
 
     await pgStaff.selectVendor(listVendor.V250066);
     await pgStaff.chooseRandomBrands(3);
-    await pgStaff.selectWorkType("merchandising");
+    await pgStaff.selectWorkType("Training (Training / Internship)");
     await pgStaff.fillName(fakeName());
     await pgStaff.fillEmail(
       faker.internet.email({ provider: "hasaki.vn" }).toLowerCase(),

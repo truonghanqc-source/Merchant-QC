@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-export class QuotationPage {
+export class CreateQuotationPage {
   readonly noteInput: Locator;
   readonly saveQuotationButton: Locator;
   readonly requestToConfirmButton: Locator;

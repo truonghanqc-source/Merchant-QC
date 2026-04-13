@@ -19,6 +19,10 @@ export class ProductPage {
   // Buttons
   readonly saveAndNextButton: Locator;
   readonly requestToApproveButton: Locator;
+  readonly approveButton: Locator;
+  readonly disApproveButton: Locator;
+  readonly modalRejectProductReason: Locator;
+  readonly confirmDisApproveButton: Locator;
 
   // Elements liên quan upload ảnh sản phẩm trên tab Image
   readonly upLoadBtn: Locator;
@@ -57,13 +61,25 @@ export class ProductPage {
     this.requestToApproveButton = page.getByRole("button", {
       name: " Request to approve",
     });
+    this.approveButton = page.locator(
+      "button.btnUpdateProductDetail[value='2']",
+    );
+    this.disApproveButton = page.locator("button.btnDisapproveProductDetail");
+    this.modalRejectProductReason = page.locator("#reject_note");
+    this.confirmDisApproveButton = page.locator(
+      "#modal-reject-note button.btnUpdateProductDetail",
+    );
   }
 
   async goto(baseUrl: string) {
     await this.page.goto(`${baseUrl}/product/detail`);
-    await this.page.waitForSelector("form, .card, .tab-content", {
-      state: "visible",
-    });
+    await this.page
+      .locator(".card-title", { hasText: "Add new Product" })
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 15000,
+      });
   }
 
   // ─── Select2 helper (static dropdown — options pre-loaded) ───────────────────
@@ -357,29 +373,62 @@ export class ProductPage {
       timeout: 15000,
     });
 
-    // Retry click đến khi daterangepicker mở
+    // Retry cả quá trình: mở picker + chọn preset
     const picker = this.page.locator(".daterangepicker");
-    for (let i = 0; i < 3; i++) {
-      await this.expirationDateInput.click();
+    let lastError: Error | null = null;
+
+    for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        await picker.waitFor({ state: "visible", timeout: 3000 });
-        break;
-      } catch {
-        // picker chưa mở → click lại
+        // Retry click đến khi daterangepicker mở
+        for (let i = 0; i < 3; i++) {
+          await this.expirationDateInput.click();
+          try {
+            await picker.waitFor({ state: "visible", timeout: 3000 });
+            break;
+          } catch {
+            // picker chưa mở → click lại
+          }
+        }
+
+        // Chờ picker ổn định
+        await this.page.waitForTimeout(200);
+
+        // Lấy tất cả preset range, bỏ "Custom Range"
+        const presets = this.page.locator(
+          ".daterangepicker .ranges li:not([data-range-key='Custom Range'])",
+        );
+        const allPresets = await presets.all();
+
+        if (allPresets.length === 0)
+          throw new Error("No preset ranges available");
+
+        // Chọn ngẫu nhiên 1 preset
+        const picked =
+          allPresets[Math.floor(Math.random() * allPresets.length)]!;
+        await picked.click();
+
+        // Chờ picker đóng
+        await picker.waitFor({ state: "hidden", timeout: 5000 });
+        return; // thành công
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        console.warn(
+          `expirationDateInputFill attempt ${attempt + 1}/3 failed: ${lastError.message}`,
+        );
+
+        // Reset nếu picker còn mở
+        if (await picker.isVisible().catch(() => false)) {
+          await this.page.keyboard.press("Escape").catch(() => null);
+          await picker
+            .waitFor({ state: "hidden", timeout: 3000 })
+            .catch(() => null);
+        }
       }
     }
 
-    // Lấy tất cả preset range, bỏ "Custom Range"
-    const presets = this.page.locator(
-      ".daterangepicker .ranges li:not([data-range-key='Custom Range'])",
+    throw (
+      lastError || new Error("expirationDateInputFill failed after 3 attempts")
     );
-    const allPresets = await presets.all();
-
-    if (allPresets.length === 0) throw new Error("No preset ranges available");
-
-    // Chọn ngẫu nhiên 1 preset
-    const picked = allPresets[Math.floor(Math.random() * allPresets.length)]!;
-    await picked.click();
   }
 
   /** Upload file document trên tab Document */
@@ -407,5 +456,48 @@ export class ProductPage {
     // Chấp nhận native browser confirm dialog "Are you sure to request approve?"
     this.page.once("dialog", (dialog) => dialog.accept());
     await this.requestToApproveButton.click();
+  }
+
+  async clickApproveButton() {
+    await this.approveButton.waitFor({
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForLoadState("load");
+    // Chấp nhận native browser confirm dialog "Are you sure to request approve?"
+    this.page.once("dialog", (dialog) => dialog.accept());
+    await this.approveButton.click();
+  }
+
+  async disApproveButtonClick() {
+    await this.disApproveButton.waitFor({
+      state: "visible",
+      timeout: 30000,
+    });
+
+    // Retry click đến khi modal mở (Bootstrap thêm class "show")
+    for (let i = 0; i < 3; i++) {
+      await this.disApproveButton.click();
+      try {
+        await this.page.locator("#modal-reject-note.show").waitFor({
+          state: "attached",
+          timeout: 3000,
+        });
+        break;
+      } catch {
+        // modal chưa mở → click lại
+      }
+    }
+  }
+
+  async inputDisApproveReason(reason: string) {
+    // Fill trực tiếp vào textarea (không cần visible vì modal đã mở)
+    await this.modalRejectProductReason.fill(reason);
+    await this.confirmDisApproveButton.waitFor({
+      state: "visible",
+      timeout: 15000,
+    });
+    this.page.once("dialog", (dialog) => dialog.accept());
+    await this.confirmDisApproveButton.click();
   }
 }

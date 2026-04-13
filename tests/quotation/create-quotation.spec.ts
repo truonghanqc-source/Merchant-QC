@@ -1,5 +1,5 @@
 import { test, expect } from "../../fixtures/index.js";
-import { QuotationPage } from "../../pages/quotation/quotationPage.js";
+import { CreateQuotationPage } from "../../pages/quotation/QuotationPage.js";
 
 // Tên company
 const COMPANY = {
@@ -22,12 +22,22 @@ const listTypeQuotation = {
 };
 test.describe("Quotation - Create with Hasaki VietNam", () => {
   test.describe.configure({ timeout: 120 * 1000 });
+
+  test("Navigate to create quotation page", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const quotation = new CreateQuotationPage(page);
+
+    await quotation.goto(baseUrl);
+  });
   test("Create Normal quotation with Hasaki VietNam company uses VND currency @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -60,7 +70,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -86,7 +96,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -114,7 +124,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -140,7 +150,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -166,7 +176,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -189,7 +199,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -214,7 +224,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -249,7 +259,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -276,7 +286,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -305,7 +315,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -332,7 +342,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -362,7 +372,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -392,7 +402,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -419,7 +429,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -448,7 +458,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 
@@ -475,7 +485,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
-    const quotation = new QuotationPage(page);
+    const quotation = new CreateQuotationPage(page);
 
     await quotation.goto(baseUrl);
 

@@ -11,6 +11,7 @@ pipeline {
     timeout(time: 60, unit: 'MINUTES')
     buildDiscarder(logRotator(numToKeepStr: '20'))
     disableConcurrentBuilds()
+    timestamps()
   }
 
   parameters {
@@ -21,8 +22,18 @@ pipeline {
     )
     choice(
       name: 'TEST_SUITE',
-      choices: ['all', 'quotation', 'pgpb', 'auth'],
+      choices: ['all', 'auth', 'bookingservice', 'courses', 'logsadmin', 'pgpb', 'product', 'purchase', 'quotation', 'report', 'returnproduct', 'settingadmin', 'users', 'vendors'],
       description: 'Which test suite to run'
+    )
+    choice(
+      name: 'TEST_SCOPE',
+      choices: ['all', 'smoke', 'regression'],
+      description: 'Quick scope selector by tag. TEST_GREP takes priority when provided.'
+    )
+    string(
+      name: 'TEST_WORKERS',
+      defaultValue: '20',
+      description: 'Number of Playwright workers'
     )
   }
 
@@ -30,6 +41,8 @@ pipeline {
     BASE_URL         = credentials('MERCHANT_BASE_URL')
     LOGIN_USER_ADMIN = credentials('MERCHANT_LOGIN_USER_ADMIN')
     LOGIN_PASS_ADMIN = credentials('MERCHANT_LOGIN_PASS_ADMIN')
+    LOGIN_USER_MERCHANT = credentials('MERCHANT_LOGIN_USER_MERCHANT')
+    LOGIN_PASS_MERCHANT = credentials('MERCHANT_LOGIN_PASS_MERCHANT')
     CI               = 'true'
   }
 
@@ -44,8 +57,19 @@ pipeline {
       steps {
         script {
           def suitePath = params.TEST_SUITE == 'all' ? '' : "tests/${params.TEST_SUITE}/"
-          def grepFlag  = params.TEST_GREP ? "--grep \"${params.TEST_GREP}\"" : ''
-          sh "npx playwright test ${suitePath} ${grepFlag}"
+          def scopeGrep = ''
+          if (params.TEST_SCOPE == 'smoke') {
+            scopeGrep = '@smoke'
+          } else if (params.TEST_SCOPE == 'regression') {
+            scopeGrep = '@regression'
+          }
+
+          def finalGrep = params.TEST_GREP?.trim() ? params.TEST_GREP.trim() : scopeGrep
+          def grepFlag = finalGrep ? "--grep \"${finalGrep}\"" : ''
+          def workersFlag = params.TEST_WORKERS?.trim() ? "--workers=${params.TEST_WORKERS.trim()}" : ''
+
+          echo "Running suite: ${params.TEST_SUITE}, scope: ${params.TEST_SCOPE}, grep: ${finalGrep ?: 'none'}, workers: ${params.TEST_WORKERS}"
+          sh "npx playwright test ${suitePath} ${grepFlag} ${workersFlag}"
         }
       }
     }
@@ -55,7 +79,7 @@ pipeline {
     always {
       // Publish HTML report (requires HTML Publisher plugin)
       publishHTML(target: [
-        allowMissing:          false,
+        allowMissing:          true,
         alwaysLinkToLastBuild: true,
         keepAll:               true,
         reportDir:             'playwright-report',
@@ -71,7 +95,7 @@ pipeline {
 
       // Archive trace & screenshots on failure
       archiveArtifacts(
-        artifacts:     'test-results/**/*',
+        artifacts:     'playwright-report/**/*,test-results/**/*',
         allowEmptyArchive: true
       )
     }

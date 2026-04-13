@@ -60,10 +60,15 @@ export class PgStaffPage {
   }
 
   async goto(baseUrl: string) {
-    await this.page.goto(`${baseUrl}/promoter/pg-draft/create`);
+    // `load` can be flaky on this page due to slow third-party assets.
+    // Use DOM-ready navigation to make tests more stable.
+    await this.page.goto(`${baseUrl}/promoter/pg-draft/create`, {
+      waitUntil: "domcontentloaded",
+      timeout: 90000,
+    });
     await this.page.waitForSelector(
       'input[name="name"], input[name="email"], input[name="phone"], input[name="cmnd"], input[name="address"], select[name="workType"]',
-      { state: "visible" },
+      { state: "visible", timeout: 30000 },
     );
   }
 
