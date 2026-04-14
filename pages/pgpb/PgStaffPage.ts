@@ -1,12 +1,16 @@
 import type { Locator, Page } from "@playwright/test";
 
 export class PgStaffPage {
+  /** Tiêu đề trang tạo draft (Add PG/PB). */
+  readonly pageTitleH1: Locator;
   readonly nameInput: Locator;
+  /** Form thật dùng `personal_email`, không phải `name="email"`. */
   readonly emailInput: Locator;
   readonly phoneInput: Locator;
   readonly idNumberInput: Locator;
   readonly addressInput: Locator;
   readonly noteInput: Locator;
+  /** Native: `select#work_type` / `name="work_type"`. */
   readonly workTypeSelect: Locator;
   readonly avatarPencil: Locator;
   readonly frontSidePencil: Locator;
@@ -21,13 +25,17 @@ export class PgStaffPage {
   readonly modalInputRejectReason: Locator;
 
   constructor(public readonly page: Page) {
-    this.nameInput = page.getByLabel("name");
-    this.emailInput = page.getByLabel("email");
-    this.phoneInput = page.getByLabel("phone");
-    this.idNumberInput = page.getByLabel("ID Number");
-    this.addressInput = page.getByLabel("address");
-    this.noteInput = page.getByLabel("note");
-    this.workTypeSelect = page.getByLabel("workType");
+    /** Chỉ tiêu đề breadcrumb (tránh trùng `h1.card-title` “Add new PG/PB”). */
+    this.pageTitleH1 = page.getByRole("heading", { name: "Add PG/PB", exact: true });
+    this.nameInput = page.locator('input#name, input[name="name"]');
+    this.emailInput = page.locator(
+      'input#personal_email, input[name="personal_email"]',
+    );
+    this.phoneInput = page.locator('input#phone, input[name="phone"]');
+    this.idNumberInput = page.locator('input#cmnd, input[name="cmnd"]');
+    this.addressInput = page.locator('input#address, input[name="address"]');
+    this.noteInput = page.locator('textarea#note, textarea[name="note"]');
+    this.workTypeSelect = page.locator('select#work_type, select[name="work_type"]');
     this.avatarPencil = page.locator(".avatar_pencil");
     this.frontSidePencil = page.locator(".front_side_pencil");
     this.backSidePencil = page.locator(".back_side_pencil");
@@ -66,10 +74,46 @@ export class PgStaffPage {
       waitUntil: "domcontentloaded",
       timeout: 90000,
     });
-    await this.page.waitForSelector(
-      'input[name="name"], input[name="email"], input[name="phone"], input[name="cmnd"], input[name="address"], select[name="workType"]',
-      { state: "visible", timeout: 30000 },
-    );
+    await this.page.waitForURL(/\/promoter\/pg-draft\/create/i, {
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('input[name="name"]', {
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('input[name="personal_email"]', {
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('input[name="phone"]', {
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('input[name="cmnd"]', {
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('input[name="address"]', {
+      state: "visible",
+      timeout: 30000,
+    });
+    await this.page.waitForSelector('select#work_type', {
+      state: "attached",
+      timeout: 30000,
+    });
+  }
+
+  /** Form tạo PG draft đã render đủ control chính. */
+  async expectCreateFormVisible() {
+    await this.pageTitleH1.waitFor({ state: "visible", timeout: 20000 });
+    await this.nameInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.emailInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.phoneInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.idNumberInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.addressInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.noteInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.workTypeSelect.waitFor({ state: "attached", timeout: 15000 });
+    await this.submitButton.first().waitFor({ state: "visible", timeout: 15000 });
   }
 
   async fillName(name: string) {
@@ -231,7 +275,7 @@ export class PgStaffPage {
     await this.page.evaluate((workType) => {
       // Tìm element bằng 2 selector dự phòng (name hoặc id)
       const sel = document.querySelector(
-        'select[name="workType"], select#work_type',
+        'select[name="work_type"], select#work_type, select[name="workType"]',
       );
       if (!sel) return;
       // Tìm option khớp theo value hoặc text chứa keyword (case-insensitive)

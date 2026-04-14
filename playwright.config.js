@@ -21,7 +21,7 @@ export default defineConfig({
   /* Retry failed tests on CI */
   retries: process.env.CI ? 2 : 0,
   /* More workers on CI since tests are independent */
-  workers: process.env.CI ? 5 : undefined,
+  workers: process.env.CI ? 10 : undefined,
   /* Reporters: HTML always, JUnit for Jenkins CI */
   reporter: process.env.CI
     ? [

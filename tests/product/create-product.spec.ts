@@ -64,9 +64,7 @@ async function createAndRequestApproval(
   await expect(page).toHaveURL(/tab=link_ref/, { timeout: 15000 });
   await product.clickRequestToApprove();
 
-  await expect(
-    page.locator("span.position-relative.ms-2.badge.badge-warning"),
-  ).toHaveText("Waiting Approve", { timeout: 15000 });
+  await product.expectWaitingApproveBadge();
 }
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
@@ -80,6 +78,7 @@ test.describe("Product - Create new product", () => {
     const { page } = authenticatedPage;
     const product = new ProductPage(page);
     await product.goto(baseUrl);
+    await product.expectAddProductFormReady();
   });
 
   test("Create product successfully (happy path) @smoke", async ({
@@ -101,9 +100,7 @@ test.describe("Product - Create new product", () => {
     // Admin approve
     await product.clickApproveButton();
 
-    await expect(
-      page.locator("span.position-relative.ms-2.badge.badge-success"),
-    ).toHaveText("Approved", { timeout: 15000 });
+    await product.expectApprovedBadge();
   });
 
   test("Disapprove product with reason @smoke", async ({
@@ -121,12 +118,10 @@ test.describe("Product - Create new product", () => {
     const reason = `Auto reject reason ${faker.lorem.sentence()}`;
     await product.inputDisApproveReason(reason);
 
-    await expect(
-      page.locator("span.position-relative.ms-2.badge.badge-danger"),
-    ).toHaveText("Rejected", { timeout: 15000 });
+    await product.expectRejectedBadge();
   });
 
-  test("Validate required fields on Product Info tab", async ({
+  test("Validate required fields on Product Info tab @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -141,11 +136,6 @@ test.describe("Product - Create new product", () => {
     // URL không được chuyển sang tab images
     await expect(page).not.toHaveURL(/tab=images/, { timeout: 5000 });
 
-    // Phải có ít nhất 1 thông báo lỗi validation trên trang
-    await expect(
-      page
-        .locator(".invalid-feedback, .text-danger, #swal2-html-container")
-        .first(),
-    ).toBeVisible({ timeout: 10000 });
+    await product.expectFirstValidationVisible();
   });
 });

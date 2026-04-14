@@ -7,6 +7,15 @@ export class CreateQuotationPage {
   readonly confirmSaveButtonQuotation: Locator;
   readonly quotationConfigButton: Locator;
 
+  /** Native &lt;select&gt; (Select2 bọc ngoài) — trang /quotation/detail */
+  readonly quotationTypeSelect: Locator;
+  readonly companySelect: Locator;
+  readonly vendorSelect: Locator;
+  readonly storeSelectRow1: Locator;
+  readonly productSkuSelectRow1: Locator;
+  readonly lineItemsTable: Locator;
+  readonly summaryTotal: Locator;
+
   constructor(public readonly page: Page) {
     this.noteInput = page.locator("#quotationNote");
     this.saveQuotationButton = page.locator("#btnSaveQuotationDetail");
@@ -15,13 +24,54 @@ export class CreateQuotationPage {
       "a:has-text('Request to confirm'), button:has-text('Request to confirm')",
     );
     this.quotationConfigButton = page.locator("#quotationConfig");
+
+    this.quotationTypeSelect = page.locator("select#quotationType");
+    this.companySelect = page.locator("select#company");
+    this.vendorSelect = page.locator("select#vendor");
+    this.storeSelectRow1 = page.locator("select#store_1");
+    this.productSkuSelectRow1 = page.locator("select#selectProductSku_1");
+    this.lineItemsTable = page.locator("table tbody").first();
+    this.summaryTotal = page.locator(
+      "#summaryTotal, #selected-product-total-price",
+    );
   }
 
   async goto(baseUrl: string) {
     await this.page.goto(`${baseUrl}/quotation/detail`);
+    await this.page.waitForURL(/\/quotation\/detail\/?(\?|#|$)/i, {
+      timeout: 30000,
+    });
     await this.page.waitForSelector("form, .card, h1, h2", {
       state: "visible",
     });
+  }
+
+  /** Form tạo quotation tại /quotation/detail (control chính có trong DOM). */
+  async expectQuotationDetailFormVisible() {
+    await this.quotationTypeSelect.waitFor({
+      state: "attached",
+      timeout: 15000,
+    });
+    await this.companySelect.waitFor({ state: "attached", timeout: 15000 });
+    await this.vendorSelect.waitFor({ state: "attached", timeout: 15000 });
+    await this.storeSelectRow1.waitFor({ state: "attached", timeout: 15000 });
+    await this.productSkuSelectRow1.waitFor({
+      state: "attached",
+      timeout: 15000,
+    });
+    await this.noteInput.waitFor({ state: "visible", timeout: 15000 });
+    await this.saveQuotationButton.waitFor({
+      state: "visible",
+      timeout: 15000,
+    });
+    await this.quotationConfigButton.waitFor({
+      state: "attached",
+      timeout: 10000,
+    });
+    await this.lineItemsTable.waitFor({ state: "attached", timeout: 15000 });
+    await this.summaryTotal
+      .first()
+      .waitFor({ state: "attached", timeout: 15000 });
   }
 
   // Helper chung: click vào Select2 container rồi chọn option theo text

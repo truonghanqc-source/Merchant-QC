@@ -34,6 +34,38 @@ test.describe("PG Staff - Create", () => {
     const { page } = authenticatedPage;
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
+
+    await expect(page).toHaveURL(/\/promoter\/pg-draft\/create/i);
+    await pgStaff.expectCreateFormVisible();
+    await expect(pgStaff.pageTitleH1).toContainText(/Add PG/i);
+  });
+
+  test("Work type select includes inline and merchandising @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const pgStaff = new PgStaffPage(authenticatedPage.page);
+    await pgStaff.goto(baseUrl);
+    await pgStaff.expectCreateFormVisible();
+
+    const values = await pgStaff.workTypeSelect
+      .locator("option")
+      .evaluateAll((opts) => opts.map((o) => (o as HTMLOptionElement).value));
+    expect(values).toContain("inline");
+    expect(values).toContain("merchandising");
+  });
+
+  test("Personal email field stores input @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const pgStaff = new PgStaffPage(authenticatedPage.page);
+    await pgStaff.goto(baseUrl);
+    await pgStaff.expectCreateFormVisible();
+
+    const email = `pg.auto.${Date.now()}@hasaki.vn`;
+    await pgStaff.fillEmail(email);
+    await expect(pgStaff.emailInput).toHaveValue(email);
   });
 
   test("Create new PG staff with valid data @regression", async ({

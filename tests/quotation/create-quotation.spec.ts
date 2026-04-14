@@ -507,3 +507,67 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     await quotation.requestToConfirm();
   });
 });
+
+/** Trang tạo quotation: /quotation/detail (cùng CreateQuotationPage.goto). */
+test.describe("Quotation - Detail page (/quotation/detail)", () => {
+  test.describe.configure({ timeout: 90 * 1000 });
+
+  test("Navigate to quotation detail — URL, form shell, save enabled @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const quotation = new CreateQuotationPage(page);
+
+    await quotation.goto(baseUrl);
+
+    await expect(page).toHaveURL(/\/quotation\/detail\/?(\?|#|$)/i);
+    await quotation.expectQuotationDetailFormVisible();
+    await expect(quotation.saveQuotationButton).toBeEnabled();
+  });
+
+  test("Note field accepts input on detail page @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const quotation = new CreateQuotationPage(authenticatedPage.page);
+    const note = `Detail page note ${Date.now()}`;
+
+    await quotation.goto(baseUrl);
+    await quotation.fillNote(note);
+
+    await expect(quotation.noteInput).toHaveValue(note);
+  });
+
+  test("Select company then store loads options @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const quotation = new CreateQuotationPage(authenticatedPage.page);
+
+    await quotation.goto(baseUrl);
+    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+
+    const picked = await quotation.selectStore("SHOP");
+    expect(picked.length).toBeGreaterThan(0);
+  });
+
+  test("Detail flow: company → store → product → quantity updates summary @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    test.setTimeout(120000);
+    const quotation = new CreateQuotationPage(authenticatedPage.page);
+
+    await quotation.goto(baseUrl);
+    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.fillNote(`Auto detail flow ${Date.now()}`);
+    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
+    await quotation.selectProduct("100240028");
+    await quotation.fillQuantity(3);
+
+    const total = await quotation.getSummaryTotal();
+    expect(total.length).toBeGreaterThan(0);
+    await expect(quotation.lineItemsTable).toBeVisible();
+  });
+});

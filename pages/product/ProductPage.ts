@@ -1,8 +1,16 @@
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
-import { request } from "http";
 
 export class ProductPage {
+  /** Tiêu đề form tạo mới (tránh strict mode với card khác). */
+  readonly addProductCardTitle: Locator;
+  /** Badge trạng thái duyệt trên header workflow */
+  readonly badgeWaitingApprove: Locator;
+  readonly badgeApproved: Locator;
+  readonly badgeRejected: Locator;
+  /** Thông báo lỗi validation / SweetAlert body */
+  readonly validationMessageLocator: Locator;
+
   // Inputs — Product Info tab
   readonly nameInput: Locator;
   readonly vendorProductNameInput: Locator;
@@ -34,6 +42,23 @@ export class ProductPage {
   readonly declarationCodeInput: Locator;
 
   constructor(public readonly page: Page) {
+    this.addProductCardTitle = page
+      .locator(".card-title")
+      .filter({ hasText: /add new product/i })
+      .first();
+    this.badgeWaitingApprove = page
+      .locator("span.badge.badge-warning")
+      .filter({ hasText: /Waiting Approve/i });
+    this.badgeApproved = page
+      .locator("span.badge.badge-success")
+      .filter({ hasText: /^Approved$/i });
+    this.badgeRejected = page
+      .locator("span.badge.badge-danger")
+      .filter({ hasText: /^Rejected$/i });
+    this.validationMessageLocator = page.locator(
+      ".invalid-feedback, .text-danger, #swal2-html-container",
+    );
+
     this.nameInput = page.locator("#name");
     this.vendorProductNameInput = page.locator("#venprod_name");
     this.barcodeInput = page.locator("#barcode");
@@ -58,8 +83,9 @@ export class ProductPage {
 
     // button "Save & Next" chung cho cả 2 tab, nên khai báo ở đây để dùng lại
     this.saveAndNextButton = page.getByRole("button", { name: "Save & Next" });
+    /** Accessible name có thể có khoảng trắng đầu/cuối — dùng regex. */
     this.requestToApproveButton = page.getByRole("button", {
-      name: " Request to approve",
+      name: /request to approve/i,
     });
     this.approveButton = page.locator(
       "button.btnUpdateProductDetail[value='2']",
@@ -72,14 +98,40 @@ export class ProductPage {
   }
 
   async goto(baseUrl: string) {
-    await this.page.goto(`${baseUrl}/product/detail`);
-    await this.page
-      .locator(".card-title", { hasText: "Add new Product" })
-      .first()
-      .waitFor({
-        state: "visible",
-        timeout: 15000,
-      });
+    const root = baseUrl.replace(/\/$/, "");
+    await this.page.goto(`${root}/product/detail`, {
+      waitUntil: "load",
+      timeout: 90000,
+    });
+    await this.page.waitForURL(/\/product\/detail/i, { timeout: 30000 });
+    await this.addProductCardTitle.waitFor({ state: "visible", timeout: 20000 });
+  }
+
+  /** Form tạo sản phẩm (tab Product Info) đã sẵn sàng nhập liệu. */
+  async expectAddProductFormReady() {
+    await expect(this.page).toHaveURL(/\/product\/detail/i);
+    await expect(this.addProductCardTitle).toBeVisible({ timeout: 15000 });
+    await expect(this.nameInput).toBeVisible({ timeout: 10000 });
+  }
+
+  async expectFirstValidationVisible(timeout = 10000) {
+    await expect(this.validationMessageLocator.first()).toBeVisible({
+      timeout,
+    });
+  }
+
+  async expectWaitingApproveBadge(timeout = 15000) {
+    await expect(this.badgeWaitingApprove).toHaveText(/Waiting Approve/i, {
+      timeout,
+    });
+  }
+
+  async expectApprovedBadge(timeout = 15000) {
+    await expect(this.badgeApproved).toHaveText(/^Approved$/i, { timeout });
+  }
+
+  async expectRejectedBadge(timeout = 15000) {
+    await expect(this.badgeRejected).toHaveText(/^Rejected$/i, { timeout });
   }
 
   // ─── Select2 helper (static dropdown — options pre-loaded) ───────────────────

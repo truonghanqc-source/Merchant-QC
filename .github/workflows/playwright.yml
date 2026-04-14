@@ -33,7 +33,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Run smoke tests
-        run: npx playwright test --grep "@smoke" --workers=1
+        run: npx playwright test --grep "@smoke" --workers=10
         env:
           CI: true
           BASE_URL: ${{ secrets.BASE_URL }}
