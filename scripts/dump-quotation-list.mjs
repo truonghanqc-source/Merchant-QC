@@ -42,7 +42,7 @@ try {
     timeout: 60000,
   });
 
-  await page.goto(`${baseUrl}/quotation`, { waitUntil: "networkidle" }).catch(() =>
+  await page.goto(`${baseUrl}/quotation`, { waitUntil: "load" }).catch(() =>
     page.goto(`${baseUrl}/quotation`, { waitUntil: "load" }),
   );
   await page.waitForTimeout(2500);

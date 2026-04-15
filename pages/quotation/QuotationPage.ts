@@ -359,7 +359,7 @@ export class CreateQuotationPage {
         .catch(() => null);
     } else if (result === "timeout") {
       // Cả swal lẫn badge đều không xuất hiện → thử click lại 1 lần
-      await this.page.waitForLoadState("networkidle").catch(() => null);
+      await this.page.waitForLoadState("load").catch(() => null);
       await this.requestToConfirmButton.click();
       await this.page
         .locator(".swal2-confirm")

@@ -1,8 +1,7 @@
 /**
- * Global Setup — chạy 1 lần trước toàn bộ test suite
- * Mục đích: Login admin 1 lần, lưu session state → tất cả test reuse session này
- * Tránh login lặp lại ở mỗi test → giảm thời gian chạy đáng kể
- * Auto re-login nếu session đã hết hạn (cookie HASAKI_MERCHANT_SID expired)
+ * Global setup — runs once before the test suite.
+ * Logs in per auth profile and saves storage state for reuse.
+ * Re-logins when cookies are missing/expired or the server rejects the session.
  */
 import { chromium } from "@playwright/test";
 import { config as loadEnv } from "dotenv";
@@ -10,17 +9,18 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { LoginPage } from "./pages/auth/LoginPage.ts";
+import {
+  AUTH_PROFILE_IDS,
+  AUTH_PROFILES,
+  type AuthProfileId,
+  authStoragePath,
+  getProfileCredentials,
+} from "./playwright/auth-profiles.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 loadEnv({ path: path.resolve(__dirname, ".env.local") });
 
-const ADMIN_AUTH_FILE = path.resolve(__dirname, "playwright/.auth/admin.json");
-const MERCHANT_AUTH_FILE = path.resolve(
-  __dirname,
-  "playwright/.auth/merchant.json",
-);
-
-/** Trả về true nếu auth file tồn tại và session cookie chưa hết hạn */
+/** True if auth file exists and session cookie is not expired (per file). */
 function isSessionValid(authFile: string): boolean {
   if (!fs.existsSync(authFile)) return false;
   try {
@@ -29,10 +29,40 @@ function isSessionValid(authFile: string): boolean {
       (c: { name: string }) => c.name === "HASAKI_MERCHANT_SID",
     );
     if (!sid) return false;
-    // Để lại 5 phút buffer trước khi hết hạn
+    if (sid.expires === -1) return true;
+    if (typeof sid.expires !== "number") return false;
     return sid.expires * 1000 > Date.now() + 5 * 60 * 1000;
   } catch {
     return false;
+  }
+}
+
+async function storageStateAcceptedByServer(
+  baseUrl: string,
+  authFile: string,
+): Promise<boolean> {
+  const root = baseUrl.replace(/\/$/, "");
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 1920, height: 1080 },
+      ignoreHTTPSErrors: true,
+      storageState: authFile,
+    });
+    try {
+      const page = await context.newPage();
+      await page.goto(root, {
+        waitUntil: "domcontentloaded",
+        timeout: 30000,
+      });
+      return !/\/login(\/|\?|$)/i.test(page.url());
+    } catch {
+      return false;
+    } finally {
+      await context.close();
+    }
+  } finally {
+    await browser.close();
   }
 }
 
@@ -43,7 +73,6 @@ async function loginAndSave(
   authFile: string,
   label: string,
 ) {
-  // Đảm bảo thư mục tồn tại trước khi ghi file
   fs.mkdirSync(path.dirname(authFile), { recursive: true });
 
   const browser = await chromium.launch();
@@ -60,46 +89,89 @@ async function loginAndSave(
   console.log(`✓ [${label}] Login successful — session saved`);
 }
 
-export default async function globalSetup() {
-  const baseUrl = process.env.BASE_URL?.trim();
-  const usernameAdmin = process.env.LOGIN_USER_ADMIN?.trim();
-  const passwordAdmin = process.env.LOGIN_PASS_ADMIN?.trim();
-  const usernameMerchant = process.env.LOGIN_USER_MERCHANT?.trim();
-  const passwordMerchant = process.env.LOGIN_PASS_MERCHANT?.trim();
+async function ensureSession(
+  baseUrl: string,
+  username: string,
+  password: string,
+  authFile: string,
+  label: string,
+) {
+  const cookieOk = isSessionValid(authFile);
+  const serverOk =
+    cookieOk && (await storageStateAcceptedByServer(baseUrl, authFile));
 
-  if (!baseUrl || !usernameAdmin || !passwordAdmin) {
-    throw new Error(
-      "Missing required env vars: BASE_URL, LOGIN_USER_ADMIN, LOGIN_PASS_ADMIN",
+  if (serverOk) {
+    console.log(
+      `✓ [${label}] Auth session active (cookie + server) — skipping login`,
     );
+    return;
   }
 
-  // Admin session
-  if (isSessionValid(ADMIN_AUTH_FILE)) {
-    console.log("✓ [Admin] Auth session haven't expired — skipping login");
+  if (cookieOk && !serverOk) {
+    console.log(
+      `↻ [${label}] Cookie not expired but server rejected session — re-login...`,
+    );
   } else {
-    console.log("↻ [Admin] Session expired or not found — logging in...");
-    await loginAndSave(
-      baseUrl,
-      usernameAdmin,
-      passwordAdmin,
-      ADMIN_AUTH_FILE,
-      "Admin",
-    );
+    console.log(`↻ [${label}] Session expired or not found — logging in...`);
   }
 
-  // Merchant session (nếu có env vars)
-  if (usernameMerchant && passwordMerchant) {
-    if (isSessionValid(MERCHANT_AUTH_FILE)) {
-      console.log("✓ [Merchant] Auth session haven't expired — skipping login");
-    } else {
-      console.log("↻ [Merchant] Session expired or not found — logging in...");
-      await loginAndSave(
-        baseUrl,
-        usernameMerchant,
-        passwordMerchant,
-        MERCHANT_AUTH_FILE,
-        "Merchant",
+  await loginAndSave(baseUrl, username, password, authFile, label);
+
+  const afterLogin = await storageStateAcceptedByServer(baseUrl, authFile);
+  if (!afterLogin) {
+    throw new Error(
+      `[${label}] After login, storage state still not accepted (check BASE_URL, credentials, and network).`,
+    );
+  }
+}
+
+async function ensureProfileSession(
+  baseUrl: string,
+  profile: AuthProfileId,
+): Promise<void> {
+  const meta = AUTH_PROFILES[profile];
+  const authFile = authStoragePath(profile);
+  const { username, password } = getProfileCredentials(profile);
+
+  if (meta.requireForSuite) {
+    if (!username || !password) {
+      throw new Error(
+        `Missing required env vars for profile "${profile}": ${meta.userEnv}, ${meta.passEnv}`,
       );
     }
+    await ensureSession(
+      baseUrl,
+      username,
+      password,
+      authFile,
+      meta.setupLabel,
+    );
+    return;
+  }
+
+  if (!username || !password) {
+    console.log(
+      `○ [${meta.setupLabel}] Skipping global setup — ${meta.userEnv} / ${meta.passEnv} not set`,
+    );
+    return;
+  }
+
+  await ensureSession(
+    baseUrl,
+    username,
+    password,
+    authFile,
+    meta.setupLabel,
+  );
+}
+
+export default async function globalSetup() {
+  const baseUrl = process.env.BASE_URL?.trim();
+  if (!baseUrl) {
+    throw new Error("Missing required env var: BASE_URL");
+  }
+
+  for (const profile of AUTH_PROFILE_IDS) {
+    await ensureProfileSession(baseUrl, profile);
   }
 }

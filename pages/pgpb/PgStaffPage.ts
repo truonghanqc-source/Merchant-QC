@@ -1,4 +1,5 @@
 import type { Locator, Page } from "@playwright/test";
+import { waitForNextPaint } from "../../utils/page-waits.ts";
 
 export class PgStaffPage {
   /** Tiêu đề trang tạo draft (Add PG/PB). */
@@ -352,12 +353,11 @@ export class PgStaffPage {
 
   async submit() {
     await this.submitButton.first().click();
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 
   async getValidationErrors() {
-    // Wait a moment for errors to render after submit
-    await this.page.waitForTimeout(1000);
+    await waitForNextPaint(this.page);
     const errors = await this.page
       .locator(
         ".text-danger, .invalid-feedback, .ant-form-item-explain, " +

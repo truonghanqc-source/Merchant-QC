@@ -4,6 +4,8 @@ export class LoginPage {
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly submitButton: Locator;
+  /** Server flash / validation banner after failed login (same family as empty-field errors). */
+  readonly authFailureBanner: Locator;
 
   constructor(public readonly page: Page) {
     this.usernameInput = page.locator(
@@ -13,6 +15,9 @@ export class LoginPage {
     this.submitButton = page.locator(
       'button[type="submit"], button:has-text("Login"), button:has-text("Đăng nhập")',
     );
+    this.authFailureBanner = page
+      .locator(".alert.alert-danger.flashSession")
+      .or(page.locator(".alert.alert-danger"));
   }
 
   async goto(baseUrl: string) {
@@ -33,5 +38,9 @@ export class LoginPage {
     await this.page.waitForURL((url) => !url.pathname.startsWith("/login"), {
       timeout: 60000,
     });
+  }
+
+  async expectAuthFailureBannerVisible(timeout = 20_000) {
+    await this.authFailureBanner.first().waitFor({ state: "visible", timeout });
   }
 }

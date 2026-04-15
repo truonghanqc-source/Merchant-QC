@@ -39,6 +39,9 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           LOGIN_USER_ADMIN: ${{ secrets.LOGIN_USER_ADMIN }}
           LOGIN_PASS_ADMIN: ${{ secrets.LOGIN_PASS_ADMIN }}
+          # Optional: required if smoke/global-setup uses MerchantAuto profile
+          LOGIN_USER_MERCHANT: ${{ secrets.LOGIN_USER_MERCHANT }}
+          LOGIN_PASS_MERCHANT: ${{ secrets.LOGIN_PASS_MERCHANT }}
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4

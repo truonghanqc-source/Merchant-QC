@@ -1,4 +1,4 @@
-/** node scripts/dump-promoter-list.mjs — BASE_URL, LOGIN_USER_ADMIN, LOGIN_PASS_ADMIN */
+/** node scripts/dump-po-delivery.mjs */
 import { chromium } from "playwright";
 import { config } from "dotenv";
 import path from "path";
@@ -18,27 +18,32 @@ await page.locator('input[name="username"], input#username').first().fill(user);
 await page.locator("input#password").fill(pass);
 await page.locator('button[type="submit"]').click();
 await page.waitForURL((u) => !u.pathname.startsWith("/login"), { timeout: 60000 });
-await page.goto(`${baseUrl}/promoter`, { waitUntil: "load" }).catch(() =>
-  page.goto(`${baseUrl}/promoter`, { waitUntil: "load" }),
-);
+await page.goto(`${baseUrl}/purchase-order/register-delivery`, {
+  waitUntil: "load",
+  timeout: 60000,
+});
 await page.waitForTimeout(2000);
 
 const snap = await page.evaluate(() => {
-  const pick = (s) => document.querySelector(s)?.outerHTML?.slice(0, 4000) ?? null;
-  const h1 = [...document.querySelectorAll("h1")].map((e) => e.textContent?.trim());
-  const notice = document.querySelector("p.w-100.fs-6.mb-2")?.outerHTML;
-  return {
-    url: location.href,
-    title: document.title,
-    h1s: h1,
-    noticeP: notice,
-    formFilter: pick("form#formFilter"),
-    table: pick("table.table-row-bordered") || pick("table"),
-    pagination: pick("ul.pagination"),
-    createLink: [...document.querySelectorAll('a[href*="pg-draft/create"]')]
-      .slice(0, 2)
-      .map((a) => a.getAttribute("href")),
-  };
+  const h1 = document.querySelector(".page-title h1")?.textContent?.trim();
+  const btns = [...document.querySelectorAll("button, a.btn")].map((b) => ({
+    tag: b.tagName,
+    text: b.textContent?.trim().slice(0, 60),
+    id: b.id,
+    href: b.getAttribute("href")?.slice(0, 80),
+  })).slice(0, 40);
+  const forms = [...document.querySelectorAll("form")].map((f) => ({
+    id: f.id,
+    action: f.getAttribute("action")?.slice(0, 100),
+  }));
+  const tables = [...document.querySelectorAll("table")].map((t) => ({
+    id: t.id,
+    cls: t.className?.slice(0, 80),
+  }));
+  const cal = document.querySelector("[class*='calendar'], .fc, #calendar, .flatpickr-calendar")
+    ? "calendar-like found"
+    : null;
+  return { url: location.href, title: document.title, h1, forms, tables, cal, btns };
 });
 console.log(JSON.stringify(snap, null, 2));
 await browser.close();

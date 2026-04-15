@@ -79,18 +79,18 @@ export class ProductListPage {
 
   async submitFilter() {
     await this.filterSearchButton.click();
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 
   async resetFilter() {
     await this.filterResetButton.click();
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 
   async selectPageSize(size: string) {
     await this.changeSizePageSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.changeSizePageSelect.selectOption(size);
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 
   async clickPaginationPage(pageNumber: number) {

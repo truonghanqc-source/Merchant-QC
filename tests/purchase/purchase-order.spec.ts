@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("Purchase Order - List (/purchase-order)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate — URL, title, table shell @smoke", async ({
+  test("TC01 - Navigate — URL, title, table shell @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -19,7 +19,7 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     await po.expectListShellVisible();
   });
 
-  test("Filter by code then Search updates query @regression", async ({
+  test("TC02 - Filter by code then Search updates query @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -36,7 +36,7 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     await expect(po.dataTable).toBeVisible();
   });
 
-  test("Change page size via #changeSizePage @regression", async ({
+  test("TC03 - Change page size via #changeSizePage @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -50,7 +50,7 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     await expect(po.dataTable).toBeVisible();
   });
 
-  test("Pagination opens page 2 when available @regression", async ({
+  test("TC04 - Pagination opens page 2 when available @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -70,7 +70,7 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     await expect(po.dataTable).toBeVisible();
   });
 
-  test("Table has header columns @regression", async ({
+  test("TC05 - Table has header columns @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -82,7 +82,7 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     expect(await po.tableHeader.locator("th, td").count()).toBeGreaterThan(0);
   });
 
-  test("Reset clears code filter @regression", async ({
+  test("TC06 - Reset clears code filter @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -100,3 +100,5 @@ test.describe("Purchase Order - List (/purchase-order)", () => {
     await expect(po.codeInput).toHaveValue("");
   });
 });
+
+

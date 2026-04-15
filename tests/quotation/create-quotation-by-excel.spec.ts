@@ -22,7 +22,7 @@ const listVendor = {
 test.describe("Quotation - Create by Excel", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate to create quotation by excel page @smoke", async ({
+  test("TC01 - Navigate to create quotation by excel page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -35,7 +35,7 @@ test.describe("Quotation - Create by Excel", () => {
     await quotationExcel.expectEssentialFormVisible();
   });
 
-  test("Note field stores user input @smoke", async ({
+  test("TC02 - Note field stores user input @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -49,7 +49,7 @@ test.describe("Quotation - Create by Excel", () => {
     await expect(quotationExcel.noteInput).toHaveValue(note);
   });
 
-  test("Require VAT checkbox can be toggled @regression", async ({
+  test("TC03 - Require VAT checkbox can be toggled @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -68,7 +68,7 @@ test.describe("Quotation - Create by Excel", () => {
     });
   });
 
-  test("Switch import type between sku and barcode @regression", async ({
+  test("TC04 - Switch import type between sku and barcode @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -80,7 +80,7 @@ test.describe("Quotation - Create by Excel", () => {
     await quotationExcel.selectImportType("sku");
   });
 
-  test("Download quotation Excel template @regression", async ({
+  test("TC05 - Download quotation Excel template @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -94,7 +94,7 @@ test.describe("Quotation - Create by Excel", () => {
     expect(name.endsWith(".xlsx") || name.endsWith(".xls")).toBeTruthy();
   });
 
-  test("Validate without Excel file shows feedback @regression", async ({
+  test("TC06 - Validate without Excel file shows feedback @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -108,7 +108,7 @@ test.describe("Quotation - Create by Excel", () => {
     expect(alertMessage).toMatch(/please select file to upload/i);
   });
 
-  test("Cancel navigates away from import page @regression", async ({
+  test("TC07 - Cancel navigates away from import page @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -121,7 +121,7 @@ test.describe("Quotation - Create by Excel", () => {
     await expect(page).not.toHaveURL(/\/quotation\//);
   });
 
-  test("Select vendor then upload and validate barcode file @regression", async ({
+  test("TC08 - Select vendor then upload and validate barcode file @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -138,7 +138,7 @@ test.describe("Quotation - Create by Excel", () => {
     });
   });
 
-  test("Upload excel file and validate happy path type barcode @regression", async ({
+  test("TC09 - Upload excel file and validate happy path type barcode @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -163,7 +163,7 @@ test.describe("Quotation - Create by Excel", () => {
     await quotationExcel.saveQuotation();
   });
 
-  test("Upload excel file and validate happy path type sku @regression", async ({
+  test("TC10 - Upload excel file and validate happy path type sku @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -189,7 +189,7 @@ test.describe("Quotation - Create by Excel", () => {
     await quotationExcel.saveQuotation();
   });
 
-  test("Full flow: Excel barcode → Quotation Review → request to confirm @regression", async ({
+  test("TC11 - Full flow: Excel barcode → Quotation Review → request to confirm @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -240,7 +240,7 @@ test.describe("Quotation - Create by Excel", () => {
     expect(/₫|vnd|\$/i.test(body)).toBeTruthy();
   });
 
-  test("Full flow: Excel sku → Quotation Review → request to confirm @regression", async ({
+  test("TC12 - Full flow: Excel sku → Quotation Review → request to confirm @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -292,3 +292,5 @@ test.describe("Quotation - Create by Excel", () => {
     expect(/₫|vnd|\$/i.test(body)).toBeTruthy();
   });
 });
+
+

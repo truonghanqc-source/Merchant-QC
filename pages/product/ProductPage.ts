@@ -1,5 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
+import { waitForNextPaint } from "../../utils/page-waits.ts";
 
 export class ProductPage {
   /** Tiêu đề form tạo mới (tránh strict mode với card khác). */
@@ -332,7 +333,7 @@ export class ProductPage {
    */
   async waitModalOpen(locator: Locator) {
     await locator.waitFor({ state: "visible" });
-    await this.page.waitForTimeout(200); // fix animation
+    await waitForNextPaint(this.page);
   }
 
   // upload có retry nếu thất bại (thường do modal crop bị lỗi JS hoặc timeout)
@@ -350,7 +351,7 @@ export class ProductPage {
         await fileChooser.setFiles(filePath);
 
         await this.waitModalOpen(this.cropModal);
-        await this.page.waitForTimeout(300);
+        await waitForNextPaint(this.page);
 
         await this.cropBtn.click();
 
@@ -443,7 +444,7 @@ export class ProductPage {
         }
 
         // Chờ picker ổn định
-        await this.page.waitForTimeout(200);
+        await waitForNextPaint(this.page);
 
         // Lấy tất cả preset range, bỏ "Custom Range"
         const presets = this.page.locator(
@@ -504,7 +505,7 @@ export class ProductPage {
 
   /** Click "Request to approve" trên tab Document */
   async clickRequestToApprove() {
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("load");
     // Chấp nhận native browser confirm dialog "Are you sure to request approve?"
     this.page.once("dialog", (dialog) => dialog.accept());
     await this.requestToApproveButton.click();

@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("PG/PB - List (/promoter)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate — URL, title, notice, table shell @smoke", async ({
+  test("TC01 - Navigate — URL, title, notice, table shell @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -21,7 +21,7 @@ test.describe("PG/PB - List (/promoter)", () => {
     );
   });
 
-  test("Table has expected columns @regression", async ({
+  test("TC02 - Table has expected columns @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -35,7 +35,7 @@ test.describe("PG/PB - List (/promoter)", () => {
     expect(headerText).toMatch(/Status Working/i);
   });
 
-  test("Open PG/PB Draft list from menu @smoke", async ({
+  test("TC03 - Open PG/PB Draft list from menu @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -50,7 +50,7 @@ test.describe("PG/PB - List (/promoter)", () => {
     await expect(page).toHaveURL(/\/promoter\/pg-draft/i);
   });
 
-  test("Change page size @regression", async ({
+  test("TC04 - Change page size @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -63,7 +63,7 @@ test.describe("PG/PB - List (/promoter)", () => {
     await expect(list.changeSizePageSelect).toHaveValue("25");
   });
 
-  test("Pagination to page 2 when available @regression", async ({
+  test("TC05 - Pagination to page 2 when available @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -83,7 +83,7 @@ test.describe("PG/PB - List (/promoter)", () => {
     await expect(list.dataTable).toBeVisible();
   });
 
-  test("List shows at least one staff row @regression", async ({
+  test("TC06 - List shows at least one staff row @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -95,3 +95,5 @@ test.describe("PG/PB - List (/promoter)", () => {
     expect(await list.tableBodyRows.count()).toBeGreaterThan(0);
   });
 });
+
+

@@ -71,7 +71,7 @@ async function createAndRequestApproval(
 test.describe("Product - Create new product", () => {
   test.describe.configure({ timeout: 180 * 1000 });
 
-  test("Navigate to create product page @smoke", async ({
+  test("TC01 - Navigate to create product page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -81,7 +81,7 @@ test.describe("Product - Create new product", () => {
     await product.expectAddProductFormReady();
   });
 
-  test("Create product successfully (happy path) @smoke", async ({
+  test("TC02 - Create product successfully (happy path) @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -90,7 +90,7 @@ test.describe("Product - Create new product", () => {
     await createAndRequestApproval(product, page, baseUrl);
   });
 
-  test("Approve product @smoke", async ({ authenticatedPage, baseUrl }) => {
+  test("TC03 - Approve product @smoke", async ({ authenticatedPage, baseUrl }) => {
     const { page } = authenticatedPage;
     const product = new ProductPage(page);
 
@@ -103,7 +103,7 @@ test.describe("Product - Create new product", () => {
     await product.expectApprovedBadge();
   });
 
-  test("Disapprove product with reason @smoke", async ({
+  test("TC04 - Disapprove product with reason @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -121,7 +121,7 @@ test.describe("Product - Create new product", () => {
     await product.expectRejectedBadge();
   });
 
-  test("Validate required fields on Product Info tab @regression", async ({
+  test("TC05 - Validate required fields on Product Info tab @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -139,3 +139,5 @@ test.describe("Product - Create new product", () => {
     await product.expectFirstValidationVisible();
   });
 });
+
+

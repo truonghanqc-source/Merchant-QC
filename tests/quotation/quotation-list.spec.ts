@@ -4,7 +4,7 @@ import { QuotationListPage } from "../../pages/quotation/QuotationListPage.ts";
 test.describe("Quotation - List (/quotation)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate to quotation list — URL and table shell @smoke", async ({
+  test("TC01 - Navigate to quotation list — URL and table shell @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -18,7 +18,7 @@ test.describe("Quotation - List (/quotation)", () => {
     await expect(page.locator("h1, h2").first()).toBeVisible();
   });
 
-  test("Create quotation link opens detail page @smoke", async ({
+  test("TC02 - Create quotation link opens detail page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -35,7 +35,7 @@ test.describe("Quotation - List (/quotation)", () => {
     });
   });
 
-  test("Import by Excel link opens import page @smoke", async ({
+  test("TC03 - Import by Excel link opens import page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -52,7 +52,7 @@ test.describe("Quotation - List (/quotation)", () => {
     });
   });
 
-  test("Quotation table has column header row @regression", async ({
+  test("TC04 - Quotation table has column header row @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -65,7 +65,7 @@ test.describe("Quotation - List (/quotation)", () => {
     expect(await headerCells.count()).toBeGreaterThan(0);
   });
 
-  test("Data rows or empty-state row is present @regression", async ({
+  test("TC05 - Data rows or empty-state row is present @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -78,7 +78,7 @@ test.describe("Quotation - List (/quotation)", () => {
     expect(rowCount).toBeGreaterThan(0);
   });
 
-  test("Filter by status then Search updates query string @regression", async ({
+  test("TC06 - Filter by status then Search updates query string @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -95,7 +95,7 @@ test.describe("Quotation - List (/quotation)", () => {
     await expect(listPage.dataTable).toBeVisible();
   });
 
-  test("Change page size via #changeSizePage @regression", async ({
+  test("TC07 - Change page size via #changeSizePage @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -109,7 +109,7 @@ test.describe("Quotation - List (/quotation)", () => {
     await expect(listPage.dataTable).toBeVisible();
   });
 
-  test("Pagination opens page 2 @regression", async ({
+  test("TC08 - Pagination opens page 2 @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -132,3 +132,5 @@ test.describe("Quotation - List (/quotation)", () => {
     await expect(listPage.dataTable).toBeVisible();
   });
 });
+
+

@@ -23,7 +23,7 @@ const listTypeQuotation = {
 test.describe("Quotation - Create with Hasaki VietNam", () => {
   test.describe.configure({ timeout: 120 * 1000 });
 
-  test("Navigate to create quotation page", async ({
+  test("TC01 - Navigate to create quotation page", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -32,7 +32,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     await quotation.goto(baseUrl);
   });
-  test("Create Normal quotation with Hasaki VietNam company uses VND currency @smoke", async ({
+  test("TC02 - Create Normal quotation with Hasaki VietNam company uses VND currency @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -60,12 +60,11 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     // Click Request to confirm để hoàn thành flow
     await quotation.requestToConfirm();
-    // Xác nhận đơn vị tiền là VNĐ (₫ hoặc VND)
-    const pageContent = await page.content();
-    expect(/₫/i.test(pageContent)).toBeTruthy();
+    const totalAfterConfirm = await quotation.getSummaryTotal();
+    expect(totalAfterConfirm).toMatch(/\u20ab|VND/i);
   });
 
-  test("Create Tester quotation with Hasaki VietNam company uses VND currency @regression", async ({
+  test("TC03 - Create Tester quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -91,7 +90,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create Gift quotation with Hasaki VietNam company uses VND currency @regression", async ({
+  test("TC04 - Create Gift quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -119,7 +118,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     expect(total).toBe("0 ₫");
   });
 
-  test("Create Activation quotation with Hasaki VietNam company uses VND currency @regression", async ({
+  test("TC05 - Create Activation quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -145,7 +144,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create POSM quotation with Hasaki VietNam company uses VND currency @regression", async ({
+  test("TC06 - Create POSM quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -171,7 +170,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Verify error when submitting a no-VAT quotation with a VAT-required SKU @regression", async ({
+  test("TC07 - Verify error when submitting a no-VAT quotation with a VAT-required SKU @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -194,7 +193,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     );
   });
 
-  test("Verify error when submitting a VAT-required quotation with a no-VAT SKU @regression", async ({
+  test("TC08 - Verify error when submitting a VAT-required quotation with a no-VAT SKU @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -219,7 +218,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 test.describe("Quotation - Create with Hasaki Global Trade", () => {
   test.describe.configure({ timeout: 120 * 1000 });
 
-  test("Create Normal quotation with Hasaki Global Trade company uses USD currency @smoke", async ({
+  test("TC09 - Create Normal quotation with Hasaki Global Trade company uses USD currency @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -249,12 +248,11 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     // Click Request to confirm để hoàn thành flow
     await quotation.requestToConfirm();
 
-    // Xác nhận đơn vị tiền là USD ($)
-    const pageContent = await page.content();
-    expect(/\$/i.test(pageContent)).toBeTruthy();
+    const totalAfterConfirm = await quotation.getSummaryTotal();
+    expect(totalAfterConfirm).toMatch(/\$|USD/i);
   });
 
-  test("Create Tester quotation with Hasaki Global Trade company uses USD currency @regression`", async ({
+  test("TC10 - Create Tester quotation with Hasaki Global Trade company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -281,7 +279,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create Gift quotation with Hasaki Global Trade company uses USD currency @regression", async ({
+  test("TC11 - Create Gift quotation with Hasaki Global Trade company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -310,7 +308,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     if (totalUSD) expect(totalUSD).toMatch(/^\$\s*0/);
   });
 
-  test("Create Activation quotation with Hasaki Global Trade company uses USD currency @regression", async ({
+  test("TC12 - Create Activation quotation with Hasaki Global Trade company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -337,7 +335,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create POSM quotation with Hasaki Global Trade company uses USD currency @regression", async ({
+  test("TC13 - Create POSM quotation with Hasaki Global Trade company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -367,7 +365,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
 test.describe("Quotation - Create with Hasaki LLC", () => {
   test.describe.configure({ timeout: 120 * 1000 });
-  test("Create Normal quotation with Hasaki LLC company uses USD currency @smoke", async ({
+  test("TC14 - Create Normal quotation with Hasaki LLC company uses USD currency @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -397,7 +395,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     expect(/\$/i.test(pageContent)).toBeTruthy();
   });
 
-  test("Create Tester quotation with Hasaki LLC company uses USD currency @regression", async ({
+  test("TC15 - Create Tester quotation with Hasaki LLC company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -424,7 +422,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create Gift quotation with Hasaki LLC company uses USD currency @regression", async ({
+  test("TC16 - Create Gift quotation with Hasaki LLC company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -453,7 +451,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     if (total) expect(total).toMatch(/^\$\s*0/);
   });
 
-  test("Create Activation quotation with Hasaki LLC company uses USD currency @regression", async ({
+  test("TC17 - Create Activation quotation with Hasaki LLC company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -480,7 +478,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     await quotation.requestToConfirm();
   });
 
-  test("Create POSM quotation with Hasaki LLC company uses USD currency @regression", async ({
+  test("TC18 - Create POSM quotation with Hasaki LLC company uses USD currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -512,7 +510,7 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 test.describe("Quotation - Detail page (/quotation/detail)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate to quotation detail — URL, form shell, save enabled @smoke", async ({
+  test("TC19 - Navigate to quotation detail — URL, form shell, save enabled @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -526,7 +524,7 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     await expect(quotation.saveQuotationButton).toBeEnabled();
   });
 
-  test("Note field accepts input on detail page @smoke", async ({
+  test("TC20 - Note field accepts input on detail page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -539,7 +537,7 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     await expect(quotation.noteInput).toHaveValue(note);
   });
 
-  test("Select company then store loads options @regression", async ({
+  test("TC21 - Select company then store loads options @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -552,7 +550,7 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     expect(picked.length).toBeGreaterThan(0);
   });
 
-  test("Detail flow: company → store → product → quantity updates summary @regression", async ({
+  test("TC22 - Detail flow: company → store → product → quantity updates summary @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {

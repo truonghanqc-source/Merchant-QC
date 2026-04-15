@@ -27,7 +27,7 @@ const listVendor = {
 test.describe("PG Staff - Create", () => {
   test.describe.configure({ timeout: 120 * 1000 });
 
-  test("Navigate to create PG staff page @smoke", async ({
+  test("TC01 - Navigate to create PG staff page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -40,7 +40,7 @@ test.describe("PG Staff - Create", () => {
     await expect(pgStaff.pageTitleH1).toContainText(/Add PG/i);
   });
 
-  test("Work type select includes inline and merchandising @smoke", async ({
+  test("TC02 - Work type select includes inline and merchandising @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -55,7 +55,7 @@ test.describe("PG Staff - Create", () => {
     expect(values).toContain("merchandising");
   });
 
-  test("Personal email field stores input @regression", async ({
+  test("TC03 - Personal email field stores input @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -68,7 +68,7 @@ test.describe("PG Staff - Create", () => {
     await expect(pgStaff.emailInput).toHaveValue(email);
   });
 
-  test("Create new PG staff with valid data @regression", async ({
+  test("TC04 - Create new PG staff with valid data @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -105,7 +105,7 @@ test.describe("PG Staff - Create", () => {
     await expect(page).toHaveURL(/.*pg-draft\/edit\/\d+/i, { timeout: 30000 });
   });
 
-  test("Show required field validation errors when mandatory fields are empty @regression", async ({
+  test("TC05 - Show required field validation errors when mandatory fields are empty @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -122,7 +122,7 @@ test.describe("PG Staff - Create", () => {
     ).toBeTruthy();
   });
 
-  test("Reject duplicate ID number when there is a staff with the same ID number Active @regression", async ({
+  test("TC06 - Reject duplicate ID number when there is a staff with the same ID number Active @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -186,7 +186,7 @@ test.describe("PG Staff - Create", () => {
     ).toBeTruthy();
   });
 
-  test("Create PG staff with inline worktype have external sync @smoke", async ({
+  test("TC07 - Create PG staff with inline worktype have external sync @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -224,7 +224,7 @@ test.describe("PG Staff - Create", () => {
     console.log("Created PG staff with Staff ID:", staffIdValue);
   });
 
-  test("Create PG staff with non-inline worktype no external sync @smoke", async ({
+  test("TC08 - Create PG staff with non-inline worktype no external sync @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -259,7 +259,7 @@ test.describe("PG Staff - Create", () => {
     await expect(staffIdInput).toHaveValue("", { timeout: 10000 });
   });
 
-  test("Reject invalid email format @regression", async ({
+  test("TC09 - Reject invalid email format @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -287,7 +287,7 @@ test.describe("PG Staff - Create", () => {
     ).toBeTruthy();
   });
 
-  test("Reject invalid phone format @regression", async ({
+  test("TC10 - Reject invalid phone format @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -319,7 +319,7 @@ test.describe("PG Staff - Create", () => {
     ).toBeTruthy();
   });
 
-  test("Reject invalid CMND format wrong length @regression", async ({
+  test("TC11 - Reject invalid CMND format wrong length @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -351,7 +351,7 @@ test.describe("PG Staff - Create", () => {
     ).toBeTruthy();
   });
 
-  test("Status becomes In-Active after rejecting PG staff info @regression", async ({
+  test("TC12 - Status becomes In-Active after rejecting PG staff info @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -388,3 +388,5 @@ test.describe("PG Staff - Create", () => {
     expect(status).toBe("In-Active");
   });
 });
+
+

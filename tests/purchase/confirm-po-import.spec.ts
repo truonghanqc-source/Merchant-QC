@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("purchase - ConfirmPoImportPage Navigate", () => {
   test.describe.configure({ timeout: 60 * 1000 });
 
-  test("Navigate @smoke", async ({ authenticatedPage, baseUrl }) => {
+  test("TC01 - Navigate @smoke", async ({ authenticatedPage, baseUrl }) => {
     const { page } = authenticatedPage;
     const confirmPoImport = new ConfirmPoImportPage(page);
 
@@ -18,3 +18,5 @@ test.describe("purchase - ConfirmPoImportPage Navigate", () => {
     );
   });
 });
+
+

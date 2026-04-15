@@ -1,13 +1,24 @@
 /**
  * Custom Playwright fixtures
- * Thay thế hàm createAuthenticatedPage() lặp lại trong mỗi test file
  *
  * Cách dùng:
- *   import { test, expect } from "../../fixtures/index.ts";
- *   test("my test", async ({ authenticatedPage }) => { ... });
+ *   import { test, expect, type AuthProfileId } from "../../fixtures/index.ts";
+ *
+ * Default profile is admin (backward compatible).
+ * Per test or describe:
+ *   test.use({ authProfile: "merchant" });
+ *   test("...", async ({ authenticatedPage }) => { ... });
+ *
+ * Page fixtures (listVendorPage, …) use the same authenticatedPage → follow authProfile.
+ * authenticatedMerchantPage: always merchant session (ignores authProfile).
  */
-import { test as base, expect, type Browser } from "@playwright/test";
-import { fileURLToPath } from "url";
+import {
+  test as base,
+  expect,
+  type Browser,
+  type BrowserContext,
+  type Page,
+} from "@playwright/test";
 import path from "path";
 import fs from "fs";
 import { CreateQuotationPage } from "../pages/quotation/QuotationPage.ts";
@@ -42,25 +53,121 @@ import { ListRegisterPage } from "../pages/users/ListRegisterPage.ts";
 import { AddNewUserPage } from "../pages/users/AddNewUserPage.ts";
 import { FastRegisterPage } from "../pages/users/FastRegisterPage.ts";
 import { ListVendorPage } from "../pages/vendors/ListVendorPage.ts";
+import {
+  AUTH_PROFILES,
+  type AuthProfileId,
+  authStoragePath,
+  getProfileCredentials,
+  missingCredentialsErrorMessage,
+} from "../playwright/auth-profiles.ts";
 
-//
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const AUTH_FILE = path.resolve(__dirname, "../playwright/.auth/admin.json");
-const MERCHANT_AUTH_FILE = path.resolve(
-  __dirname,
-  "../playwright/.auth/merchant.json",
-);
+export type { AuthProfileId };
+export {
+  AUTH_PROFILE_IDS,
+  AUTH_PROFILES,
+  authStoragePath,
+  getProfileCredentials,
+} from "../playwright/auth-profiles.ts";
+
+const DEFAULT_CONTEXT_OPTIONS = {
+  viewport: { width: 1920, height: 1080 },
+  ignoreHTTPSErrors: true,
+} as const;
+
+type AuthenticatedSession = {
+  context: BrowserContext;
+  page: Page;
+};
+
+type PageWithGoto = {
+  goto(baseUrl: string): Promise<unknown>;
+};
+
+function navigatedPageFixture<T extends new (page: Page) => PageWithGoto>(
+  PageClass: T,
+) {
+  return async (
+    {
+      authenticatedPage,
+      baseUrl,
+    }: {
+      authenticatedPage: AuthenticatedSession;
+      baseUrl: string;
+    },
+    use: (page: InstanceType<T>) => Promise<void>,
+  ) => {
+    const instance = new PageClass(authenticatedPage.page) as InstanceType<T>;
+    await instance.goto(baseUrl);
+    await use(instance);
+  };
+}
+
+async function ensureAuthStorageFromLogin(
+  browser: Browser,
+  options: {
+    authFile: string;
+    baseUrl: string | undefined;
+    username: string | undefined;
+    password: string | undefined;
+    missingEnvError: string;
+    successLog: string;
+  },
+): Promise<void> {
+  const { authFile, baseUrl, username, password, missingEnvError, successLog } =
+    options;
+  if (!baseUrl || !username || !password) {
+    throw new Error(missingEnvError);
+  }
+  fs.mkdirSync(path.dirname(authFile), { recursive: true });
+  const setupBrowser = await browser.browserType().launch();
+  const setupContext = await setupBrowser.newContext(DEFAULT_CONTEXT_OPTIONS);
+  const setupPage = await setupContext.newPage();
+  const login = new LoginPage(setupPage);
+  await login.goto(baseUrl);
+  await login.login(username, password);
+  await setupContext.storageState({ path: authFile });
+  await setupBrowser.close();
+  console.log(successLog);
+}
+
+async function withAuthenticatedProfile(
+  browser: Browser,
+  profile: AuthProfileId,
+  use: (session: AuthenticatedSession) => Promise<void>,
+): Promise<void> {
+  const authFile = authStoragePath(profile);
+  const { username, password } = getProfileCredentials(profile);
+  const label = AUTH_PROFILES[profile].setupLabel;
+
+  if (!fs.existsSync(authFile)) {
+    await ensureAuthStorageFromLogin(browser, {
+      authFile,
+      baseUrl: process.env.BASE_URL?.trim(),
+      username,
+      password,
+      missingEnvError: missingCredentialsErrorMessage(profile),
+      successLog: `✓ [${label}] Fallback login successful — session saved`,
+    });
+  }
+
+  const context = await browser.newContext({
+    ...DEFAULT_CONTEXT_OPTIONS,
+    storageState: authFile,
+  });
+  const page = await context.newPage();
+  await use({ context, page });
+  await context.close();
+}
 
 export { expect };
 
 type AuthFixtures = {
-  /** Tạo browser context mới với viewport 1920x1080, ignoreHTTPSErrors */
-  authenticatedPage: {
-    context: Awaited<ReturnType<Browser["newContext"]>>;
-    page: Awaited<
-      ReturnType<Awaited<ReturnType<Browser["newContext"]>>["newPage"]>
-    >;
-  };
+  /**
+   * Chọn tài khoản cho authenticatedPage và các page fixture phụ thuộc.
+   * @default "admin"
+   */
+  authProfile: AuthProfileId;
+  authenticatedPage: AuthenticatedSession;
   createQuotationPage: CreateQuotationPage;
   pgStaffPage: PgStaffPage;
   productPage: ProductPage;
@@ -92,295 +199,57 @@ type AuthFixtures = {
   addNewUserPage: AddNewUserPage;
   fastRegisterPage: FastRegisterPage;
   listVendorPage: ListVendorPage;
-
-  /** Tạo browser context mới với session của userMerchant (cookie HASAKI_MERCHANT_SID) */
-
-  /** Context dùng session của userMerchant (LOGIN_USER_MERCHANT) */
-  authenticatedMerchantPage: {
-    context: Awaited<ReturnType<Browser["newContext"]>>;
-    page: Awaited<
-      ReturnType<Awaited<ReturnType<Browser["newContext"]>>["newPage"]>
-    >;
-  };
+  /** Luôn dùng session merchant; không phụ thuộc authProfile. */
+  authenticatedMerchantPage: AuthenticatedSession;
   baseUrl: string;
 };
 
 export const test = base.extend<AuthFixtures>({
+  authProfile: ["SuperAdminAuto", { option: true, scope: "test" }],
+
   baseUrl: async ({}, use) => {
     const url = process.env.BASE_URL?.trim();
     if (!url) throw new Error("Missing env var: BASE_URL");
     await use(url);
   },
 
-  authenticatedPage: async ({ browser }, use) => {
-    // Nếu admin.json chưa tồn tại → tự login
-    if (!fs.existsSync(AUTH_FILE)) {
-      const baseUrl = process.env.BASE_URL?.trim();
-      const username = process.env.LOGIN_USER_ADMIN?.trim();
-      const password = process.env.LOGIN_PASS_ADMIN?.trim();
-      if (!baseUrl || !username || !password) {
-        throw new Error(
-          "Missing env vars: BASE_URL, LOGIN_USER_ADMIN, LOGIN_PASS_ADMIN",
-        );
-      }
-      fs.mkdirSync(path.dirname(AUTH_FILE), { recursive: true });
-      const setupBrowser = await browser.browserType().launch();
-      const setupContext = await setupBrowser.newContext({
-        viewport: { width: 1920, height: 1080 },
-        ignoreHTTPSErrors: true,
-      });
-      const setupPage = await setupContext.newPage();
-      const login = new LoginPage(setupPage);
-      await login.goto(baseUrl);
-      await login.login(username, password);
-      await setupContext.storageState({ path: AUTH_FILE });
-      await setupBrowser.close();
-      console.log("✓ [Admin] Fallback login successful — session saved");
-    }
-
-    const context = await browser.newContext({
-      viewport: { width: 1920, height: 1080 },
-      ignoreHTTPSErrors: true,
-      storageState: AUTH_FILE,
-    });
-    const page = await context.newPage();
-    await use({ context, page });
-    await context.close();
+  authenticatedPage: async ({ browser, authProfile }, use) => {
+    await withAuthenticatedProfile(browser, authProfile, use);
   },
 
-  //--------------------------------------------------------------------------------//
-
-  // Vendors Index Page
-  listVendorPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listVendor = new ListVendorPage(authenticatedPage.page);
-    await listVendor.goto(baseUrl);
-    await use(listVendor);
-  },
-
-  // Users Index Page
-  listUserPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listUser = new ListUserPage(authenticatedPage.page);
-    await listUser.goto(baseUrl);
-    await use(listUser);
-  },
-
-  listRegisterPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listRegister = new ListRegisterPage(authenticatedPage.page);
-    await listRegister.goto(baseUrl);
-    await use(listRegister);
-  },
-
-  addNewUserPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const addNewUser = new AddNewUserPage(authenticatedPage.page);
-    await addNewUser.goto(baseUrl);
-    await use(addNewUser);
-  },
-
-  fastRegisterPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const fastRegister = new FastRegisterPage(authenticatedPage.page);
-    await fastRegister.goto(baseUrl);
-    await use(fastRegister);
-  },
-
-  // Setting Admin Index Page
-  vendorConfirmPoPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const vendorConfirmPo = new VendorConfirmPoPage(authenticatedPage.page);
-    await vendorConfirmPo.goto(baseUrl);
-    await use(vendorConfirmPo);
-  },
-
-  globalPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const globalPage = new GlobalPage(authenticatedPage.page);
-    await globalPage.goto(baseUrl);
-    await use(globalPage);
-  },
-
-  //Return Product Index Page
-  listReturnPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listReturn = new ListReturnPage(authenticatedPage.page);
-    await listReturn.goto(baseUrl);
-    await use(listReturn);
-  },
-
-  // Report Index Page
-  reportBrandPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const reportBrand = new ReportBrandPage(authenticatedPage.page);
-    await reportBrand.goto(baseUrl);
-    await use(reportBrand);
-  },
-
-  reportSalesPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const reportSales = new ReportSalesPage(authenticatedPage.page);
-    await reportSales.goto(baseUrl);
-    await use(reportSales);
-  },
-
-  reportStocksPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const reportStocks = new ReportStocksPage(authenticatedPage.page);
-    await reportStocks.goto(baseUrl);
-    await use(reportStocks);
-  },
-
-  // Purchase Order Index Page
-  purchaseOrderPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const purchaseOrder = new PurchaseOrderPage(authenticatedPage.page);
-    await purchaseOrder.goto(baseUrl);
-    await use(purchaseOrder);
-  },
-
-  poDeliveryPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const poDelivery = new PoDeliveryPage(authenticatedPage.page);
-    await poDelivery.goto(baseUrl);
-    await use(poDelivery);
-  },
-
-  confirmPoImportPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const confirmPoImport = new ConfirmPoImportPage(authenticatedPage.page);
-    await confirmPoImport.goto(baseUrl);
-    await use(confirmPoImport);
-  },
-
-  // Logs Admin Index Page
-  sentApiLogsPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const sentApiLogs = new SentApiLogsPage(authenticatedPage.page);
-    await sentApiLogs.goto(baseUrl);
-    await use(sentApiLogs);
-  },
-
-  genQrCodeLogsPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const genQrCodeLogs = new GenQrCodeLogsPage(authenticatedPage.page);
-    await genQrCodeLogs.goto(baseUrl);
-    await use(genQrCodeLogs);
-  },
-
-  // Course Index Page
-  listLessonPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listLesson = new ListLessonPage(authenticatedPage.page);
-    await listLesson.goto(baseUrl);
-    await use(listLesson);
-  },
-
-  listCoursePage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listCourse = new ListCoursePage(authenticatedPage.page);
-    await listCourse.goto(baseUrl);
-    await use(listCourse);
-  },
-
-  addNewLessonPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const addNewLesson = new AddNewLessonPage(authenticatedPage.page);
-    await addNewLesson.goto(baseUrl);
-    await use(addNewLesson);
-  },
-
-  addNewCoursePage: async ({ authenticatedPage, baseUrl }, use) => {
-    const addNewCourse = new AddNewCoursePage(authenticatedPage.page);
-    await addNewCourse.goto(baseUrl);
-    await use(addNewCourse);
-  },
-
-  // Booking Services - Product Posm Index Page
-  listProductPosmPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listProductPosm = new ListProductPosmPage(authenticatedPage.page);
-    await listProductPosm.goto(baseUrl);
-    await use(listProductPosm);
-  },
-
-  listBookingPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listBooking = new ListBookingPage(authenticatedPage.page);
-    await listBooking.goto(baseUrl);
-    await use(listBooking);
-  },
-
-  addProductPosmPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const addProductPosm = new AddProductPosmPage(authenticatedPage.page);
-    await addProductPosm.goto(baseUrl);
-    await use(addProductPosm);
-  },
-
-  addBookingPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const addBooking = new AddBookingPage(authenticatedPage.page);
-    await addBooking.goto(baseUrl);
-    await use(addBooking);
-  },
-
-  // Quotation Index Page
-  createQuotationPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const createQuotation = new CreateQuotationPage(authenticatedPage.page);
-    await createQuotation.goto(baseUrl);
-    await use(createQuotation);
-  },
-
-  // PgPb Index Page
-  pgStaffPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const pgStaff = new PgStaffPage(authenticatedPage.page);
-    await pgStaff.goto(baseUrl);
-    await use(pgStaff);
-  },
-
-  pgPbReportPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const pgPbReport = new PgPbReportPage(authenticatedPage.page);
-    await pgPbReport.goto(baseUrl);
-    await use(pgPbReport);
-  },
-
-  listPgPbPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const listPgPb = new ListPgPbPage(authenticatedPage.page);
-    await listPgPb.goto(baseUrl);
-    await use(listPgPb);
-  },
-
-  workSchedulePage: async ({ authenticatedPage, baseUrl }, use) => {
-    const workSchedule = new WorkSchedulePage(authenticatedPage.page);
-    await workSchedule.goto(baseUrl);
-    await use(workSchedule);
-  },
-
-  //Product Index Page
-  productPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const product = new ProductPage(authenticatedPage.page);
-    await product.goto(baseUrl);
-    await use(product);
-  },
-
-  productListPage: async ({ authenticatedPage, baseUrl }, use) => {
-    const productList = new ProductListPage(authenticatedPage.page);
-    await productList.goto(baseUrl);
-    await use(productList);
-  },
+  listVendorPage: navigatedPageFixture(ListVendorPage),
+  listUserPage: navigatedPageFixture(ListUserPage),
+  listRegisterPage: navigatedPageFixture(ListRegisterPage),
+  addNewUserPage: navigatedPageFixture(AddNewUserPage),
+  fastRegisterPage: navigatedPageFixture(FastRegisterPage),
+  vendorConfirmPoPage: navigatedPageFixture(VendorConfirmPoPage),
+  globalPage: navigatedPageFixture(GlobalPage),
+  listReturnPage: navigatedPageFixture(ListReturnPage),
+  reportBrandPage: navigatedPageFixture(ReportBrandPage),
+  reportSalesPage: navigatedPageFixture(ReportSalesPage),
+  reportStocksPage: navigatedPageFixture(ReportStocksPage),
+  purchaseOrderPage: navigatedPageFixture(PurchaseOrderPage),
+  poDeliveryPage: navigatedPageFixture(PoDeliveryPage),
+  confirmPoImportPage: navigatedPageFixture(ConfirmPoImportPage),
+  sentApiLogsPage: navigatedPageFixture(SentApiLogsPage),
+  genQrCodeLogsPage: navigatedPageFixture(GenQrCodeLogsPage),
+  listLessonPage: navigatedPageFixture(ListLessonPage),
+  listCoursePage: navigatedPageFixture(ListCoursePage),
+  addNewLessonPage: navigatedPageFixture(AddNewLessonPage),
+  addNewCoursePage: navigatedPageFixture(AddNewCoursePage),
+  listProductPosmPage: navigatedPageFixture(ListProductPosmPage),
+  listBookingPage: navigatedPageFixture(ListBookingPage),
+  addProductPosmPage: navigatedPageFixture(AddProductPosmPage),
+  addBookingPage: navigatedPageFixture(AddBookingPage),
+  createQuotationPage: navigatedPageFixture(CreateQuotationPage),
+  pgStaffPage: navigatedPageFixture(PgStaffPage),
+  pgPbReportPage: navigatedPageFixture(PgPbReportPage),
+  listPgPbPage: navigatedPageFixture(ListPgPbPage),
+  workSchedulePage: navigatedPageFixture(WorkSchedulePage),
+  productPage: navigatedPageFixture(ProductPage),
+  productListPage: navigatedPageFixture(ProductListPage),
 
   authenticatedMerchantPage: async ({ browser }, use) => {
-    // Nếu merchant.json chưa tồn tại (global-setup chưa tạo) → tự login
-    if (!fs.existsSync(MERCHANT_AUTH_FILE)) {
-      const baseUrl = process.env.BASE_URL?.trim();
-      const username = process.env.LOGIN_USER_MERCHANT?.trim();
-      const password = process.env.LOGIN_PASS_MERCHANT?.trim();
-      if (!baseUrl || !username || !password) {
-        throw new Error(
-          "Missing env vars: BASE_URL, LOGIN_USER_MERCHANT, LOGIN_PASS_MERCHANT",
-        );
-      }
-      fs.mkdirSync(path.dirname(MERCHANT_AUTH_FILE), { recursive: true });
-      const setupBrowser = await browser.browserType().launch();
-      const setupContext = await setupBrowser.newContext({
-        viewport: { width: 1920, height: 1080 },
-        ignoreHTTPSErrors: true,
-      });
-      const setupPage = await setupContext.newPage();
-      const login = new LoginPage(setupPage);
-      await login.goto(baseUrl);
-      await login.login(username, password);
-      await setupContext.storageState({ path: MERCHANT_AUTH_FILE });
-      await setupBrowser.close();
-      console.log("✓ [Merchant] Fallback login successful — session saved");
-    }
-
-    const context = await browser.newContext({
-      viewport: { width: 1920, height: 1080 },
-      ignoreHTTPSErrors: true,
-      storageState: MERCHANT_AUTH_FILE,
-    });
-    const page = await context.newPage();
-    await use({ context, page });
-    await context.close();
+    await withAuthenticatedProfile(browser, "MerchantAuto", use);
   },
 });

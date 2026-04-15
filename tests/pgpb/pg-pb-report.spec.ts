@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate — URL, title, filter form and main table @smoke", async ({
+  test("TC01 - Navigate — URL, title, filter form and main table @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -25,7 +25,7 @@ test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
     await expect(report.exportButton).toBeVisible();
   });
 
-  test("Table header columns @regression", async ({
+  test("TC02 - Table header columns @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -41,7 +41,7 @@ test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
     expect(headerText).toMatch(/TOTAL NOT INLINE/i);
   });
 
-  test("Search reloads report without error @regression", async ({
+  test("TC03 - Search reloads report without error @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -54,7 +54,7 @@ test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
     await expect(report.dataTable).toBeVisible();
   });
 
-  test("Reset keeps shell visible @regression", async ({
+  test("TC04 - Reset keeps shell visible @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -66,7 +66,7 @@ test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
     await report.expectReportShellVisible();
   });
 
-  test("Apply date range control visible; table body present @regression", async ({
+  test("TC05 - Apply date range control visible; table body present @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -78,3 +78,5 @@ test.describe("PG/PB - Report (/promoter/promoter-report)", () => {
     expect(await report.tableBodyRows.count()).toBeGreaterThan(0);
   });
 });
+
+

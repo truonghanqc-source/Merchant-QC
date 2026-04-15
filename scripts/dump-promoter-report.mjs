@@ -19,7 +19,7 @@ await page.locator("input#password").fill(pass);
 await page.locator('button[type="submit"]').click();
 await page.waitForURL((u) => !u.pathname.startsWith("/login"), { timeout: 60000 });
 await page
-  .goto(`${baseUrl}/promoter/promoter-report`, { waitUntil: "networkidle" })
+  .goto(`${baseUrl}/promoter/promoter-report`, { waitUntil: "load" })
   .catch(() =>
     page.goto(`${baseUrl}/promoter/promoter-report`, { waitUntil: "load" }),
   );

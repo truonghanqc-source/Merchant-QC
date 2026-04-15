@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("Product - List (/product)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate — URL, title, filter shell and main grid @smoke", async ({
+  test("TC01 - Navigate — URL, title, filter shell and main grid @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -22,7 +22,7 @@ test.describe("Product - List (/product)", () => {
     await expect(list.filterResetButton).toBeVisible();
   });
 
-  test("Table lists core commerce columns @regression", async ({
+  test("TC02 - Table lists core commerce columns @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -38,7 +38,7 @@ test.describe("Product - List (/product)", () => {
     expect(headerText).toMatch(/Actions/i);
   });
 
-  test("Filter selects expose options (sanity / validation) @regression", async ({
+  test("TC03 - Filter selects expose options (sanity / validation) @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -54,7 +54,7 @@ test.describe("Product - List (/product)", () => {
     ).toBeGreaterThan(0);
   });
 
-  test("Search by unlikely keyword — page still usable (edge) @regression", async ({
+  test("TC04 - Search by unlikely keyword — page still usable (edge) @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -67,7 +67,7 @@ test.describe("Product - List (/product)", () => {
     await expect(list.dataTable).toBeVisible();
   });
 
-  test("Reset clears interaction path without breaking layout @regression", async ({
+  test("TC05 - Reset clears interaction path without breaking layout @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -80,7 +80,7 @@ test.describe("Product - List (/product)", () => {
     await list.expectListShellVisible();
   });
 
-  test("Change page size @regression", async ({
+  test("TC06 - Change page size @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -92,7 +92,7 @@ test.describe("Product - List (/product)", () => {
     await expect(list.changeSizePageSelect).toHaveValue("25");
   });
 
-  test("Pagination to page 2 when available @regression", async ({
+  test("TC07 - Pagination to page 2 when available @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -112,7 +112,7 @@ test.describe("Product - List (/product)", () => {
     await expect(list.dataTable).toBeVisible();
   });
 
-  test("Product grid shows rows @regression", async ({
+  test("TC08 - Product grid shows rows @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -123,3 +123,5 @@ test.describe("Product - List (/product)", () => {
     expect(await list.tableBodyRows.count()).toBeGreaterThan(0);
   });
 });
+
+

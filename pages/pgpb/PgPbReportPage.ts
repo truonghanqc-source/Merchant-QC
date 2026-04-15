@@ -62,11 +62,11 @@ export class PgPbReportPage {
 
   async submitSearch() {
     await this.searchButton.click();
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 
   async resetFilters() {
     await this.resetButton.click();
-    await this.page.waitForLoadState("networkidle").catch(() => null);
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 }

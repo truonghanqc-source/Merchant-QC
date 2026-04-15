@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 
-  test("Navigate — URL, title, filter and table shell @smoke", async ({
+  test("TC01 - Navigate — URL, title, filter and table shell @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -23,7 +23,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await expect(ws.filterResetButton).toBeVisible();
   });
 
-  test("Table header columns @regression", async ({
+  test("TC02 - Table header columns @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -39,7 +39,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     expect(headerText).toMatch(/Status/i);
   });
 
-  test("Search keeps shell visible @regression", async ({
+  test("TC03 - Search keeps shell visible @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -52,7 +52,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await expect(ws.dataTable).toBeVisible();
   });
 
-  test("Reset keeps shell visible @regression", async ({
+  test("TC04 - Reset keeps shell visible @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -64,7 +64,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await ws.expectListShellVisible();
   });
 
-  test("Change page size @regression", async ({
+  test("TC05 - Change page size @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -77,7 +77,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await expect(ws.changeSizePageSelect).toHaveValue("25");
   });
 
-  test("Pagination to page 2 when available @regression", async ({
+  test("TC06 - Pagination to page 2 when available @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -97,7 +97,7 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await expect(ws.dataTable).toBeVisible();
   });
 
-  test("List has at least one schedule row @regression", async ({
+  test("TC07 - List has at least one schedule row @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -109,3 +109,5 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     expect(await ws.tableBodyRows.count()).toBeGreaterThan(0);
   });
 });
+
+

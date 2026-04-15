@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("bookingservice - ListProductPosmPage Navigate", () => {
   test.describe.configure({ timeout: 60 * 1000 });
 
-  test("Navigate @smoke", async ({ authenticatedPage, baseUrl }) => {
+  test("TC01 - Navigate @smoke", async ({ authenticatedPage, baseUrl }) => {
     const { page } = authenticatedPage;
     const listProductPosm = new ListProductPosmPage(page);
 
@@ -16,3 +16,5 @@ test.describe("bookingservice - ListProductPosmPage Navigate", () => {
     );
   });
 });
+
+

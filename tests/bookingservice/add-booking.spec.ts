@@ -4,7 +4,7 @@ import { test, expect } from "../../fixtures/index.ts";
 test.describe("Booking Service - Add Booking", () => {
   test.describe.configure({ timeout: 60 * 1000 });
 
-  test("Navigate to add booking page @smoke", async ({
+  test("TC01 - Navigate to add booking page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -19,3 +19,5 @@ test.describe("Booking Service - Add Booking", () => {
     );
   });
 });
+
+

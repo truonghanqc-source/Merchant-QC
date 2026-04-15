@@ -39,7 +39,7 @@ try {
   });
 
   await page
-    .goto(`${baseUrl}/purchase-order?status=new`, { waitUntil: "networkidle" })
+    .goto(`${baseUrl}/purchase-order?status=new`, { waitUntil: "load" })
     .catch(() =>
       page.goto(`${baseUrl}/purchase-order?status=new`, { waitUntil: "load" }),
     );
