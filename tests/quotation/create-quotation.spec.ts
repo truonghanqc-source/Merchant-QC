@@ -23,16 +23,15 @@ const listTypeQuotation = {
 test.describe("Quotation - Create with Hasaki VietNam", () => {
   test.describe.configure({ timeout: 120 * 1000 });
 
-  test("TC01 - Navigate to create quotation page", async ({
+  test("TC01 - Navigate to create quotation page @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
     const { page } = authenticatedPage;
     const quotation = new CreateQuotationPage(page);
-
     await quotation.goto(baseUrl);
   });
-  test("TC02 - Create Normal quotation with Hasaki VietNam company uses VND currency @smoke", async ({
+  test("TC02 - Create Normal quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -43,7 +42,7 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     //   await quotation.selectVendor(listVendor.V220065); // Role Admin mặc định có Vendor
     await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
-    await quotation.fillNote("Quotion Auto Test");
+    await quotation.fillNote("Quotation Auto Test");
     await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
     await quotation.selectProduct("100240028");
     await quotation.fillQuantity(6);
