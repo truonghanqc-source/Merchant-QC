@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Vendor list — `/vendors` ([Vendor List](https://test-merchant.hasaki.vn/vendors)).
@@ -49,8 +52,7 @@ export class ListVendorPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/vendors`, {
+    await this.page.goto(`${baseUrl}/vendors`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -77,8 +79,14 @@ export class ListVendorPage {
     await this.approveSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.statusSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.sortSelect.waitFor({ state: "visible", timeout: 10000 });
-    await this.havePublicMemberCheckbox.waitFor({ state: "attached", timeout: 5000 });
-    await this.existedAllowStoreCheckbox.waitFor({ state: "attached", timeout: 5000 });
+    await this.havePublicMemberCheckbox.waitFor({
+      state: "attached",
+      timeout: 5000,
+    });
+    await this.existedAllowStoreCheckbox.waitFor({
+      state: "attached",
+      timeout: 5000,
+    });
     await this.dataTable.waitFor({ state: "visible", timeout: 20000 });
     await this.tableHeader.waitFor({ state: "visible", timeout: 10000 });
     await this.tableBody.waitFor({ state: "attached", timeout: 10000 });

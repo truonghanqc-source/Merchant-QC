@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Tạo bài học mới — `/courses/lession/detail` (URL dùng typo `lession` theo app).
@@ -38,8 +41,7 @@ export class AddNewLessonPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/courses/lession/detail`, {
+    await this.page.goto(`${baseUrl}/courses/lession/detail`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -61,7 +63,10 @@ export class AddNewLessonPage {
     await this.titleInput.waitFor({ state: "visible", timeout: 10000 });
     await this.courseSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.roleSelect.waitFor({ state: "visible", timeout: 10000 });
-    await this.descriptionTextarea.waitFor({ state: "visible", timeout: 10000 });
+    await this.descriptionTextarea.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.contentTextarea.waitFor({ state: "attached", timeout: 10000 });
     await this.contentEditorFrame.waitFor({ state: "visible", timeout: 15000 });
     await this.saveButton.waitFor({ state: "visible", timeout: 10000 });
@@ -90,7 +95,10 @@ export class AddNewLessonPage {
 
   /** Gõ vào body CKEditor (textarea `#content` display:none). */
   async typeInContentEditor(text: string) {
-    const body = this.page.frameLocator("iframe.cke_wysiwyg_frame").first().locator("body");
+    const body = this.page
+      .frameLocator("iframe.cke_wysiwyg_frame")
+      .first()
+      .locator("body");
     await body.click();
     await body.pressSequentially(text, { delay: 5 });
   }

@@ -1,0 +1,11 @@
+[    1204ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ https://test-merchant.hasaki.vn/promoter/promoter-report:0
+[    1448ms] [LOG] HSK Chat SDK module loaded: Module @ https://test-merchant.hasaki.vn/promoter/promoter-report:6111
+[    1448ms] [LOG] HSK Chat SDK exposed to window. Available methods: [mountChatWidget, mountChatWidgetIIFE, Environment] @ https://test-merchant.hasaki.vn/promoter/promoter-report:6124
+[    1591ms] [INFO] HSK Chat Widget: Failed to initialize Error: No API token received
+    at initializeChatWidget (https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776416520:188:23) @ https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776416520:213
+[   42001ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ https://test-merchant.hasaki.vn/promoter/promoter-report:0
+[   42116ms] [LOG] HSK Chat SDK module loaded: Module @ https://test-merchant.hasaki.vn/promoter/promoter-report:6111
+[   42116ms] [LOG] HSK Chat SDK exposed to window. Available methods: [mountChatWidget, mountChatWidgetIIFE, Environment] @ https://test-merchant.hasaki.vn/promoter/promoter-report:6124
+[   42273ms] [ERROR] Failed to load resource: the server responded with a status of 404 (OK) @ https://test-merchant.hasaki.vn/ajax/promoter/download-report-pg-excel?vendor_id=&start_date=2026-04-17&end_date=2026-04-17&_=1776416561635:0
+[   42314ms] [INFO] HSK Chat Widget: Failed to initialize Error: No API token received
+    at initializeChatWidget (https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776416561:188:23) @ https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776416561:213

@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Fast merchant register — `/user/fast-register` ([Add new User](https://test-merchant.hasaki.vn/user/fast-register)).
@@ -30,8 +33,7 @@ export class FastRegisterPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/user/fast-register`, {
+    await this.page.goto(`${baseUrl}/user/fast-register`, {
       waitUntil: "load",
       timeout: 90000,
     });

@@ -22,7 +22,9 @@ export class PoDeliveryPage {
     this.pageTitleH1 = page.locator(".page-title h1");
     this.calendarRoot = page.locator("div.fc").first();
     this.todayCalendarButton = page.locator("button.fc-today-button");
-    this.nextMonthCalendarButton = page.locator("button.fc-next-button").first();
+    this.nextMonthCalendarButton = page
+      .locator("button.fc-next-button")
+      .first();
     this.newRegistrationButton = page.locator("#newRegistrationBtn");
     this.manageLocationsButton = page.getByRole("button", {
       name: "Manage Locations",
@@ -37,8 +39,7 @@ export class PoDeliveryPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/purchase-order/register-delivery`, {
+    await this.page.goto(`${baseUrl}/purchase-order/register-delivery`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -69,7 +70,13 @@ export class PoDeliveryPage {
 
   /** Quyền Admin: control cấu hình có trong DOM (thường trong panel cấu hình, chưa mở vẫn `attached`). */
   async expectAdminConfigControlsInDom() {
-    await this.defaultConfigButton.waitFor({ state: "attached", timeout: 10000 });
-    await this.customConfigButton.waitFor({ state: "attached", timeout: 10000 });
+    await this.defaultConfigButton.waitFor({
+      state: "attached",
+      timeout: 10000,
+    });
+    await this.customConfigButton.waitFor({
+      state: "attached",
+      timeout: 10000,
+    });
   }
 }

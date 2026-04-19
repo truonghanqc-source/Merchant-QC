@@ -1,0 +1,10 @@
+[   13627ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ https://test-merchant.hasaki.vn/:0
+[   13815ms] [LOG] HSK Chat SDK module loaded: Module @ https://test-merchant.hasaki.vn/:1582
+[   13816ms] [LOG] HSK Chat SDK exposed to window. Available methods: [mountChatWidget, mountChatWidgetIIFE, Environment] @ https://test-merchant.hasaki.vn/:1595
+[   13911ms] [INFO] HSK Chat Widget: Failed to initialize Error: No API token received
+    at initializeChatWidget (https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776420157:188:23) @ https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776420157:213
+[   14585ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ https://test-merchant.hasaki.vn/promoter/multi-work-schedule:0
+[   14697ms] [LOG] HSK Chat SDK module loaded: Module @ https://test-merchant.hasaki.vn/promoter/multi-work-schedule:3694
+[   14697ms] [LOG] HSK Chat SDK exposed to window. Available methods: [mountChatWidget, mountChatWidgetIIFE, Environment] @ https://test-merchant.hasaki.vn/promoter/multi-work-schedule:3707
+[   14840ms] [INFO] HSK Chat Widget: Failed to initialize Error: No API token received
+    at initializeChatWidget (https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776420158:188:23) @ https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776420158:213

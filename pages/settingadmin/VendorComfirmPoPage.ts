@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Cấu hình vendor được phép xác nhận PO đang pending — `/setting/confirm-po-pending`
@@ -22,15 +25,16 @@ export class VendorConfirmPoPage {
     this.formFilter = page.locator("form#formFilter");
     this.vendorSelect = page.locator("select#vendor");
     this.modifyPermissionButton = page.locator("#add_permission");
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
     this.tableHeader = this.dataTable.locator("thead");
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/setting/confirm-po-pending`, {
+    await this.page.goto(`${baseUrl}/setting/confirm-po-pending`, {
       waitUntil: "load",
       timeout: 90000,
     });

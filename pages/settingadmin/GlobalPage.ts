@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Cài đặt toàn cục marketplace — `/setting` ([Global Setting](https://test-merchant.hasaki.vn/setting)).
@@ -28,11 +31,17 @@ export class GlobalPage {
   constructor(public readonly page: Page) {
     this.pageTitleH1 = page.locator(".page-title h1");
     this.formSetting = page.locator("form#formSetting");
-    this.marketplaceCardTitle = this.formSetting.getByText(/Marketplace global setting/i).first();
+    this.marketplaceCardTitle = this.formSetting
+      .getByText(/Marketplace global setting/i)
+      .first();
     this.draftStatusActiveRadio = page.locator("input#status_active");
     this.draftStatusInactiveRadio = page.locator("input#status_inactive");
-    this.saveVendorStaffDraftStatusButton = page.locator("#saveVendorStaffDraftStatus");
-    this.saveInactiveAccountConfigButton = page.locator("#saveInactiveAccountConfig");
+    this.saveVendorStaffDraftStatusButton = page.locator(
+      "#saveVendorStaffDraftStatus",
+    );
+    this.saveInactiveAccountConfigButton = page.locator(
+      "#saveInactiveAccountConfig",
+    );
     this.userSelect = page.locator("select#userSelect");
     this.permissionSelect = page.locator("select#permissionSelect");
     this.addPermissionButton = page.locator("#addPermissionBtn");
@@ -44,8 +53,7 @@ export class GlobalPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/setting`, {
+    await this.page.goto(`${baseUrl}/setting`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -64,6 +72,9 @@ export class GlobalPage {
   async expectGlobalSettingShellVisible() {
     await this.pageTitleH1.waitFor({ state: "visible", timeout: 15000 });
     await this.formSetting.waitFor({ state: "visible", timeout: 15000 });
-    await this.marketplaceCardTitle.waitFor({ state: "visible", timeout: 15000 });
+    await this.marketplaceCardTitle.waitFor({
+      state: "visible",
+      timeout: 15000,
+    });
   }
 }

@@ -20,6 +20,8 @@ const listTypeQuotation = {
   ACTIVATION: "Activation",
   POSM: "POSM",
 };
+
+// test.describe.serial("Quotation — create & detail (serial suite)", () => {
 test.describe("Quotation - Create with Hasaki VietNam", () => {
   test.describe.configure({ timeout: 120 * 1000 });
 
@@ -30,6 +32,8 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     const { page } = authenticatedPage;
     const quotation = new CreateQuotationPage(page);
     await quotation.goto(baseUrl);
+    await expect(page).toHaveURL(/\/quotation\/detail\/?(\?|#|$)/i);
+    await expect(quotation.pageTitleH1).toHaveText(/create new quotation/i);
   });
   test("TC02 - Create Normal quotation with Hasaki VietNam company uses VND currency @regression", async ({
     authenticatedPage,
@@ -227,7 +231,6 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectVendor(listVendor.V260064);
-    await quotation.selectQuotationType(listTypeQuotation.NORMAL);
     await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
     await quotation.selectStore("WH -170 QUOC LO 1A");
     await quotation.fillNote("Quotion Global Trade Auto Test");
@@ -374,7 +377,6 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectVendor(listVendor.V260064);
-    await quotation.selectQuotationType(listTypeQuotation.NORMAL);
     await quotation.selectCompany(COMPANY.HASAKI_LLC);
     await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
     await quotation.fillNote("Normal Quotation LLC Auto Test");
@@ -519,6 +521,7 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     await quotation.goto(baseUrl);
 
     await expect(page).toHaveURL(/\/quotation\/detail\/?(\?|#|$)/i);
+    await expect(quotation.pageTitleH1).toHaveText(/create new quotation/i);
     await quotation.expectQuotationDetailFormVisible();
     await expect(quotation.saveQuotationButton).toBeEnabled();
   });
@@ -568,3 +571,4 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     await expect(quotation.lineItemsTable).toBeVisible();
   });
 });
+// }); // end serial suite

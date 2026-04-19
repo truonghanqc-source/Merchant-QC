@@ -65,9 +65,8 @@ export class PurchaseOrderPage {
     baseUrl: string,
     query: Record<string, string> = { status: "new" },
   ) {
-    const root = baseUrl.replace(/\/$/, "");
     const qs = new URLSearchParams(query).toString();
-    await this.page.goto(`${root}/purchase-order?${qs}`, {
+    await this.page.goto(`${baseUrl}/purchase-order?${qs}`, {
       waitUntil: "load",
       timeout: 60000,
     });
@@ -102,7 +101,10 @@ export class PurchaseOrderPage {
   }
 
   async selectPageSize(size: string) {
-    await this.changeSizePageSelect.waitFor({ state: "visible", timeout: 10000 });
+    await this.changeSizePageSelect.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.changeSizePageSelect.selectOption(size);
     await this.page.waitForLoadState("load").catch(() => null);
   }

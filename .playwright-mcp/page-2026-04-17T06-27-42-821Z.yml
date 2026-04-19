@@ -1,0 +1,247 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]: Purchase
+      - generic [ref=e33]:
+        - link "Quotation" [ref=e34] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - generic [ref=e37]: 
+          - generic [ref=e38]: Quotation
+        - generic [ref=e40]:
+          - link "Quotation List" [ref=e42] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation
+            - generic [ref=e45]: Quotation List
+          - link "Create Quotation" [ref=e47] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/detail
+            - generic [ref=e50]: Create Quotation
+          - link "Create Quotation Store" [ref=e52] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/single-store
+            - generic [ref=e55]: Create Quotation Store
+          - link "Create Quotation by Excel" [ref=e57] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/import
+            - generic [ref=e60]: Create Quotation by Excel
+      - link "Report" [ref=e62] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e65]
+        - generic [ref=e72]: Report
+      - link "Products" [ref=e75] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e78]
+        - generic [ref=e81]: Products
+      - link "Return Products" [ref=e84] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e87]
+        - generic [ref=e92]: Return Products
+      - link "Promotions" [ref=e95] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e98]
+        - generic [ref=e103]: Promotions
+      - link "Promotions Program" [ref=e106] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e109]
+        - generic [ref=e114]: Promotions Program
+      - link "Group Chat" [ref=e117] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e120]: 
+        - generic [ref=e121]: Group Chat
+      - generic [ref=e123]:
+        - link "PG/PB" [ref=e124] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e127]
+          - generic [ref=e132]: PG/PB
+        - text: 
+      - link "Brands" [ref=e135] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e138]
+        - generic [ref=e143]: Brands
+      - generic [ref=e145]:
+        - link "Vendor Employee" [ref=e146] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e149]
+          - generic [ref=e154]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e157] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e160]
+        - generic [ref=e165]: Vendors
+      - link "Stocks" [ref=e168] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e171]
+        - generic [ref=e176]: Stocks
+      - link "Stores" [ref=e179] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e182]
+        - generic [ref=e187]: Stores
+      - link "Notification" [ref=e190] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e193]
+        - generic [ref=e196]: Notification
+      - link "Feedback" [ref=e198] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e201]
+        - generic [ref=e212]: Feedback
+      - link "Users" [ref=e215] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e218]
+        - generic [ref=e223]: Users 
+      - link "Logs" [ref=e226] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e228]
+        - generic [ref=e230]: Logs
+      - link "Setting" [ref=e233] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e235]
+        - generic [ref=e238]: Setting
+      - link "Courses" [ref=e241] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e244]: 
+        - generic [ref=e245]: Courses
+      - link "User Guide" [ref=e248] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e251]: 
+        - generic [ref=e252]: User Guide
+    - generic [ref=e253]:
+      - generic [ref=e254]:
+        - generic [ref=e255]:
+          - link "Logo" [ref=e256] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e257]
+          - img [ref=e260] [cursor=pointer]
+        - generic [ref=e265]:
+          - generic [ref=e266]:
+            - heading "Create new Quotation" [level=1] [ref=e267]
+            - list [ref=e268]:
+              - listitem [ref=e269]:
+                - link "Home" [ref=e270] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e271]
+              - listitem [ref=e273]: Default
+          - generic [ref=e276]:
+            - link "" [ref=e278] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e279]: 
+            - link "" [ref=e281] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e282]: 
+      - generic [ref=e284]:
+        - generic [ref=e287]:
+          - heading "Create Quotation" [level=1] [ref=e289]
+          - generic [ref=e290]:
+            - generic [ref=e291]:
+              - generic [ref=e292]:
+                - generic [ref=e293]: Vendor*
+                - combobox [ref=e294]
+                - combobox "QC Test Vendor 2 - Test Vendor" [ref=e297] [cursor=pointer]:
+                  - textbox "QC Test Vendor 2 - Test Vendor" [ref=e298]
+              - generic [ref=e299]:
+                - generic [ref=e300]: Receiving Time*
+                - textbox "Receiving Time*" [ref=e301]:
+                  - /placeholder: Receiving Time
+                  - text: 20-04-2026 13:27
+              - generic [ref=e302]:
+                - generic [ref=e303]: Quotation Type*
+                - combobox [ref=e304]
+                - combobox "Normal" [ref=e307] [cursor=pointer]:
+                  - textbox "Normal" [ref=e308]
+              - text: "*"
+            - generic [ref=e310]:
+              - checkbox [checked] [ref=e311] [cursor=pointer]
+              - generic [ref=e312] [cursor=pointer]: Require VAT
+            - generic [ref=e314]:
+              - generic [ref=e315]: Company*
+              - combobox [ref=e316]
+              - combobox "Select Company" [ref=e319] [cursor=pointer]:
+                - textbox "Select Company" [ref=e320]
+            - generic [ref=e321]:
+              - generic [ref=e322]: Note
+              - textbox "Note" [ref=e323]
+            - generic [ref=e326]:
+              - table [ref=e329]:
+                - rowgroup [ref=e330]:
+                  - row "Store Product Price Quantity Discount Type Total Action" [ref=e331]:
+                    - columnheader "Store" [ref=e332]
+                    - columnheader "Product" [ref=e333]
+                    - columnheader "Price" [ref=e334]
+                    - columnheader "Quantity" [ref=e335]
+                    - columnheader "Discount" [ref=e336]
+                    - columnheader "Type" [ref=e337]
+                    - columnheader "Total" [ref=e338]
+                    - columnheader "Action" [ref=e339]
+              - table [ref=e341]:
+                - rowgroup [ref=e342]:
+                  - row "Store Product Price Quantity Discount Type Total Action" [ref=e343]:
+                    - columnheader "Store" [ref=e344]:
+                      - generic: Store
+                    - columnheader "Product" [ref=e345]:
+                      - generic: Product
+                    - columnheader "Price" [ref=e346]:
+                      - generic: Price
+                    - columnheader "Quantity" [ref=e347]:
+                      - generic: Quantity
+                    - columnheader "Discount" [ref=e348]:
+                      - generic: Discount
+                    - columnheader "Type" [ref=e349]:
+                      - generic: Type
+                    - columnheader "Total" [ref=e350]:
+                      - generic: Total
+                    - columnheader "Action":
+                      - generic: Action
+                - rowgroup [ref=e351]:
+                  - row "Select Store Search for a product 1 0 % " [ref=e352]:
+                    - cell "Select Store" [ref=e353]:
+                      - combobox [disabled] [ref=e354]
+                      - combobox "Select Store" [disabled] [ref=e357] [cursor=pointer]:
+                        - textbox "Select Store" [disabled] [ref=e358]
+                    - cell "Search for a product" [ref=e359]:
+                      - combobox [ref=e360]
+                      - combobox "Search for a product" [ref=e363] [cursor=pointer]:
+                        - textbox "Search for a product" [ref=e364]
+                      - text: 
+                    - cell [ref=e365]
+                    - cell "1" [ref=e366]:
+                      - spinbutton [ref=e367]: "1"
+                    - cell "0" [ref=e368]:
+                      - spinbutton [ref=e369]: "0"
+                    - cell "%" [ref=e370]:
+                      - combobox "Select Type" [ref=e371]:
+                        - option "%" [selected]
+                        - option "Amount"
+                    - cell [ref=e372]
+                    - cell "" [ref=e373]:
+                      - generic "Delete Product" [ref=e374]:
+                        - generic [ref=e375] [cursor=pointer]: 
+                      - text: 
+            - generic [ref=e376]:
+              - generic [ref=e377]:
+                - generic [ref=e378] [cursor=pointer]: Add new row
+                - link "Import product from excel" [ref=e379] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation/import
+              - paragraph [ref=e381]: "Summary Total: 0 ₫"
+          - generic [ref=e382]:
+            - link " Cancel" [ref=e383] [cursor=pointer]:
+              - /url: https://test-merchant.hasaki.vn/quotation
+              - generic [ref=e384]: 
+              - text: Cancel
+            - button " Save" [ref=e385] [cursor=pointer]:
+              - generic [ref=e386]: 
+              - text: Save
+        - text:  *   * 
+      - generic [ref=e387]:
+        - generic [ref=e389]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e390] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

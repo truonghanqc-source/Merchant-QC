@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Log tạo QR promoter — `/logs/qr-code-promoter` ([Gen QR Code Promoter Logs](https://test-merchant.hasaki.vn/logs/qr-code-promoter)).
@@ -27,15 +30,16 @@ export class GenQrCodeLogsPage {
     this.searchInput = page.locator('input[name="search"]');
     this.dateInput = page.locator('input[name="date"]');
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
     this.tableHeader = this.dataTable.locator("thead");
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/logs/qr-code-promoter`, {
+    await this.page.goto(`${baseUrl}/logs/qr-code-promoter`, {
       waitUntil: "load",
       timeout: 90000,
     });

@@ -2,15 +2,19 @@ import type { Locator, Page } from "@playwright/test";
 
 /**
  * Danh sách PG/PB — `/promoter` (title: List PG/PB).
- * Bảng `#table_staff_pg`, filter `#formFilter`, phân trang `ul.pagination.float-end`.
+ * Bảng `#table_staff_pg`, filter `#formFilter` (GET; vd. `vendor`, `p`), phân trang `ul.pagination.float-end`.
  */
 export class PgPbListPage {
   readonly pageTitleH1: Locator;
   readonly inactiveNotice: Locator;
   readonly formFilter: Locator;
   readonly vendorSelect: Locator;
+  /** GET query param `search` — keyword (name, phone, staff code, email, ID). */
+  readonly keywordSearchInput: Locator;
   readonly filterSearchButton: Locator;
   readonly filterResetButton: Locator;
+  /** Export list as Excel (`#btnDownloadPromoter`). */
+  readonly downloadButton: Locator;
   readonly changeSizePageSelect: Locator;
   readonly dataTable: Locator;
   readonly tableHeader: Locator;
@@ -21,12 +25,22 @@ export class PgPbListPage {
   readonly draftListLink: Locator;
 
   constructor(public readonly page: Page) {
-    this.pageTitleH1 = page.getByRole("heading", { name: "List PG/PB", exact: true });
-    this.inactiveNotice = page.locator("p.w-100.fs-6.mb-2");
+    this.pageTitleH1 = page.getByRole("heading", {
+      name: "List PG/PB",
+      exact: true,
+    });
+    /** Legend near filter: inactive PG/PB shown underlined in Full Name column. */
+    this.inactiveNotice = page
+      .locator("p.w-100.fs-6.mb-2")
+      .filter({ hasText: /PG\/PB underlined/i });
     this.formFilter = page.locator("form#formFilter");
     this.vendorSelect = page.locator("select#vendor");
+    this.keywordSearchInput = page.locator(
+      'input#search, input[name="search"]',
+    );
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
     this.filterResetButton = page.locator("#btnClearFormFilter");
+    this.downloadButton = page.locator("#btnDownloadPromoter");
     this.changeSizePageSelect = page.locator("select#changeSizePage");
     this.dataTable = page.locator("table#table_staff_pg");
     this.tableHeader = this.dataTable.locator("thead");
@@ -37,8 +51,7 @@ export class PgPbListPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/promoter`, {
+    await this.page.goto(`${baseUrl}/promoter`, {
       waitUntil: "load",
       timeout: 60000,
     });
@@ -69,7 +82,10 @@ export class PgPbListPage {
   }
 
   async selectPageSize(size: string) {
-    await this.changeSizePageSelect.waitFor({ state: "visible", timeout: 10000 });
+    await this.changeSizePageSelect.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.changeSizePageSelect.selectOption(size);
     await this.page.waitForLoadState("load").catch(() => null);
   }
@@ -88,6 +104,11 @@ export class PgPbListPage {
     const url = new URL(this.page.url());
     const p = url.searchParams.get("p");
     return p ? Number(p) : 1;
+  }
+
+  /** Current URL `search` query (may be empty). */
+  keywordSearchFromUrl(): string {
+    return new URL(this.page.url()).searchParams.get("search") ?? "";
   }
 
   async clickDraftList() {

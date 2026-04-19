@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Báo cáo bán hàng — `/report/sales` ([Report Sales](https://test-merchant.hasaki.vn/report/sales)).
@@ -32,15 +35,16 @@ export class ReportSalesPage {
     this.viewCheckbox = page.locator("input#view");
     this.showGiftSkuCheckbox = page.locator("input#swShowGiftSku");
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
     this.tableHeader = this.dataTable.locator("thead");
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/report/sales`, {
+    await this.page.goto(`${baseUrl}/report/sales`, {
       waitUntil: "load",
       timeout: 90000,
     });

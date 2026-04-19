@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Tạo khóa học mới — `/courses/detail` ([Add new Course](https://test-merchant.hasaki.vn/courses/detail)).
@@ -22,7 +25,9 @@ export class AddNewCoursePage {
     this.titleInput = page.locator("input#title");
     this.descriptionTextarea = page.locator("textarea#description");
     this.priorityInput = page.locator("input#priority");
-    this.imageDropzone = this.formCourseDetail.locator(".dropzone.dz-clickable");
+    this.imageDropzone = this.formCourseDetail.locator(
+      ".dropzone.dz-clickable",
+    );
     this.saveButton = page.locator("#btnSaveCourseDetail");
     this.titleInvalidFeedback = this.formCourseDetail
       .locator(".invalid-feedback")
@@ -30,8 +35,7 @@ export class AddNewCoursePage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/courses/detail`, {
+    await this.page.goto(`${baseUrl}/courses/detail`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -51,12 +55,19 @@ export class AddNewCoursePage {
     await this.pageTitleH1.waitFor({ state: "visible", timeout: 15000 });
     await this.formCourseDetail.waitFor({ state: "visible", timeout: 15000 });
     await this.titleInput.waitFor({ state: "visible", timeout: 10000 });
-    await this.descriptionTextarea.waitFor({ state: "visible", timeout: 10000 });
+    await this.descriptionTextarea.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.priorityInput.waitFor({ state: "visible", timeout: 10000 });
     await this.saveButton.waitFor({ state: "visible", timeout: 10000 });
   }
 
-  async fillCourseDetails(data: { title: string; description?: string; priority?: string }) {
+  async fillCourseDetails(data: {
+    title: string;
+    description?: string;
+    priority?: string;
+  }) {
     await this.titleInput.fill(data.title);
     if (data.description !== undefined) {
       await this.descriptionTextarea.fill(data.description);

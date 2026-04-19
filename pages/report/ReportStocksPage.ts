@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Báo cáo tồn kho — `/report/stocks` ([Report Stock](https://test-merchant.hasaki.vn/report/stocks)).
@@ -37,15 +40,16 @@ export class ReportStocksPage {
     /** Tooltip/title làm accessible name khác plain "Export" — dùng id server. */
     this.exportButton = page.locator("#btnDownloadExcel");
     this.exportByStoreButton = page.locator("#btnDownloadExcelStore");
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
     this.tableHeader = this.dataTable.locator("thead");
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/report/stocks`, {
+    await this.page.goto(`${baseUrl}/report/stocks`, {
       waitUntil: "load",
       timeout: 90000,
     });

@@ -27,7 +27,10 @@ export class ProductListPage {
   readonly pagination: Locator;
 
   constructor(public readonly page: Page) {
-    this.pageTitleH1 = page.getByRole("heading", { name: "Product List", exact: true });
+    this.pageTitleH1 = page.getByRole("heading", {
+      name: "Product List",
+      exact: true,
+    });
     this.formFilter = page.locator("form#formFilter");
     this.vendorSelect = page.locator("select#vendor");
     this.searchInput = page.locator("input#search");
@@ -50,8 +53,7 @@ export class ProductListPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/product`, {
+    await this.page.goto(`${baseUrl}/product`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -88,7 +90,10 @@ export class ProductListPage {
   }
 
   async selectPageSize(size: string) {
-    await this.changeSizePageSelect.waitFor({ state: "visible", timeout: 10000 });
+    await this.changeSizePageSelect.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.changeSizePageSelect.selectOption(size);
     await this.page.waitForLoadState("load").catch(() => null);
   }

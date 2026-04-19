@@ -1,0 +1,488 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]: Purchase
+      - generic [ref=e33]:
+        - link "Quotation" [ref=e34] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - generic [ref=e37]: 
+          - generic [ref=e38]: Quotation
+        - generic [ref=e40]:
+          - link "Quotation List" [ref=e42] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation
+            - generic [ref=e45]: Quotation List
+          - link "Create Quotation" [ref=e47] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/detail
+            - generic [ref=e50]: Create Quotation
+          - link "Create Quotation Store" [ref=e52] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/single-store
+            - generic [ref=e55]: Create Quotation Store
+          - link "Create Quotation by Excel" [ref=e57] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/quotation/import
+            - generic [ref=e60]: Create Quotation by Excel
+      - link "Report" [ref=e62] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e65]
+        - generic [ref=e72]: Report
+      - link "Products" [ref=e75] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e78]
+        - generic [ref=e81]: Products
+      - link "Return Products" [ref=e84] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e87]
+        - generic [ref=e92]: Return Products
+      - link "Promotions" [ref=e95] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e98]
+        - generic [ref=e103]: Promotions
+      - link "Promotions Program" [ref=e106] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e109]
+        - generic [ref=e114]: Promotions Program
+      - link "Group Chat" [ref=e117] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e120]: 
+        - generic [ref=e121]: Group Chat
+      - generic [ref=e123]:
+        - link "PG/PB" [ref=e124] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e127]
+          - generic [ref=e132]: PG/PB
+        - text: 
+      - link "Brands" [ref=e135] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e138]
+        - generic [ref=e143]: Brands
+      - generic [ref=e145]:
+        - link "Vendor Employee" [ref=e146] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e149]
+          - generic [ref=e154]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e157] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e160]
+        - generic [ref=e165]: Vendors
+      - link "Stocks" [ref=e168] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e171]
+        - generic [ref=e176]: Stocks
+      - link "Stores" [ref=e179] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e182]
+        - generic [ref=e187]: Stores
+      - link "Notification" [ref=e190] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e193]
+        - generic [ref=e196]: Notification
+      - link "Feedback" [ref=e198] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e201]
+        - generic [ref=e212]: Feedback
+      - link "Users" [ref=e215] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e218]
+        - generic [ref=e223]: Users 
+      - link "Logs" [ref=e226] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e228]
+        - generic [ref=e230]: Logs
+      - link "Setting" [ref=e233] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e235]
+        - generic [ref=e238]: Setting
+      - link "Courses" [ref=e241] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e244]: 
+        - generic [ref=e245]: Courses
+      - link "User Guide" [ref=e248] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e251]: 
+        - generic [ref=e252]: User Guide
+    - generic [ref=e253]:
+      - generic [ref=e254]:
+        - generic [ref=e255]:
+          - link "Logo" [ref=e256] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e257]
+          - img [ref=e260] [cursor=pointer]
+        - generic [ref=e265]:
+          - generic [ref=e266]:
+            - heading "Quotation List" [level=1] [ref=e267]
+            - list [ref=e268]:
+              - listitem [ref=e269]:
+                - link "Home" [ref=e270] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e271]
+              - listitem [ref=e273]: Default
+          - generic [ref=e276]:
+            - link "" [ref=e278] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e279]: 
+            - link "" [ref=e281] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e282]: 
+      - generic [ref=e285]:
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - combobox [ref=e292]
+            - combobox "Select Vendor" [ref=e295] [cursor=pointer]:
+              - textbox "Select Vendor" [ref=e296]
+          - generic [ref=e297]:
+            - combobox [ref=e298]
+            - combobox "Select Stock" [ref=e301] [cursor=pointer]:
+              - textbox "Select Stock" [ref=e302]
+          - combobox [ref=e304]:
+            - option "All status" [selected]
+            - option "New"
+            - option "Waiting For Confirm"
+            - option "Confirmed"
+            - option "Cancel"
+            - option "Rejected"
+          - generic [ref=e305]:
+            - button " Search" [ref=e306] [cursor=pointer]:
+              - generic [ref=e307]: 
+              - text: Search
+            - button " Reset" [ref=e308] [cursor=pointer]:
+              - generic [ref=e309]: 
+              - text: Reset
+        - generic [ref=e310]:
+          - table [ref=e313]:
+            - rowgroup [ref=e314]:
+              - row "STT Code Vendor Type Stock Products PO Code Total Created At Updated At Status Actions" [ref=e315]:
+                - columnheader "STT" [ref=e316]
+                - columnheader "Code" [ref=e317]
+                - columnheader "Vendor" [ref=e318]
+                - columnheader "Type" [ref=e319]
+                - columnheader "Stock" [ref=e320]
+                - columnheader "Products" [ref=e321]
+                - columnheader "PO Code" [ref=e322]
+                - columnheader "Total" [ref=e323]
+                - columnheader "Created At" [ref=e324]
+                - columnheader "Updated At" [ref=e325]
+                - columnheader "Status" [ref=e326]
+                - columnheader "Actions" [ref=e327]
+            - rowgroup [ref=e328]:
+              - row "1  32631a70 ... V220065 - Test Vendo ... POSM 1 1 1 5,724,000 ₫ 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e329]:
+                - cell "1" [ref=e330]
+                - cell " 32631a70 ..." [ref=e331]:
+                  - generic [ref=e333] [cursor=pointer]: 
+                  - text: 32631a70 ...
+                - cell "V220065 - Test Vendo ..." [ref=e334]
+                - cell "POSM" [ref=e335] [cursor=pointer]
+                - cell "1" [ref=e336] [cursor=pointer]:
+                  - generic [ref=e337]: "1"
+                - cell "1" [ref=e338]:
+                  - generic [ref=e339] [cursor=pointer]: "1"
+                - cell "1" [ref=e340] [cursor=pointer]:
+                  - generic [ref=e341]: "1"
+                - cell "5,724,000 ₫" [ref=e342]
+                - cell "17/04/2026 09:14" [ref=e343]
+                - cell "17/04/2026 09:15" [ref=e344]
+                - cell "Waiting For Confirm S" [ref=e345]:
+                  - generic [ref=e346]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e347]: S
+                - cell "View Detail " [ref=e348]:
+                  - link "View Detail" [ref=e349] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5724
+                    - generic [ref=e350]: 
+                  - link "" [ref=e351] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5724
+                    - generic [ref=e352]: 
+              - row "2  8c89416f ... V220065 - Test Vendo ... Tester 1 1 1 5,724,000 ₫ 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e353]:
+                - cell "2" [ref=e354]
+                - cell " 8c89416f ..." [ref=e355]:
+                  - generic [ref=e357] [cursor=pointer]: 
+                  - text: 8c89416f ...
+                - cell "V220065 - Test Vendo ..." [ref=e358]
+                - cell "Tester" [ref=e359] [cursor=pointer]
+                - cell "1" [ref=e360] [cursor=pointer]:
+                  - generic [ref=e361]: "1"
+                - cell "1" [ref=e362]:
+                  - generic [ref=e363] [cursor=pointer]: "1"
+                - cell "1" [ref=e364] [cursor=pointer]:
+                  - generic [ref=e365]: "1"
+                - cell "5,724,000 ₫" [ref=e366]
+                - cell "17/04/2026 09:14" [ref=e367]
+                - cell "17/04/2026 09:15" [ref=e368]
+                - cell "Waiting For Confirm S" [ref=e369]:
+                  - generic [ref=e370]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e371]: S
+                - cell "View Detail " [ref=e372]:
+                  - link "View Detail" [ref=e373] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5723
+                    - generic [ref=e374]: 
+                  - link "" [ref=e375] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5723
+                    - generic [ref=e376]: 
+              - row "3  fcf95579 ... V220065 - Test Vendo ... Normal 1 1 1 5,724,000 ₫ 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e377]:
+                - cell "3" [ref=e378]
+                - cell " fcf95579 ..." [ref=e379]:
+                  - generic [ref=e381] [cursor=pointer]: 
+                  - text: fcf95579 ...
+                - cell "V220065 - Test Vendo ..." [ref=e382]
+                - cell "Normal" [ref=e383] [cursor=pointer]
+                - cell "1" [ref=e384] [cursor=pointer]:
+                  - generic [ref=e385]: "1"
+                - cell "1" [ref=e386]:
+                  - generic [ref=e387] [cursor=pointer]: "1"
+                - cell "1" [ref=e388] [cursor=pointer]:
+                  - generic [ref=e389]: "1"
+                - cell "5,724,000 ₫" [ref=e390]
+                - cell "17/04/2026 09:14" [ref=e391]
+                - cell "17/04/2026 09:15" [ref=e392]
+                - cell "Waiting For Confirm S" [ref=e393]:
+                  - generic [ref=e394]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e395]: S
+                - cell "View Detail " [ref=e396]:
+                  - link "View Detail" [ref=e397] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5722
+                    - generic [ref=e398]: 
+                  - link "" [ref=e399] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5722
+                    - generic [ref=e400]: 
+              - row "4  2d5a5c19 ... V220065 - Test Vendo ... Activation 1 1 1 5,724,000 ₫ 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e401]:
+                - cell "4" [ref=e402]
+                - cell " 2d5a5c19 ..." [ref=e403]:
+                  - generic [ref=e405] [cursor=pointer]: 
+                  - text: 2d5a5c19 ...
+                - cell "V220065 - Test Vendo ..." [ref=e406]
+                - cell "Activation" [ref=e407] [cursor=pointer]
+                - cell "1" [ref=e408] [cursor=pointer]:
+                  - generic [ref=e409]: "1"
+                - cell "1" [ref=e410]:
+                  - generic [ref=e411] [cursor=pointer]: "1"
+                - cell "1" [ref=e412] [cursor=pointer]:
+                  - generic [ref=e413]: "1"
+                - cell "5,724,000 ₫" [ref=e414]
+                - cell "17/04/2026 09:14" [ref=e415]
+                - cell "17/04/2026 09:15" [ref=e416]
+                - cell "Waiting For Confirm S" [ref=e417]:
+                  - generic [ref=e418]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e419]: S
+                - cell "View Detail " [ref=e420]:
+                  - link "View Detail" [ref=e421] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5721
+                    - generic [ref=e422]: 
+                  - link "" [ref=e423] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5721
+                    - generic [ref=e424]: 
+              - row "5  6aa9d337 ... V260064 - Global - C ... POSM 1 1 1 $12,000 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e425]:
+                - cell "5" [ref=e426]
+                - cell " 6aa9d337 ..." [ref=e427]:
+                  - generic [ref=e429] [cursor=pointer]: 
+                  - text: 6aa9d337 ...
+                - cell "V260064 - Global - C ..." [ref=e430]
+                - cell "POSM" [ref=e431] [cursor=pointer]
+                - cell "1" [ref=e432] [cursor=pointer]:
+                  - generic [ref=e433]: "1"
+                - cell "1" [ref=e434]:
+                  - generic [ref=e435] [cursor=pointer]: "1"
+                - cell "1" [ref=e436] [cursor=pointer]:
+                  - generic [ref=e437]: "1"
+                - cell "$12,000" [ref=e438]
+                - cell "17/04/2026 09:14" [ref=e439]
+                - cell "17/04/2026 09:15" [ref=e440]
+                - cell "Waiting For Confirm S" [ref=e441]:
+                  - generic [ref=e442]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e443]: S
+                - cell "View Detail " [ref=e444]:
+                  - link "View Detail" [ref=e445] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5720
+                    - generic [ref=e446]: 
+                  - link "" [ref=e447] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5720
+                    - generic [ref=e448]: 
+              - row "6  ff86802a ... V220065 - Test Vendo ... Gift 1 1 1 0 ₫ 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e449]:
+                - cell "6" [ref=e450]
+                - cell " ff86802a ..." [ref=e451]:
+                  - generic [ref=e453] [cursor=pointer]: 
+                  - text: ff86802a ...
+                - cell "V220065 - Test Vendo ..." [ref=e454]
+                - cell "Gift" [ref=e455] [cursor=pointer]
+                - cell "1" [ref=e456] [cursor=pointer]:
+                  - generic [ref=e457]: "1"
+                - cell "1" [ref=e458]:
+                  - generic [ref=e459] [cursor=pointer]: "1"
+                - cell "1" [ref=e460] [cursor=pointer]:
+                  - generic [ref=e461]: "1"
+                - cell "0 ₫" [ref=e462]
+                - cell "17/04/2026 09:14" [ref=e463]
+                - cell "17/04/2026 09:15" [ref=e464]
+                - cell "Waiting For Confirm S" [ref=e465]:
+                  - generic [ref=e466]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e467]: S
+                - cell "View Detail " [ref=e468]:
+                  - link "View Detail" [ref=e469] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5719
+                    - generic [ref=e470]: 
+                  - link "" [ref=e471] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5719
+                    - generic [ref=e472]: 
+              - row "7  5e3cc110 ... V260064 - Global - C ... Activation 1 1 1 $12,000 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e473]:
+                - cell "7" [ref=e474]
+                - cell " 5e3cc110 ..." [ref=e475]:
+                  - generic [ref=e477] [cursor=pointer]: 
+                  - text: 5e3cc110 ...
+                - cell "V260064 - Global - C ..." [ref=e478]
+                - cell "Activation" [ref=e479] [cursor=pointer]
+                - cell "1" [ref=e480] [cursor=pointer]:
+                  - generic [ref=e481]: "1"
+                - cell "1" [ref=e482]:
+                  - generic [ref=e483] [cursor=pointer]: "1"
+                - cell "1" [ref=e484] [cursor=pointer]:
+                  - generic [ref=e485]: "1"
+                - cell "$12,000" [ref=e486]
+                - cell "17/04/2026 09:14" [ref=e487]
+                - cell "17/04/2026 09:15" [ref=e488]
+                - cell "Waiting For Confirm S" [ref=e489]:
+                  - generic [ref=e490]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e491]: S
+                - cell "View Detail " [ref=e492]:
+                  - link "View Detail" [ref=e493] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5718
+                    - generic [ref=e494]: 
+                  - link "" [ref=e495] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5718
+                    - generic [ref=e496]: 
+              - row "8  5d90f7a9 ... V260064 - Global - C ... Tester 1 1 1 $12,000 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e497]:
+                - cell "8" [ref=e498]
+                - cell " 5d90f7a9 ..." [ref=e499]:
+                  - generic [ref=e501] [cursor=pointer]: 
+                  - text: 5d90f7a9 ...
+                - cell "V260064 - Global - C ..." [ref=e502]
+                - cell "Tester" [ref=e503] [cursor=pointer]
+                - cell "1" [ref=e504] [cursor=pointer]:
+                  - generic [ref=e505]: "1"
+                - cell "1" [ref=e506]:
+                  - generic [ref=e507] [cursor=pointer]: "1"
+                - cell "1" [ref=e508] [cursor=pointer]:
+                  - generic [ref=e509]: "1"
+                - cell "$12,000" [ref=e510]
+                - cell "17/04/2026 09:14" [ref=e511]
+                - cell "17/04/2026 09:15" [ref=e512]
+                - cell "Waiting For Confirm S" [ref=e513]:
+                  - generic [ref=e514]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e515]: S
+                - cell "View Detail " [ref=e516]:
+                  - link "View Detail" [ref=e517] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5717
+                    - generic [ref=e518]: 
+                  - link "" [ref=e519] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5717
+                    - generic [ref=e520]: 
+              - row "9  41120611 ... V260064 - Global - C ... Gift 1 1 1 $0 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e521]:
+                - cell "9" [ref=e522]
+                - cell " 41120611 ..." [ref=e523]:
+                  - generic [ref=e525] [cursor=pointer]: 
+                  - text: 41120611 ...
+                - cell "V260064 - Global - C ..." [ref=e526]
+                - cell "Gift" [ref=e527] [cursor=pointer]
+                - cell "1" [ref=e528] [cursor=pointer]:
+                  - generic [ref=e529]: "1"
+                - cell "1" [ref=e530]:
+                  - generic [ref=e531] [cursor=pointer]: "1"
+                - cell "1" [ref=e532] [cursor=pointer]:
+                  - generic [ref=e533]: "1"
+                - cell "$0" [ref=e534]
+                - cell "17/04/2026 09:14" [ref=e535]
+                - cell "17/04/2026 09:15" [ref=e536]
+                - cell "Waiting For Confirm S" [ref=e537]:
+                  - generic [ref=e538]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e539]: S
+                - cell "View Detail " [ref=e540]:
+                  - link "View Detail" [ref=e541] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5716
+                    - generic [ref=e542]: 
+                  - link "" [ref=e543] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5716
+                    - generic [ref=e544]: 
+              - row "10  8b1b0c44 ... V260064 - Global - C ... Normal 1 1 1 $12,000 17/04/2026 09:14 17/04/2026 09:15 Waiting For Confirm S View Detail " [ref=e545]:
+                - cell "10" [ref=e546]
+                - cell " 8b1b0c44 ..." [ref=e547]:
+                  - generic [ref=e549] [cursor=pointer]: 
+                  - text: 8b1b0c44 ...
+                - cell "V260064 - Global - C ..." [ref=e550]
+                - cell "Normal" [ref=e551] [cursor=pointer]
+                - cell "1" [ref=e552] [cursor=pointer]:
+                  - generic [ref=e553]: "1"
+                - cell "1" [ref=e554]:
+                  - generic [ref=e555] [cursor=pointer]: "1"
+                - cell "1" [ref=e556] [cursor=pointer]:
+                  - generic [ref=e557]: "1"
+                - cell "$12,000" [ref=e558]
+                - cell "17/04/2026 09:14" [ref=e559]
+                - cell "17/04/2026 09:15" [ref=e560]
+                - cell "Waiting For Confirm S" [ref=e561]:
+                  - generic [ref=e562]:
+                    - text: Waiting For Confirm
+                    - generic [ref=e563]: S
+                - cell "View Detail " [ref=e564]:
+                  - link "View Detail" [ref=e565] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view/5715
+                    - generic [ref=e566]: 
+                  - link "" [ref=e567] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/quotation/view-logs/5715
+                    - generic [ref=e568]: 
+          - generic [ref=e570]:
+            - generic [ref=e571]:
+              - combobox [ref=e572]:
+                - option "10" [selected]
+                - option "25"
+                - option "50"
+                - option "100"
+                - option "150"
+                - option "200"
+                - option "250"
+              - text: Showing 1 to 10 of 4263 entries
+            - list [ref=e574]:
+              - listitem [ref=e575]:
+                - link:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=1
+              - listitem [ref=e576]:
+                - link "1" [ref=e577] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=1
+              - listitem [ref=e578]:
+                - link "2" [ref=e579] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=2
+              - listitem [ref=e580]:
+                - link "3" [ref=e581] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=3
+              - listitem [ref=e582]:
+                - link "4" [ref=e583] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=4
+              - listitem [ref=e584]:
+                - link "5" [ref=e585] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=5
+              - listitem [ref=e586]:
+                - link [ref=e587] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/quotation?p=2
+      - generic [ref=e590]:
+        - generic [ref=e592]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e593] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

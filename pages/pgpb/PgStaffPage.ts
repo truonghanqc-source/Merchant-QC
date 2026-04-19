@@ -60,9 +60,11 @@ export class PgStaffPage {
     this.confirmApproveStaffButton = page.locator(
       ".swal2-confirm, button.swal2-confirm",
     );
-    this.rejectInfoStaffButton = page.getByRole("button", {
-      name: "Reject",
-    });
+    this.rejectInfoStaffButton = page
+      .getByRole("button", {
+        name: "Reject",
+      })
+      .first();
     this.confirmRejectStaffButton = page.locator("#btnConfirmReject");
 
     this.modalInputRejectReason = page.locator("#note_reject_textarea");
@@ -144,35 +146,55 @@ export class PgStaffPage {
     await this.noteInput.fill(note);
   }
 
+  /**
+   * Chọn vendor — `select#vendor_id` + Select2 (`#select2-vendor_id-results`).
+   * (Field id là `vendor_id`, không phải `vendor`.)
+   */
   async selectVendor(vendorText: string) {
-    // Click the Select2 container to open dropdown (triggers select2:select event properly)
-    const vendorContainer = this.page
-      .locator(".select2-container[data-select2-id] span.select2-selection")
+    const selectId = "vendor_id";
+    const trimmed = vendorText.trim();
+    const prefix = trimmed.slice(0, 8);
+    const combobox = this.page
+      .locator(
+        `span[aria-labelledby="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-results"], ` +
+          `span[aria-owns="select2-${selectId}-results"]`,
+      )
       .first();
-    await vendorContainer.waitFor({ state: "visible", timeout: 15000 });
-    await vendorContainer.click();
-
-    // Type in the search box to filter options
+    const results = this.page.locator(`#select2-${selectId}-results`);
     const searchBox = this.page.locator(
       ".select2-dropdown .select2-search__field",
     );
-    await searchBox.waitFor({ state: "visible", timeout: 10000 });
-    await searchBox.fill(vendorText.substring(0, 8)); // search by code prefix e.g. "V260064"
 
-    // Wait for results and click the matching option
-    const option = this.page.locator(".select2-results__option").filter({
-      hasText: vendorText,
-    });
-    await option.first().waitFor({ state: "visible", timeout: 10000 });
-    await option.first().click();
+    const openAndFilter = async () => {
+      await combobox.waitFor({ state: "attached", timeout: 20_000 });
+      await combobox.scrollIntoViewIfNeeded().catch(() => null);
+      await combobox.click({ force: true });
+      await searchBox.waitFor({ state: "visible", timeout: 10_000 });
+      await searchBox.fill(prefix);
+      await results.waitFor({ state: "visible", timeout: 15_000 });
+      const option = results
+        .locator(".select2-results__option")
+        .filter({ hasText: trimmed });
+      const pick = option.first();
+      await pick.waitFor({ state: "visible", timeout: 10_000 });
+      await pick.click();
+    };
 
-    // Wait for brand_id AJAX to finish loading (options appear after vendor select2:select fires)
+    try {
+      await openAndFilter();
+    } catch {
+      await this.page.keyboard.press("Escape");
+      await openAndFilter();
+    }
+
     await this.page.waitForFunction(
       () => {
         const brand = document.getElementById("brand_id") as HTMLSelectElement;
         return brand && !brand.disabled && brand.options.length > 0;
       },
-      { timeout: 20000 },
+      { timeout: 20_000 },
     );
   }
 
@@ -358,16 +380,16 @@ export class PgStaffPage {
 
   async getValidationErrors() {
     await waitForNextPaint(this.page);
-    const errors = await this.page
-      .locator(
-        ".text-danger, .invalid-feedback, .ant-form-item-explain, " +
-          ".alert-danger, .alert.alert-danger, " +
-          ".swal2-html-container, .swal2-content, " +
-          ".toast-error, .toast-message, " +
-          "[class*='error'], [class*='Error']",
-      )
-      .allTextContents();
-    return errors.map((x) => x.trim()).filter(Boolean);
+    const errorLoc = this.page.locator(
+      ".text-danger, .invalid-feedback, .ant-form-item-explain, " +
+        ".alert-danger, .alert.alert-danger, " +
+        ".swal2-html-container, .swal2-content, " +
+        ".toast-error, .toast-message, " +
+        "[role='alert'], [role='status'], " +
+        "[class*='error'], [class*='Error']",
+    );
+    const errors = await errorLoc.allTextContents();
+    return [...new Set(errors.map((x) => x.trim()).filter(Boolean))];
   }
 
   async requestToActivateButtonClick() {

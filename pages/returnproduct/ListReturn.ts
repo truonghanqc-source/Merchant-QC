@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Danh sách trả hàng — `/return-product` ([Return Product](https://test-merchant.hasaki.vn/return-product)).
@@ -43,8 +46,7 @@ export class ListReturnPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/return-product`, {
+    await this.page.goto(`${baseUrl}/return-product`, {
       waitUntil: "load",
       timeout: 90000,
     });

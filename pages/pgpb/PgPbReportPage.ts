@@ -2,7 +2,9 @@ import type { Locator, Page } from "@playwright/test";
 
 /**
  * Báo cáo PG/PB — `/promoter/promoter-report`.
- * Filter `form#filter-form`, bảng `table#main-table.data-table`.
+ * Filter GET `form#filter-form`: `#start-date`, `#end-date`, `select#vendor`, `select#location_ids`,
+ * nút Apply `#apply-range` (`.apply-range-btn`), Search (submit), Reset, Export `#export`.
+ * Bảng `table#main-table.data-table`.
  */
 export class PgPbReportPage {
   /** Trong `.page-title` để không trùng `h1` modal Change Password. */
@@ -28,7 +30,9 @@ export class PgPbReportPage {
     this.endDateInput = page.locator("input#end-date");
     this.vendorSelect = page.locator("select#vendor");
     this.locationSelect = page.locator("select#location_ids");
-    this.applyDateRangeButton = this.filterForm.locator("button.apply-range-btn");
+    this.applyDateRangeButton = this.filterForm.locator(
+      "#apply-range, button.apply-range-btn",
+    );
     this.searchButton = this.filterForm.locator('button[type="submit"]');
     this.resetButton = this.filterForm.locator('button[type="reset"]');
     /** Có `id="export"` trên test-merchant; `getByRole` có thể không resolve khi UI phức tạp. */
@@ -40,12 +44,13 @@ export class PgPbReportPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/promoter/promoter-report`, {
+    await this.page.goto(`${baseUrl}/promoter/promoter-report`, {
       waitUntil: "load",
       timeout: 90000,
     });
-    await this.page.waitForURL(/\/promoter\/promoter-report/i, { timeout: 30000 });
+    await this.page.waitForURL(/\/promoter\/promoter-report/i, {
+      timeout: 30000,
+    });
     await this.page.waitForSelector("form#filter-form, table#main-table", {
       state: "visible",
       timeout: 20000,
@@ -68,5 +73,36 @@ export class PgPbReportPage {
   async resetFilters() {
     await this.resetButton.click();
     await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  /**
+   * Apply is often `display:none` until the range picker opens — trigger via DOM click.
+   */
+  async applyDateRange() {
+    await this.applyDateRangeButton.evaluate((el: HTMLButtonElement) =>
+      el.click(),
+    );
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  /** First location_ids option with a value, skipping All-location rows. */
+  async firstSelectableLocationValue(): Promise<string | null> {
+    return this.locationSelect.evaluate((el) => {
+      const opts = Array.from((el as HTMLSelectElement).options).filter(
+        (o) => o.value && !/^all\b/i.test(o.textContent?.trim() ?? ""),
+      );
+      return opts[0]?.value ?? null;
+    });
+  }
+
+  async clickExportAndWaitForExcelRequest() {
+    const responsePromise = this.page.waitForResponse(
+      (r) =>
+        r.url().includes("download-report-pg-excel") &&
+        r.request().method() === "GET",
+      { timeout: 30_000 },
+    );
+    await this.exportButton.click({ force: true });
+    return responsePromise;
   }
 }

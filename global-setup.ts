@@ -41,7 +41,6 @@ async function storageStateAcceptedByServer(
   baseUrl: string,
   authFile: string,
 ): Promise<boolean> {
-  const root = baseUrl.replace(/\/$/, "");
   const browser = await chromium.launch();
   try {
     const context = await browser.newContext({
@@ -51,7 +50,7 @@ async function storageStateAcceptedByServer(
     });
     try {
       const page = await context.newPage();
-      await page.goto(root, {
+      await page.goto(baseUrl, {
         waitUntil: "domcontentloaded",
         timeout: 30000,
       });
@@ -139,13 +138,7 @@ async function ensureProfileSession(
         `Missing required env vars for profile "${profile}": ${meta.userEnv}, ${meta.passEnv}`,
       );
     }
-    await ensureSession(
-      baseUrl,
-      username,
-      password,
-      authFile,
-      meta.setupLabel,
-    );
+    await ensureSession(baseUrl, username, password, authFile, meta.setupLabel);
     return;
   }
 
@@ -156,13 +149,7 @@ async function ensureProfileSession(
     return;
   }
 
-  await ensureSession(
-    baseUrl,
-    username,
-    password,
-    authFile,
-    meta.setupLabel,
-  );
+  await ensureSession(baseUrl, username, password, authFile, meta.setupLabel);
 }
 
 export default async function globalSetup() {

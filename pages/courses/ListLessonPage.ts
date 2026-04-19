@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Danh sách bài học — `/courses/lession` (typo `lession` theo app; tiêu đề **Lesson List**).
@@ -25,15 +28,16 @@ export class ListLessonPage {
     this.courseSelect = page.locator("select#course");
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
     this.resetButton = page.locator("#btnClearFormFilter");
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
     this.tableHeader = this.dataTable.locator("thead");
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/courses/lession`, {
+    await this.page.goto(`${baseUrl}/courses/lession`, {
       waitUntil: "load",
       timeout: 90000,
     });

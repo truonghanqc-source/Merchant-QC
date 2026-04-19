@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Register vendor list — `/user/register-vendor-list` ([Register Vendor List](https://test-merchant.hasaki.vn/user/register-vendor-list)).
@@ -33,8 +36,7 @@ export class ListRegisterPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/user/register-vendor-list`, {
+    await this.page.goto(`${baseUrl}/user/register-vendor-list`, {
       waitUntil: "load",
       timeout: 90000,
     });

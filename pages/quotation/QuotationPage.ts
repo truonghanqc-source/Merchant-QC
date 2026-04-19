@@ -1,6 +1,13 @@
 import type { Locator, Page } from "@playwright/test";
 
+/**
+ * Tạo quotation mới — `/quotation/detail` ([Create new Quotation](https://test-merchant.hasaki.vn/quotation/detail)).
+ * Form `form#fromBrandDetail`; Select2 trên `select#quotationType`, `select#company` (trên DOM có thêm phần tử khác `id="company"` ngoài form — luôn dùng `select#company` hoặc scope form).
+ */
 export class CreateQuotationPage {
+  readonly pageTitleH1: Locator;
+  /** Form chính (MCP DOM). */
+  readonly formBrandDetail: Locator;
   readonly noteInput: Locator;
   readonly saveQuotationButton: Locator;
   readonly requestToConfirmButton: Locator;
@@ -17,37 +24,63 @@ export class CreateQuotationPage {
   readonly summaryTotal: Locator;
 
   constructor(public readonly page: Page) {
+    this.pageTitleH1 = page.locator(".page-title h1");
+    this.formBrandDetail = page.locator("form#fromBrandDetail");
+
     this.noteInput = page.locator("#quotationNote");
     this.saveQuotationButton = page.locator("#btnSaveQuotationDetail");
-    this.confirmSaveButtonQuotation = page.getByRole("button", { name: "Ok" });
-    this.requestToConfirmButton = page.locator(
-      "a:has-text('Request to confirm'), button:has-text('Request to confirm')",
-    );
+    this.confirmSaveButtonQuotation = page
+      .getByRole("button", { name: "Ok" })
+      .or(page.getByRole("button", { name: "OK" }))
+      .first();
+    // UI: clickable div/span + icon (not role=link/button). List row dùng title "Request To Confirm".
+    this.requestToConfirmButton = page
+      .getByText(/\bRequest\s+to\s+confirm\b/i)
+      .or(page.getByRole("link", { name: /request to confirm/i }))
+      .or(page.getByRole("button", { name: /request to confirm/i }))
+      .first();
     this.quotationConfigButton = page.locator("#quotationConfig");
 
-    this.quotationTypeSelect = page.locator("select#quotationType");
-    this.companySelect = page.locator("select#company");
-    this.vendorSelect = page.locator("select#vendor");
-    this.storeSelectRow1 = page.locator("select#store_1");
-    this.productSkuSelectRow1 = page.locator("select#selectProductSku_1");
-    this.lineItemsTable = page.locator("table tbody").first();
+    this.quotationTypeSelect = this.formBrandDetail.locator(
+      "select#quotationType",
+    );
+    this.companySelect = this.formBrandDetail.locator("select#company");
+    this.vendorSelect = this.formBrandDetail.locator("select#vendor");
+    this.storeSelectRow1 = this.formBrandDetail.locator("select#store_1");
+    this.productSkuSelectRow1 = this.formBrandDetail.locator(
+      "select#selectProductSku_1",
+    );
+    this.lineItemsTable = this.formBrandDetail.locator("table tbody").first();
     this.summaryTotal = page.locator(
       "#summaryTotal, #selected-product-total-price",
     );
   }
 
   async goto(baseUrl: string) {
-    await this.page.goto(`${baseUrl}/quotation/detail`);
+    await this.page.goto(`${baseUrl}/quotation/detail`, {
+      waitUntil: "load",
+      timeout: 90_000,
+    });
+    await this.page.waitForLoadState("networkidle").catch(() => null);
+    for (let i = 0; i < 25; i++) {
+      if (!/\/login(\/|\?|$)/i.test(this.page.url())) break;
+      await this.page.waitForTimeout(200);
+    }
+    if (/\/login(\/|\?|$)/i.test(this.page.url())) {
+      throw new Error(
+        "Quotation detail: still on /login. Re-run global-setup / check LOGIN_* in .env.local.",
+      );
+    }
     await this.page.waitForURL(/\/quotation\/detail\/?(\?|#|$)/i, {
-      timeout: 30000,
+      timeout: 30_000,
     });
-    await this.page.waitForSelector("form, .card, h1, h2", {
-      state: "visible",
-    });
+    await this.formBrandDetail.waitFor({ state: "visible", timeout: 25_000 });
   }
 
   /** Form tạo quotation tại /quotation/detail (control chính có trong DOM). */
   async expectQuotationDetailFormVisible() {
+    await this.pageTitleH1.waitFor({ state: "visible", timeout: 15_000 });
+    await this.formBrandDetail.waitFor({ state: "visible", timeout: 15_000 });
     await this.quotationTypeSelect.waitFor({
       state: "attached",
       timeout: 15000,
@@ -74,44 +107,38 @@ export class CreateQuotationPage {
       .waitFor({ state: "attached", timeout: 15000 });
   }
 
-  // Helper chung: click vào Select2 container rồi chọn option theo text
-  // selectId: id của native <select> bị Select2 ẩn đi (aria-hidden="true")
+  // Helper: open Select2 then pick option by visible text (combobox often "hidden" in Playwright).
   private async selectSelect2ByText(selectId: string, optionText: string) {
-    // Click vào container Select2 để mở dropdown (không click vào native select vì bị ẩn)
-    const container = this.page
+    const combobox = this.formBrandDetail
       .locator(
-        `.select2-container[data-select2-id="select2-data-${selectId}"], ` +
-          `span.select2-selection[aria-labelledby*="${selectId}"], ` +
-          `span.select2-container + span, ` +
-          // Fallback: tìm container ngay trước/sau native select
-          `select#${selectId} + .select2-container span.select2-selection`,
-      )
-      .first();
-
-    // Cách chắc chắn hơn: tìm container bằng aria nối với select id
-    // Một số Select2 dùng aria-owns/aria-controls -> "-results", một số dùng aria-labelledby -> "-container"
-    const containerByAriaOwns = this.page
-      .locator(
-        `span[aria-owns="select2-${selectId}-results"], ` +
+        `span[aria-labelledby="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-container"], ` +
           `span[aria-controls="select2-${selectId}-results"], ` +
-          `span[aria-labelledby="select2-${selectId}-container"]`,
+          `span[aria-owns="select2-${selectId}-results"]`,
       )
       .first();
 
-    if ((await containerByAriaOwns.count()) > 0) {
-      await containerByAriaOwns.waitFor({ state: "visible", timeout: 15000 });
-      await containerByAriaOwns.click();
-    } else {
-      await container.waitFor({ state: "visible", timeout: 15000 });
-      await container.click();
-    }
+    const results = this.page.locator(`#select2-${selectId}-results`);
 
-    // Chờ dropdown mở và tìm option khớp text
-    const option = this.page.locator(".select2-results__option").filter({
-      hasText: optionText,
-    });
-    await option.first().waitFor({ state: "visible", timeout: 10000 });
-    await option.first().click();
+    const openAndChoose = async () => {
+      await combobox.waitFor({ state: "attached", timeout: 20_000 });
+      await combobox.scrollIntoViewIfNeeded().catch(() => null);
+      await combobox.click({ force: true });
+      await results.waitFor({ state: "visible", timeout: 15_000 });
+      const option = results
+        .locator(".select2-results__option")
+        .filter({ hasText: optionText });
+      const chosen = option.first();
+      await chosen.waitFor({ state: "visible", timeout: 15_000 });
+      await chosen.click();
+    };
+
+    try {
+      await openAndChoose();
+    } catch {
+      await this.page.keyboard.press("Escape");
+      await openAndChoose();
+    }
   }
 
   // Chọn Quotation Type: id="quotationType", options: Normal(0), Tester(1), Gift(2), Activation(3), POSM(4)
@@ -128,16 +155,17 @@ export class CreateQuotationPage {
   async selectVendor(vendorName: string) {
     const selectId = "vendor";
 
-    // Click vào Select2 container để mở dropdown
-    const container = this.page
+    const container = this.formBrandDetail
       .locator(
-        `span[aria-owns="select2-${selectId}-results"], ` +
+        `span[aria-labelledby="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-container"], ` +
           `span[aria-controls="select2-${selectId}-results"], ` +
-          `span[aria-labelledby="select2-${selectId}-container"]`,
+          `span[aria-owns="select2-${selectId}-results"]`,
       )
       .first();
-    await container.waitFor({ state: "visible", timeout: 15000 });
-    await container.click();
+    await container.waitFor({ state: "attached", timeout: 20_000 });
+    await container.scrollIntoViewIfNeeded().catch(() => null);
+    await container.click({ force: true });
 
     // Chờ search input xuất hiện và gõ tên vendor
     const searchInput = this.page.locator(
@@ -227,16 +255,17 @@ export class CreateQuotationPage {
   async selectProduct(sku?: string, rowIndex: number = 1): Promise<string> {
     const selectId = `selectProductSku_${rowIndex}`;
 
-    // Click vào Select2 container để mở dropdown và hiện search input
-    const container = this.page
+    const container = this.formBrandDetail
       .locator(
-        `span[aria-owns="select2-${selectId}-results"], ` +
+        `span[aria-labelledby="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-container"], ` +
           `span[aria-controls="select2-${selectId}-results"], ` +
-          `span[aria-labelledby="select2-${selectId}-container"]`,
+          `span[aria-owns="select2-${selectId}-results"]`,
       )
       .first();
-    await container.waitFor({ state: "visible", timeout: 15000 });
-    await container.click();
+    await container.waitFor({ state: "attached", timeout: 20_000 });
+    await container.scrollIntoViewIfNeeded().catch(() => null);
+    await container.click({ force: true });
 
     // Chờ search input xuất hiện trong dropdown
     const searchInput = this.page.locator(
@@ -292,9 +321,12 @@ export class CreateQuotationPage {
   // Nhập quantity cho row theo rowIndex (mặc định row 1), giá trị phải <= 6
   async fillQuantity(quantity: number = 1, rowIndex: number = 1) {
     const qty = Math.min(quantity, 6);
-    const quantityInput = this.page
-      .locator(
-        `tbody tr:nth-child(${rowIndex}) input[name*="quantity"], tbody tr:nth-child(${rowIndex}) input[name*="qty"], tbody tr:nth-child(${rowIndex}) input[type="number"]`,
+    const quantityInput = this.formBrandDetail
+      .locator(`input#qty_${rowIndex}`)
+      .or(
+        this.formBrandDetail.locator(
+          `tbody tr:nth-child(${rowIndex}) input[name="qty"]`,
+        ),
       )
       .first();
     await quantityInput.fill(String(qty));
@@ -317,9 +349,14 @@ export class CreateQuotationPage {
   }
 
   async requestToConfirm() {
+    await this.page.waitForURL(
+      /quotation\/(review|detail|edit|confirm|view)\/\d+/i,
+      { timeout: 60_000 },
+    );
+    await this.page.waitForLoadState("domcontentloaded");
     await this.requestToConfirmButton.waitFor({
       state: "visible",
-      timeout: 50000,
+      timeout: 60_000,
     });
 
     // Wait for JS handlers to bind before clicking

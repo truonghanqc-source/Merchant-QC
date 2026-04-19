@@ -1,0 +1,438 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]: Purchase
+      - link "Quotation" [ref=e34] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Quotation
+      - link "Report" [ref=e41] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e44]
+        - generic [ref=e51]: Report
+      - link "Products" [ref=e54] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e57]
+        - generic [ref=e60]: Products
+      - link "Return Products" [ref=e63] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e66]
+        - generic [ref=e71]: Return Products
+      - link "Promotions" [ref=e74] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e77]
+        - generic [ref=e82]: Promotions
+      - link "Promotions Program" [ref=e85] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e88]
+        - generic [ref=e93]: Promotions Program
+      - link "Group Chat" [ref=e96] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e99]: 
+        - generic [ref=e100]: Group Chat
+      - generic [ref=e102]:
+        - link "PG/PB" [ref=e103] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e106]
+          - generic [ref=e111]: PG/PB
+        - generic [ref=e113]:
+          - link "List PG/PB" [ref=e115] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter
+            - generic [ref=e118]: List PG/PB
+          - link "List PG/PB Draft" [ref=e120] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/pg-draft
+            - generic [ref=e123]: List PG/PB Draft
+          - link "Activation List" [ref=e125] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/activation
+            - generic [ref=e128]: Activation List
+          - link "Work Schedule" [ref=e130] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-schedule
+            - generic [ref=e133]: Work Schedule
+          - link "PG/PB Report" [ref=e135] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/promoter-report
+            - generic [ref=e138]: PG/PB Report
+          - link "Work Type List" [ref=e140] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-type/list
+            - generic [ref=e143]: Work Type List
+          - link "Hỗ Trợ Khai Trương" [ref=e145] [cursor=pointer]:
+            - /url: https://forms.gle/M7ihGUZKoczXQBrT8
+            - generic [ref=e148]: Hỗ Trợ Khai Trương
+          - link "Góp ý - Báo Lỗi" [ref=e150] [cursor=pointer]:
+            - /url: https://docs.google.com/forms/d/e/1FAIpQLSdYIPqpssfSbMVOUh_R1kH4BbMxeexwVHNjJ9Y_6q9hrSaxaw/viewform
+            - generic [ref=e153]: 
+            - generic [ref=e154]: Góp ý - Báo Lỗi
+      - link "Brands" [ref=e156] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e159]
+        - generic [ref=e164]: Brands
+      - generic [ref=e166]:
+        - link "Vendor Employee" [ref=e167] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e170]
+          - generic [ref=e175]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e178] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e181]
+        - generic [ref=e186]: Vendors
+      - link "Stocks" [ref=e189] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e192]
+        - generic [ref=e197]: Stocks
+      - link "Stores" [ref=e200] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e203]
+        - generic [ref=e208]: Stores
+      - link "Notification" [ref=e211] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e214]
+        - generic [ref=e217]: Notification
+      - link "Feedback" [ref=e219] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e222]
+        - generic [ref=e233]: Feedback
+      - link "Users" [ref=e236] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e239]
+        - generic [ref=e244]: Users 
+      - link "Logs" [ref=e247] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e249]
+        - generic [ref=e251]: Logs
+      - link "Setting" [ref=e254] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e256]
+        - generic [ref=e259]: Setting
+      - link "Courses" [ref=e262] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e265]: 
+        - generic [ref=e266]: Courses
+      - link "User Guide" [ref=e269] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e272]: 
+        - generic [ref=e273]: User Guide
+    - generic [ref=e274]:
+      - generic [ref=e275]:
+        - generic [ref=e276]:
+          - link "Logo" [ref=e277] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e278]
+          - img [ref=e281] [cursor=pointer]
+        - generic [ref=e286]:
+          - generic [ref=e287]:
+            - heading "List PG/PB" [level=1] [ref=e288]
+            - list [ref=e289]:
+              - listitem [ref=e290]:
+                - link "Home" [ref=e291] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e292]
+              - listitem [ref=e294]: Default
+          - generic [ref=e297]:
+            - link "" [ref=e299] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e300]: 
+            - link "" [ref=e302] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e303]: 
+      - generic [ref=e305]:
+        - generic [ref=e306]:
+          - generic [ref=e310]:
+            - generic [ref=e311]:
+              - generic [ref=e312]:
+                - combobox [ref=e313]
+                - combobox "Select Vendor" [ref=e316] [cursor=pointer]:
+                  - textbox "Select Vendor" [ref=e317]
+              - textbox "Name, Phone, Staff Code, Email, ID Number" [ref=e319]
+              - combobox [ref=e321]:
+                - option "All status" [selected]
+                - option "Active"
+                - option "In-Active"
+                - option "Draft"
+              - generic [ref=e323]:
+                - checkbox "Violation" [ref=e324] [cursor=pointer]
+                - generic [ref=e325] [cursor=pointer]: Violation
+            - generic [ref=e327]:
+              - button " Search" [ref=e328] [cursor=pointer]:
+                - generic [ref=e329]: 
+                - text: Search
+              - button " Reset" [ref=e330] [cursor=pointer]:
+                - generic [ref=e331]: 
+                - text: Reset
+              - button " Download" [ref=e332] [cursor=pointer]:
+                - generic: 
+                - text: Download
+            - paragraph [ref=e334]:
+              - generic [ref=e335]: 
+              - text: PG/PB underlined in the Full Name column are currently inactive.
+          - generic [ref=e336]:
+            - list [ref=e338]:
+              - listitem [ref=e339]:
+                - link "PG/PB Inline" [ref=e340] [cursor=pointer]:
+                  - /url: "#"
+              - listitem [ref=e341]:
+                - link "Other Work Type" [ref=e342] [cursor=pointer]:
+                  - /url: https://test-merchant.hasaki.vn/promoter/other-work-type
+            - generic [ref=e343]:
+              - table [ref=e345]:
+                - rowgroup [ref=e346]:
+                  - row "No Avatar Staff Code Vendor Full Name ID Number Phone Email Status Working Action" [ref=e347]:
+                    - columnheader "No" [ref=e348]
+                    - columnheader "Avatar" [ref=e349]
+                    - columnheader "Staff Code" [ref=e350]
+                    - columnheader "Vendor" [ref=e351]
+                    - columnheader "Full Name" [ref=e352]
+                    - columnheader "ID Number" [ref=e353]
+                    - columnheader "Phone" [ref=e354]
+                    - columnheader "Email" [ref=e355]
+                    - columnheader "Status Working" [ref=e356]
+                    - columnheader "Action" [ref=e357]
+                - rowgroup [ref=e358]:
+                  - 'row "1 E #334439 - Test PG Staff E2E - - testpg@hasaki.vn Active " [ref=e359]':
+                    - cell "1" [ref=e360]
+                    - cell "E" [ref=e361]:
+                      - generic [ref=e363]: E
+                    - cell "#334439" [ref=e364]
+                    - cell "-" [ref=e365]:
+                      - generic "-" [ref=e366]
+                    - cell "Test PG Staff E2E" [ref=e367]:
+                      - link "Test PG Staff E2E" [ref=e370] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15736
+                    - cell "-" [ref=e371]
+                    - cell "-" [ref=e372]
+                    - cell "testpg@hasaki.vn" [ref=e373]
+                    - cell "Active" [ref=e374]:
+                      - generic [ref=e375]: Active
+                    - cell "" [ref=e376]:
+                      - generic [ref=e377]:
+                        - button "" [ref=e378] [cursor=pointer]:
+                          - generic [ref=e379]: 
+                        - text:   
+                  - 'row "2 #26450 V250066 - Sông Hồng Stella O Conner 027356833053 0908728140 pg027356833053@hasaki.vn Active " [ref=e380]':
+                    - cell "2" [ref=e381]
+                    - cell [ref=e382]
+                    - cell "#26450" [ref=e385]
+                    - cell "V250066 - Sông Hồng" [ref=e386]:
+                      - generic "V250066 - Sông Hồng" [ref=e387]
+                    - cell "Stella O Conner" [ref=e388]:
+                      - link "Stella O Conner" [ref=e391] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15898
+                    - cell "027356833053" [ref=e392]
+                    - cell "0908728140" [ref=e393]
+                    - cell "pg027356833053@hasaki.vn" [ref=e394]
+                    - cell "Active" [ref=e395]:
+                      - generic [ref=e396]: Active
+                    - cell "" [ref=e397]:
+                      - generic [ref=e398]:
+                        - button "" [ref=e399] [cursor=pointer]:
+                          - generic [ref=e400]: 
+                        - text:   
+                  - 'row "3 #26449 V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE Troy Price 058826256097 0979732411 pg058826256097@hasaki.vn Active " [ref=e401]':
+                    - cell "3" [ref=e402]
+                    - cell [ref=e403]
+                    - cell "#26449" [ref=e406]
+                    - cell "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e407]:
+                      - generic "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e408]
+                    - cell "Troy Price" [ref=e409]:
+                      - link "Troy Price" [ref=e412] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15897
+                    - cell "058826256097" [ref=e413]
+                    - cell "0979732411" [ref=e414]
+                    - cell "pg058826256097@hasaki.vn" [ref=e415]
+                    - cell "Active" [ref=e416]:
+                      - generic [ref=e417]: Active
+                    - cell "" [ref=e418]:
+                      - generic [ref=e419]:
+                        - button "" [ref=e420] [cursor=pointer]:
+                          - generic [ref=e421]: 
+                        - text:   
+                  - 'row "4 #26447 V250066 - Sông Hồng Grace Legros 427207073670 0926406343 pg427207073670@hasaki.vn Active " [ref=e422]':
+                    - cell "4" [ref=e423]
+                    - cell [ref=e424]
+                    - cell "#26447" [ref=e427]
+                    - cell "V250066 - Sông Hồng" [ref=e428]:
+                      - generic "V250066 - Sông Hồng" [ref=e429]
+                    - cell "Grace Legros" [ref=e430]:
+                      - link "Grace Legros" [ref=e433] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15895
+                    - cell "427207073670" [ref=e434]
+                    - cell "0926406343" [ref=e435]
+                    - cell "pg427207073670@hasaki.vn" [ref=e436]
+                    - cell "Active" [ref=e437]:
+                      - generic [ref=e438]: Active
+                    - cell "" [ref=e439]:
+                      - generic [ref=e440]:
+                        - button "" [ref=e441] [cursor=pointer]:
+                          - generic [ref=e442]: 
+                        - text:   
+                  - 'row "5 #26446 V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE Antoinette Runte 400792893198 0934136920 pg400792893198@hasaki.vn Active " [ref=e443]':
+                    - cell "5" [ref=e444]
+                    - cell [ref=e445]
+                    - cell "#26446" [ref=e448]
+                    - cell "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e449]:
+                      - generic "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e450]
+                    - cell "Antoinette Runte" [ref=e451]:
+                      - link "Antoinette Runte" [ref=e454] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15894
+                    - cell "400792893198" [ref=e455]
+                    - cell "0934136920" [ref=e456]
+                    - cell "pg400792893198@hasaki.vn" [ref=e457]
+                    - cell "Active" [ref=e458]:
+                      - generic [ref=e459]: Active
+                    - cell "" [ref=e460]:
+                      - generic [ref=e461]:
+                        - button "" [ref=e462] [cursor=pointer]:
+                          - generic [ref=e463]: 
+                        - text:   
+                  - 'row "6 #26445 V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE Rosalinda Treutel 1 violations 456474310044 0924968701 pg456474310044@hasaki.vn Active " [ref=e464]':
+                    - cell "6" [ref=e465]
+                    - cell [ref=e466]
+                    - cell "#26445" [ref=e469]
+                    - cell "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e470]:
+                      - generic "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e471]
+                    - cell "Rosalinda Treutel 1 violations" [ref=e472]:
+                      - generic [ref=e473]:
+                        - link "Rosalinda Treutel" [ref=e475] [cursor=pointer]:
+                          - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15893
+                        - generic [ref=e476]: 1 violations
+                    - cell "456474310044" [ref=e477]
+                    - cell "0924968701" [ref=e478]
+                    - cell "pg456474310044@hasaki.vn" [ref=e479]
+                    - cell "Active" [ref=e480]:
+                      - generic [ref=e481]: Active
+                    - cell "" [ref=e482]:
+                      - generic [ref=e483]:
+                        - button "" [ref=e484] [cursor=pointer]:
+                          - generic [ref=e485]: 
+                        - text:   
+                  - 'row "7 #26444 V250066 - Sông Hồng Rosemarie Dare 666204999191 0933387994 pg666204999191@hasaki.vn Active " [ref=e486]':
+                    - cell "7" [ref=e487]
+                    - cell [ref=e488]
+                    - cell "#26444" [ref=e491]
+                    - cell "V250066 - Sông Hồng" [ref=e492]:
+                      - generic "V250066 - Sông Hồng" [ref=e493]
+                    - cell "Rosemarie Dare" [ref=e494]:
+                      - link "Rosemarie Dare" [ref=e497] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15892
+                    - cell "666204999191" [ref=e498]
+                    - cell "0933387994" [ref=e499]
+                    - cell "pg666204999191@hasaki.vn" [ref=e500]
+                    - cell "Active" [ref=e501]:
+                      - generic [ref=e502]: Active
+                    - cell "" [ref=e503]:
+                      - generic [ref=e504]:
+                        - button "" [ref=e505] [cursor=pointer]:
+                          - generic [ref=e506]: 
+                        - text:   
+                  - 'row "8 #26441 V250066 - Sông Hồng Reed Hackett 854349184811 0966078299 pg854349184811@hasaki.vn Active " [ref=e507]':
+                    - cell "8" [ref=e508]
+                    - cell [ref=e509]
+                    - cell "#26441" [ref=e512]
+                    - cell "V250066 - Sông Hồng" [ref=e513]:
+                      - generic "V250066 - Sông Hồng" [ref=e514]
+                    - cell "Reed Hackett" [ref=e515]:
+                      - link "Reed Hackett" [ref=e518] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15889
+                    - cell "854349184811" [ref=e519]
+                    - cell "0966078299" [ref=e520]
+                    - cell "pg854349184811@hasaki.vn" [ref=e521]
+                    - cell "Active" [ref=e522]:
+                      - generic [ref=e523]: Active
+                    - cell "" [ref=e524]:
+                      - generic [ref=e525]:
+                        - button "" [ref=e526] [cursor=pointer]:
+                          - generic [ref=e527]: 
+                        - text:   
+                  - 'row "9 #26440 V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE Sallie Kilback 739463129 0956701179 pg739463129@hasaki.vn Active " [ref=e528]':
+                    - cell "9" [ref=e529]
+                    - cell [ref=e530]
+                    - cell "#26440" [ref=e533]
+                    - cell "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e534]:
+                      - generic "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE" [ref=e535]
+                    - cell "Sallie Kilback" [ref=e536]:
+                      - link "Sallie Kilback" [ref=e539] [cursor=pointer]:
+                        - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15888
+                    - cell "739463129" [ref=e540]
+                    - cell "0956701179" [ref=e541]
+                    - cell "pg739463129@hasaki.vn" [ref=e542]
+                    - cell "Active" [ref=e543]:
+                      - generic [ref=e544]: Active
+                    - cell "" [ref=e545]:
+                      - generic [ref=e546]:
+                        - button "" [ref=e547] [cursor=pointer]:
+                          - generic [ref=e548]: 
+                        - text:   
+                  - 'row "10 #26436 V250066 - Sông Hồng Regan Gibson 1 violations 667547593422 0912415011 pg667547593422@hasaki.vn Active " [ref=e549]':
+                    - cell "10" [ref=e550]
+                    - cell [ref=e551]
+                    - cell "#26436" [ref=e554]
+                    - cell "V250066 - Sông Hồng" [ref=e555]:
+                      - generic "V250066 - Sông Hồng" [ref=e556]
+                    - cell "Regan Gibson 1 violations" [ref=e557]:
+                      - generic [ref=e558]:
+                        - link "Regan Gibson" [ref=e560] [cursor=pointer]:
+                          - /url: https://test-merchant.hasaki.vn/promoter/pg/edit/15884
+                        - generic [ref=e561]: 1 violations
+                    - cell "667547593422" [ref=e562]
+                    - cell "0912415011" [ref=e563]
+                    - cell "pg667547593422@hasaki.vn" [ref=e564]
+                    - cell "Active" [ref=e565]:
+                      - generic [ref=e566]: Active
+                    - cell "" [ref=e567]:
+                      - generic [ref=e568]:
+                        - button "" [ref=e569] [cursor=pointer]:
+                          - generic [ref=e570]: 
+                        - text:   
+              - text:                                          
+            - generic [ref=e572]:
+              - generic [ref=e573]:
+                - combobox [ref=e574]:
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+                  - option "100"
+                  - option "150"
+                  - option "200"
+                  - option "250"
+                - text: Showing 1 to 10 of 1301 entries
+              - list [ref=e576]:
+                - listitem [ref=e577]:
+                  - link:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=1
+                - listitem [ref=e578]:
+                  - link "1" [ref=e579] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=1
+                - listitem [ref=e580]:
+                  - link "2" [ref=e581] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=2
+                - listitem [ref=e582]:
+                  - link "3" [ref=e583] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=3
+                - listitem [ref=e584]:
+                  - link "4" [ref=e585] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=4
+                - listitem [ref=e586]:
+                  - link "5" [ref=e587] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=5
+                - listitem [ref=e588]:
+                  - link [ref=e589] [cursor=pointer]:
+                    - /url: https://test-merchant.hasaki.vn/promoter?vendor=0&p=2
+        - text:        
+      - generic [ref=e591]:
+        - generic [ref=e593]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e594] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

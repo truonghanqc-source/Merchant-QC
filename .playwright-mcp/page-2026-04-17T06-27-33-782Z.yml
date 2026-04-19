@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - link "Logo" [ref=e5] [cursor=pointer]:
+      - /url: https://test-merchant.hasaki.vn/
+      - img "Logo" [ref=e6]
+    - generic [ref=e8]:
+      - heading "Sign In to Marketplace" [level=1] [ref=e10]
+      - generic [ref=e11]: Please enter your username !
+      - generic [ref=e12]:
+        - generic [ref=e13]: Account
+        - generic [ref=e14]:
+          - generic [ref=e16]: 
+          - textbox "User name or email" [ref=e17]
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: Password
+          - link "Forgot Password ?" [ref=e21] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/forgot-password
+        - generic [ref=e22]:
+          - generic [ref=e24]: 
+          - textbox "*******" [ref=e25]
+          - generic [ref=e27] [cursor=pointer]: 
+          - text: 
+      - button "Login" [ref=e29] [cursor=pointer]
+      - generic [ref=e30]:
+        - link "Sign-Up New Account." [ref=e32] [cursor=pointer]:
+          - /url: https://test-merchant.hasaki.vn/sign-up
+        - link [ref=e36] [cursor=pointer]:
+          - /url: "#"
+      - link "Two-factor authentication user guide" [ref=e41] [cursor=pointer]:
+        - /url: javascript:void(0)
+  - img

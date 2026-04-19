@@ -1,0 +1,5 @@
+[     765ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ https://test-merchant.hasaki.vn/quotation/detail:0
+[     905ms] [LOG] HSK Chat SDK module loaded: Module @ https://test-merchant.hasaki.vn/quotation/detail:4041
+[     905ms] [LOG] HSK Chat SDK exposed to window. Available methods: [mountChatWidget, mountChatWidgetIIFE, Environment] @ https://test-merchant.hasaki.vn/quotation/detail:4054
+[    1090ms] [INFO] HSK Chat Widget: Failed to initialize Error: No API token received
+    at initializeChatWidget (https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776407262:188:23) @ https://test-merchant.hasaki.vn/static/js/chat-widget-init.js?v=1776407262:213

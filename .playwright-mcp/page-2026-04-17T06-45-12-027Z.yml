@@ -1,0 +1,171 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase 259" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]:
+          - text: Purchase
+          - generic [ref=e31]: "259"
+      - link "Quotation" [ref=e34] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Quotation
+      - link "Report" [ref=e41] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e44]
+        - generic [ref=e51]: Report
+      - link "Products" [ref=e54] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e57]
+        - generic [ref=e60]: Products
+      - link "Return Products" [ref=e63] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e66]
+        - generic [ref=e71]: Return Products
+      - link "Promotions" [ref=e74] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e77]
+        - generic [ref=e82]: Promotions
+      - link "Promotions Program" [ref=e85] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e88]
+        - generic [ref=e93]: Promotions Program
+      - link "Group Chat" [ref=e96] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e99]: 
+        - generic [ref=e100]: Group Chat
+      - generic [ref=e102]:
+        - link "PG/PB" [ref=e103] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e106]
+          - generic [ref=e111]: PG/PB
+        - text: 
+      - link "Brands" [ref=e114] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e117]
+        - generic [ref=e122]: Brands
+      - generic [ref=e124]:
+        - link "Vendor Employee" [ref=e125] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e128]
+          - generic [ref=e133]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e136] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e139]
+        - generic [ref=e144]: Vendors
+      - link "Stocks" [ref=e147] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e150]
+        - generic [ref=e155]: Stocks
+      - link "Stores" [ref=e158] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e161]
+        - generic [ref=e166]: Stores
+      - link "Notification" [ref=e169] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e172]
+        - generic [ref=e175]: Notification
+      - link "Feedback 18" [ref=e177] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e180]
+        - generic [ref=e191]:
+          - text: Feedback
+          - generic [ref=e192]: "18"
+      - link "Users " [ref=e194] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e197]
+        - generic [ref=e202]:
+          - text: Users
+          - generic [ref=e203]: 
+      - link "Logs" [ref=e206] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e208]
+        - generic [ref=e210]: Logs
+      - link "Setting" [ref=e213] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e215]
+        - generic [ref=e218]: Setting
+      - link "Courses" [ref=e221] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e224]: 
+        - generic [ref=e225]: Courses
+      - link "User Guide" [ref=e228] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e231]: 
+        - generic [ref=e232]: User Guide
+    - generic [ref=e233]:
+      - generic [ref=e234]:
+        - generic [ref=e235]:
+          - link "Logo" [ref=e236] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e237]
+          - img [ref=e240] [cursor=pointer]
+        - generic [ref=e245]:
+          - generic [ref=e246]:
+            - heading "Welcome" [level=1] [ref=e247]
+            - list [ref=e248]:
+              - listitem [ref=e249]:
+                - link "Home" [ref=e250] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e251]
+              - listitem [ref=e253]: Default
+          - generic [ref=e256]:
+            - link [ref=e260] [cursor=pointer]:
+              - /url: "#"
+            - link " 5" [ref=e264] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e265]: 
+              - generic [ref=e266]: "5"
+            - link "" [ref=e268] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e269]: 
+      - generic [ref=e272]:
+        - heading "Welcome to Hasaki" [level=1] [ref=e273]
+        - img "Hasaki" [ref=e274]
+        - generic [ref=e276]:
+          - generic [ref=e277]:
+            - heading "User Guide" [level=2] [ref=e278]
+            - link "test 001" [ref=e279] [cursor=pointer]:
+              - /url: https://test-merchant.hasaki.vn/guide/28
+              - generic [ref=e281]: test 001
+            - link "Hướng dẫn đăng ký tài khoản" [ref=e282] [cursor=pointer]:
+              - /url: https://test-merchant.hasaki.vn/guide/3
+              - generic [ref=e284]: Hướng dẫn đăng ký tài khoản
+            - link "New" [ref=e285] [cursor=pointer]:
+              - /url: https://test-merchant.hasaki.vn/guide/25
+              - generic [ref=e287]: New
+            - img "User Guide" [ref=e289]
+            - link "View All" [ref=e290] [cursor=pointer]:
+              - /url: https://test-merchant.hasaki.vn/guide
+          - generic [ref=e291]:
+            - heading "Contact Us" [level=2] [ref=e292]
+            - generic [ref=e293]:
+              - generic [ref=e294]: "Address:"
+              - generic [ref=e295]: 71 Hoàng Hoa Thám, Phường Tân Bình, Thành Phố Hồ Chí Minh
+            - generic [ref=e296]:
+              - generic [ref=e297]: "Tax Code:"
+              - generic [ref=e298]: "0313612829"
+            - generic [ref=e299]:
+              - generic [ref=e300]: "Tell:"
+              - generic [ref=e301]: 1800 6324
+            - generic [ref=e302]:
+              - generic [ref=e303]: "Website:"
+              - generic [ref=e304]: www.hasaki.vn
+      - generic [ref=e305]:
+        - generic [ref=e307]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e308] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

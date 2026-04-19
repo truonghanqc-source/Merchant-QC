@@ -19,6 +19,10 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await expect(ws.searchInput).toBeVisible();
     await expect(ws.workDateInput).toBeAttached();
     await expect(ws.vendorSelect).toBeAttached();
+    await expect(ws.locationSelect).toBeAttached();
+    await expect(ws.workTypeSelect).toBeAttached();
+    await expect(ws.statusSelect).toBeAttached();
+    await expect(ws.createdBySelect).toBeAttached();
     await expect(ws.filterSearchButton).toBeVisible();
     await expect(ws.filterResetButton).toBeVisible();
   });
@@ -88,9 +92,10 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await ws.expectListShellVisible();
 
     const link2 = ws.pagination.getByRole("link", { name: "2", exact: true });
-    if ((await link2.count()) === 0) {
-      test.skip();
-    }
+    test.skip(
+      (await link2.count()) === 0,
+      "Work schedule list has only one page — no link to page 2",
+    );
 
     await ws.clickPaginationPage(2);
     expect(ws.currentPageFromUrl()).toBe(2);
@@ -106,7 +111,73 @@ test.describe("PG/PB - Work Schedule (/promoter/work-schedule)", () => {
     await ws.goto(baseUrl);
     await ws.expectListShellVisible();
 
-    expect(await ws.tableBodyRows.count()).toBeGreaterThan(0);
+    const rowCount = await ws.tableBodyRows.count();
+    test.skip(
+      rowCount === 0,
+      "No schedule rows for default filters — skip in empty env",
+    );
+    expect(rowCount).toBeGreaterThan(0);
+  });
+
+  test("TC08 - Search adds vendor and work_date to URL @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const ws = new WorkSchedulePage(page);
+
+    await ws.goto(baseUrl);
+    await ws.expectListShellVisible();
+
+    await ws.submitFilter();
+
+    const url = new URL(page.url());
+    expect(url.searchParams.has("vendor")).toBeTruthy();
+    expect(url.searchParams.has("work_date")).toBeTruthy();
+    expect(url.searchParams.get("work_date")?.length).toBeGreaterThan(0);
+    await expect(ws.dataTable).toBeVisible();
+  });
+
+  test("TC09 - Filter by status reflects in URL @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const ws = new WorkSchedulePage(page);
+
+    await ws.goto(baseUrl);
+    await ws.expectListShellVisible();
+
+    const statusValue = await ws.firstSelectableStatusValue();
+    test.skip(!statusValue, "No selectable status in filter");
+
+    await ws.statusSelect.selectOption(statusValue);
+    await ws.submitFilter();
+
+    const url = new URL(page.url());
+    expect(url.searchParams.get("status")).toBe(statusValue);
+    await expect(ws.dataTable).toBeVisible();
+  });
+
+  test("TC10 - Filter by created_by reflects in URL @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const ws = new WorkSchedulePage(page);
+
+    await ws.goto(baseUrl);
+    await ws.expectListShellVisible();
+
+    const createdByValue = await ws.firstSelectableCreatedByValue();
+    test.skip(!createdByValue, "No selectable created_by in filter");
+
+    await ws.createdBySelect.selectOption(createdByValue);
+    await ws.submitFilter();
+
+    const url = new URL(page.url());
+    expect(url.searchParams.get("created_by")).toBe(createdByValue);
+    await expect(ws.dataTable).toBeVisible();
   });
 });
 

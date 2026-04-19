@@ -1,0 +1,320 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]: Purchase
+      - link "Quotation" [ref=e34] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Quotation
+      - link "Report" [ref=e41] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e44]
+        - generic [ref=e51]: Report
+      - link "Products" [ref=e54] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e57]
+        - generic [ref=e60]: Products
+      - link "Return Products" [ref=e63] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e66]
+        - generic [ref=e71]: Return Products
+      - link "Promotions" [ref=e74] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e77]
+        - generic [ref=e82]: Promotions
+      - link "Promotions Program" [ref=e85] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e88]
+        - generic [ref=e93]: Promotions Program
+      - link "Group Chat" [ref=e96] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e99]: 
+        - generic [ref=e100]: Group Chat
+      - generic [ref=e102]:
+        - link "PG/PB" [ref=e103] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e106]
+          - generic [ref=e111]: PG/PB
+        - generic [ref=e113]:
+          - link "List PG/PB" [ref=e115] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter
+            - generic [ref=e118]: List PG/PB
+          - link "List PG/PB Draft" [ref=e120] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/pg-draft
+            - generic [ref=e123]: List PG/PB Draft
+          - link "Activation List" [ref=e125] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/activation
+            - generic [ref=e128]: Activation List
+          - link "Work Schedule" [ref=e130] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-schedule
+            - generic [ref=e133]: Work Schedule
+          - link "PG/PB Report" [ref=e135] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/promoter-report
+            - generic [ref=e138]: PG/PB Report
+          - link "Work Type List" [ref=e140] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-type/list
+            - generic [ref=e143]: Work Type List
+          - link "Hỗ Trợ Khai Trương" [ref=e145] [cursor=pointer]:
+            - /url: https://forms.gle/M7ihGUZKoczXQBrT8
+            - generic [ref=e148]: Hỗ Trợ Khai Trương
+          - link "Góp ý - Báo Lỗi" [ref=e150] [cursor=pointer]:
+            - /url: https://docs.google.com/forms/d/e/1FAIpQLSdYIPqpssfSbMVOUh_R1kH4BbMxeexwVHNjJ9Y_6q9hrSaxaw/viewform
+            - generic [ref=e153]: 
+            - generic [ref=e154]: Góp ý - Báo Lỗi
+      - link "Brands" [ref=e156] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e159]
+        - generic [ref=e164]: Brands
+      - generic [ref=e166]:
+        - link "Vendor Employee" [ref=e167] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e170]
+          - generic [ref=e175]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e178] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e181]
+        - generic [ref=e186]: Vendors
+      - link "Stocks" [ref=e189] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e192]
+        - generic [ref=e197]: Stocks
+      - link "Stores" [ref=e200] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e203]
+        - generic [ref=e208]: Stores
+      - link "Notification" [ref=e211] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e214]
+        - generic [ref=e217]: Notification
+      - link "Feedback" [ref=e219] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e222]
+        - generic [ref=e233]: Feedback
+      - link "Users" [ref=e236] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e239]
+        - generic [ref=e244]: Users 
+      - link "Logs" [ref=e247] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e249]
+        - generic [ref=e251]: Logs
+      - link "Setting" [ref=e254] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e256]
+        - generic [ref=e259]: Setting
+      - link "Courses" [ref=e262] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e265]: 
+        - generic [ref=e266]: Courses
+      - link "User Guide" [ref=e269] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e272]: 
+        - generic [ref=e273]: User Guide
+    - generic [ref=e274]:
+      - generic [ref=e275]:
+        - generic [ref=e276]:
+          - link "Logo" [ref=e277] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e278]
+          - img [ref=e281] [cursor=pointer]
+        - generic [ref=e286]:
+          - generic [ref=e287]:
+            - heading "Add PG/PB" [level=1] [ref=e288]
+            - list [ref=e289]:
+              - listitem [ref=e290]:
+                - link "Home" [ref=e291] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e292]
+              - listitem [ref=e294]: Default
+          - generic [ref=e297]:
+            - link "" [ref=e299] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e300]: 
+            - link "" [ref=e302] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e303]: 
+      - generic [ref=e305]:
+        - generic [ref=e308]:
+          - generic [ref=e309]:
+            - heading "Add new PG/PB" [level=1] [ref=e310]
+            - generic [ref=e312]:
+              - link " Back" [ref=e313] [cursor=pointer]:
+                - /url: https://test-merchant.hasaki.vn/promoter/pg-draft
+                - generic [ref=e314]: 
+                - text: Back
+              - button " Save" [ref=e315] [cursor=pointer]:
+                - generic [ref=e316]:
+                  - generic [ref=e317]: 
+                  - text: Save
+          - generic [ref=e318]:
+            - generic [ref=e319]:
+              - generic [ref=e321]:
+                - generic [ref=e322]: Vendor*
+                - combobox [ref=e323]
+                - combobox "Select Vendor" [ref=e326] [cursor=pointer]:
+                  - textbox "Select Vendor" [ref=e327]
+              - generic [ref=e329]:
+                - generic [ref=e330]: Brand*
+                - listbox [ref=e331]
+                - combobox [ref=e334] [cursor=pointer]:
+                  - list
+                  - searchbox "Search" [ref=e336]
+            - generic [ref=e337]:
+              - generic [ref=e339]:
+                - generic [ref=e340]: Work Type*
+                - combobox "Work Type*" [ref=e341]:
+                  - option "Select Type" [selected]
+                  - option "Inline - Sales consulting and shelf maintenance"
+                  - option "Shelf maintenance and product display"
+                  - option "Audit (Store check / visit)"
+                  - option "Audit and shelf/product maintenance"
+                  - option "Shelf installation and repair"
+                  - option "KOC/KOL, TikToker, Influencer, product video creation"
+                  - 'option "Activation: skin analysis, promotional activities,…"'
+                  - option "Training (Training / Internship)"
+              - generic [ref=e343]:
+                - generic [ref=e344]: Hire Date *
+                - textbox "Hire Date *" [ref=e345]:
+                  - /placeholder: hire_date
+                  - text: 17-04-2026
+            - generic [ref=e346]:
+              - generic [ref=e348]:
+                - generic [ref=e349]: Full Name*
+                - textbox "Full Name*" [ref=e350]:
+                  - /placeholder: Input name
+              - generic [ref=e352]:
+                - generic [ref=e353]: Personal Email*
+                - textbox "Personal Email*" [ref=e354]:
+                  - /placeholder: Input Personal Emaill
+            - generic [ref=e355]:
+              - generic [ref=e357]:
+                - generic [ref=e358]: ID Number *
+                - textbox "ID Number *" [ref=e359]:
+                  - /placeholder: ID Number
+              - generic [ref=e361]:
+                - generic [ref=e362]: Phone*
+                - textbox "Phone*" [ref=e363]:
+                  - /placeholder: Input Phone
+            - generic [ref=e364]:
+              - generic [ref=e366]:
+                - generic [ref=e367]: Location*
+                - listbox [ref=e368]:
+                  - option [ref=e369]: 71 Hoàng Hoa Thám
+                  - option [ref=e370]: 555 3 tháng 2
+                  - option [ref=e371]: 176 Phan Đăng Lưu
+                  - option [ref=e372]: 94 Lê Văn Việt
+                  - option [ref=e373]: 119 Nguyễn Gia Trí
+                  - option [ref=e374]: 657 Quang Trung
+                  - option [ref=e375]: 468 Nguyễn Thị Thập
+                  - option [ref=e376]: 447 Phan Văn Trị
+                  - option [ref=e377]: 6 Nguyễn Ảnh Thủ
+                  - option [ref=e378]: 304 Lê Văn Quới
+                  - option [ref=e379]: 104 Lê Trọng Tấn
+                  - option [ref=e380]: 141 Nguyễn Trãi
+                  - option [ref=e381]: 81 Hồ Tùng Mậu
+                  - option [ref=e382]: 48 Lê Văn Sỹ
+                  - option [ref=e383]: 15 Võ Văn Ngân
+                  - option [ref=e384]: 182 Cầu Giấy
+                  - option [ref=e385]: 94 Hậu Giang
+                  - option [ref=e386]: 223 Khánh Hội
+                  - option [ref=e387]: 169 Thái Hà
+                  - option [ref=e388]: 50 Phạm Văn Chiêu
+                  - option [ref=e389]: 220 Tân Hương
+                  - option [ref=e390]: 109 Nguyễn Duy Trinh
+                  - option [ref=e391]: 28 Phan Huy Ích
+                  - option [ref=e392]: A30 Quốc Lộ 50
+                  - option [ref=e393]: 56 Nguyễn Thị Tú
+                  - option [ref=e394]: 256 Đỗ Xuân Hợp
+                  - option [ref=e395]: 631 Tỉnh Lộ 10
+                  - option [ref=e396]: 36 Nguyễn Ảnh Thủ
+                  - option [ref=e397]: 36 Phan Văn Hớn
+                  - option [ref=e398]: 420 Huỳnh Tấn Phát
+                  - option [ref=e399]: 1261 Phạm Hùng
+                  - option [ref=e400]: 1519 Phạm Văn Thuận
+                  - option [ref=e401]: 133 Hiệp Bình
+                  - option [ref=e402]: 694 Âu Cơ
+                  - option [ref=e403]: 402 Lê Đức Thọ
+                  - option [ref=e404]: 202 Nguyễn An Ninh
+                  - option [ref=e405]: 177 Ba Cu
+                  - option [ref=e406]: 189 30 Tháng 4
+                  - option [ref=e407]: 695 Phạm Văn Thuận
+                  - option [ref=e408]: 219 YERSIN
+                  - option [ref=e409]: 59 Quang Trung
+                  - option [ref=e410]: 311 Tây Thạnh
+                  - option [ref=e411]: 11 Cách Mạng Tháng Tám
+                  - option [ref=e412]: 136 Phan Trung
+                  - option [ref=e413]: 582 Nguyễn Ái Quốc
+                  - option [ref=e414]: 407 Nguyễn Trung Trực
+                  - option [ref=e415]: 167 Nguyễn Xí
+                  - option [ref=e416]: 28 Lê Trọng Tấn
+                  - option [ref=e417]: 194 Ấp Bắc
+                  - option [ref=e418]: 276 Xô Viết Nghệ Tĩnh
+                  - option [ref=e419]: 393 Lê Duẩn
+                  - option [ref=e420]: 296 Lãnh Binh Thăng
+                  - option [ref=e421]: 96 YJUT
+                  - option [ref=e422]: 38 Phạm Thái Bường
+                  - option [ref=e423]: 75 Đồng Khởi
+                  - option [ref=e424]: 50 Bà Triệu
+                  - option [ref=e425]: 58 Lý Thánh Tôn
+                  - option [ref=e426]: 401 Trần Hưng Đạo
+                  - option [ref=e427]: 96 Nguyễn Huệ
+                  - option [ref=e428]: 238 Trần Phú
+                  - option [ref=e429]: 1 Hai Bà Trưng
+                  - option [ref=e430]: 1395 Trần Hưng Đạo
+                  - option [ref=e431]: 168 Trưng Nữ Vương
+                  - option [ref=e432]: 261 Lê Quang Định
+                  - option [ref=e433]: 12 Nguyễn Đình Chiểu
+                  - option [ref=e434]: 68 TINH LO 8
+                  - option [ref=e435]: 29 HOANG VIET
+                  - option [ref=e436]: 568 LUY BAN BICH
+                - combobox [ref=e439] [cursor=pointer]:
+                  - list
+                  - searchbox "Search" [ref=e441]
+              - generic [ref=e443]:
+                - generic [ref=e444]: Current Address*
+                - textbox "Current Address*" [ref=e445]:
+                  - /placeholder: Input address
+            - generic [ref=e448]:
+              - generic [ref=e449]: Note
+              - textbox "Note" [ref=e450]
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - generic [ref=e453]: 
+                - text: Avatar and ID card images (front/back) should have a maximum resolution of 1280x720 and be under 2MB
+              - generic [ref=e457]:
+                - generic [ref=e459]: Avatar*
+                - generic [ref=e460]:
+                  - generic [ref=e463] [cursor=pointer]: 
+                  - text: 
+              - generic [ref=e466]:
+                - generic [ref=e467]:
+                  - generic [ref=e469]: ID Number Front side*
+                  - generic [ref=e470]:
+                    - generic [ref=e473] [cursor=pointer]: 
+                    - text: 
+                - generic [ref=e474]:
+                  - generic [ref=e476]: ID Number Back side*
+                  - generic [ref=e477]:
+                    - generic [ref=e480] [cursor=pointer]: 
+                    - text: 
+        - text:                              
+      - generic [ref=e482]:
+        - generic [ref=e484]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e485] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

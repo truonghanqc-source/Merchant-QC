@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * User list — `/user` ([User List](https://test-merchant.hasaki.vn/user)).
@@ -39,8 +42,7 @@ export class ListUserPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/user`, {
+    await this.page.goto(`${baseUrl}/user`, {
       waitUntil: "load",
       timeout: 90000,
     });
@@ -63,7 +65,10 @@ export class ListUserPage {
     await this.statusSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.roleSelect.waitFor({ state: "visible", timeout: 10000 });
     await this.vendorSelect.waitFor({ state: "visible", timeout: 10000 });
-    await this.inactivedReasonSelect.waitFor({ state: "visible", timeout: 10000 });
+    await this.inactivedReasonSelect.waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
     await this.dataTable.waitFor({ state: "visible", timeout: 20000 });
     await this.tableHeader.waitFor({ state: "visible", timeout: 10000 });
     await this.tableBody.waitFor({ state: "attached", timeout: 10000 });

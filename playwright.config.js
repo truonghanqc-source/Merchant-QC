@@ -19,7 +19,7 @@ export default defineConfig({
   /* Fail the build on CI if test.only is accidentally left in */
   forbidOnly: !!process.env.CI,
   /* Retry failed tests on CI */
-  retries: process.env.CI ? 3 : 1,
+  retries: process.env.CI ? 3 : 0,
   /* More workers on CI since tests are independent */
   workers: process.env.CI ? 10 : undefined,
   /* Reporters: HTML always, JUnit for Jenkins CI */

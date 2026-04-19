@@ -1,0 +1,6 @@
+- generic [ref=e3]:
+  - heading "404" [level=1] [ref=e5]
+  - heading "Oops! Page Not Be Found" [level=2] [ref=e6]
+  - paragraph [ref=e7]: Acl resource quotation/confirm in /app/config/acl.php not exists.
+  - link "Back to homepage" [ref=e8] [cursor=pointer]:
+    - /url: https://test-merchant.hasaki.vn/

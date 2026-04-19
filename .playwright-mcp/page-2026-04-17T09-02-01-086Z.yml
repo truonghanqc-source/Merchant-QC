@@ -1,0 +1,522 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e7]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/dashboard
+        - img [ref=e12]
+        - generic [ref=e17]: Dashboard
+      - link " Booking Services" [ref=e19] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Booking Services
+      - link "Purchase" [ref=e26] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e29]: 
+        - generic [ref=e30]: Purchase
+      - link "Quotation" [ref=e34] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Quotation
+      - link "Report" [ref=e41] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e44]
+        - generic [ref=e51]: Report
+      - link "Products" [ref=e54] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e57]
+        - generic [ref=e60]: Products
+      - link "Return Products" [ref=e63] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e66]
+        - generic [ref=e71]: Return Products
+      - link "Promotions" [ref=e74] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e77]
+        - generic [ref=e82]: Promotions
+      - link "Promotions Program" [ref=e85] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e88]
+        - generic [ref=e93]: Promotions Program
+      - link "Group Chat" [ref=e96] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e99]: 
+        - generic [ref=e100]: Group Chat
+      - generic [ref=e102]:
+        - link "PG/PB" [ref=e103] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e106]
+          - generic [ref=e111]: PG/PB
+        - generic [ref=e113]:
+          - link "List PG/PB" [ref=e115] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter
+            - generic [ref=e118]: List PG/PB
+          - link "List PG/PB Draft" [ref=e120] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/pg-draft
+            - generic [ref=e123]: List PG/PB Draft
+          - link "Activation List" [ref=e125] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/activation
+            - generic [ref=e128]: Activation List
+          - link "Work Schedule" [ref=e130] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-schedule
+            - generic [ref=e133]: Work Schedule
+          - link "PG/PB Report" [ref=e135] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/promoter-report
+            - generic [ref=e138]: PG/PB Report
+          - link "Work Type List" [ref=e140] [cursor=pointer]:
+            - /url: https://test-merchant.hasaki.vn/promoter/work-type/list
+            - generic [ref=e143]: Work Type List
+          - link "Hỗ Trợ Khai Trương" [ref=e145] [cursor=pointer]:
+            - /url: https://forms.gle/M7ihGUZKoczXQBrT8
+            - generic [ref=e148]: Hỗ Trợ Khai Trương
+          - link "Góp ý - Báo Lỗi" [ref=e150] [cursor=pointer]:
+            - /url: https://docs.google.com/forms/d/e/1FAIpQLSdYIPqpssfSbMVOUh_R1kH4BbMxeexwVHNjJ9Y_6q9hrSaxaw/viewform
+            - generic [ref=e153]: 
+            - generic [ref=e154]: Góp ý - Báo Lỗi
+      - link "Brands" [ref=e156] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e159]
+        - generic [ref=e164]: Brands
+      - generic [ref=e166]:
+        - link "Vendor Employee" [ref=e167] [cursor=pointer]:
+          - /url: javascript:void(0);
+          - img [ref=e170]
+          - generic [ref=e175]: Vendor Employee
+        - text: 
+      - link "Vendors" [ref=e178] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e181]
+        - generic [ref=e186]: Vendors
+      - link "Stocks" [ref=e189] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e192]
+        - generic [ref=e197]: Stocks
+      - link "Stores" [ref=e200] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e203]
+        - generic [ref=e208]: Stores
+      - link "Notification" [ref=e211] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/notification
+        - img [ref=e214]
+        - generic [ref=e217]: Notification
+      - link "Feedback" [ref=e219] [cursor=pointer]:
+        - /url: https://test-merchant.hasaki.vn/feedback
+        - img [ref=e222]
+        - generic [ref=e233]: Feedback
+      - link "Users" [ref=e236] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e239]
+        - generic [ref=e244]: Users 
+      - link "Logs" [ref=e247] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e249]
+        - generic [ref=e251]: Logs
+      - link "Setting" [ref=e254] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - img [ref=e256]
+        - generic [ref=e259]: Setting
+      - link "Courses" [ref=e262] [cursor=pointer]:
+        - /url: javascript:void(0);
+        - generic [ref=e265]: 
+        - generic [ref=e266]: Courses
+      - link "User Guide" [ref=e269] [cursor=pointer]:
+        - /url: /guide
+        - generic [ref=e272]: 
+        - generic [ref=e273]: User Guide
+    - generic [ref=e274]:
+      - generic [ref=e275]:
+        - generic [ref=e276]:
+          - link "Logo" [ref=e277] [cursor=pointer]:
+            - /url: /
+            - img "Logo" [ref=e278]
+          - img [ref=e281] [cursor=pointer]
+        - generic [ref=e286]:
+          - generic [ref=e287]:
+            - heading "PG/PB Report" [level=1] [ref=e288]
+            - list [ref=e289]:
+              - listitem [ref=e290]:
+                - link "Home" [ref=e291] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e292]
+              - listitem [ref=e294]: Default
+          - generic [ref=e297]:
+            - link "" [ref=e299] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e300]: 
+            - link "" [ref=e302] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e303]: 
+      - generic [ref=e306]:
+        - generic [ref=e308]:
+          - generic [ref=e310]:
+            - generic [ref=e312] [cursor=pointer]:
+              - generic [ref=e313]: 17/04/2026
+              - generic [ref=e314]: 
+            - combobox [ref=e315]
+            - combobox "Select Vendor" [ref=e318] [cursor=pointer]:
+              - textbox "Select Vendor" [ref=e319]
+            - listbox [ref=e320]:
+              - option [ref=e321]: All Location
+              - option [ref=e322]: 71 Hoàng Hoa Thám
+              - option [ref=e323]: 37/919 Nguyễn Minh Hoàng
+              - option [ref=e324]: 555 3 tháng 2
+              - option [ref=e325]: 43 Tân Hải
+              - option [ref=e326]: 176 Phan Đăng Lưu
+              - option [ref=e327]: 94 Lê Văn Việt
+              - option [ref=e328]: 119 Nguyễn Gia Trí
+              - option [ref=e329]: 657 Quang Trung
+              - option [ref=e330]: 468 Nguyễn Thị Thập
+              - option [ref=e331]: 447 Phan Văn Trị
+              - option [ref=e332]: 6 Nguyễn Ảnh Thủ
+              - option [ref=e333]: 304 Lê Văn Quới
+              - option [ref=e334]: 104 Lê Trọng Tấn
+              - option [ref=e335]: 48 Xuân Thủy
+              - option [ref=e336]: 141 Nguyễn Trãi
+              - option [ref=e337]: 81 Hồ Tùng Mậu
+              - option [ref=e338]: 48 Lê Văn Sỹ
+              - option [ref=e339]: 15 Võ Văn Ngân
+              - option [ref=e340]: 182 Cầu Giấy
+              - option [ref=e341]: 94 Hậu Giang
+              - option [ref=e342]: 223 Khánh Hội
+              - option [ref=e343]: 169 Thái Hà
+              - option [ref=e344]: 50 Phạm Văn Chiêu
+              - option [ref=e345]: 220 Tân Hương
+              - option [ref=e346]: 109 Nguyễn Duy Trinh
+              - option [ref=e347]: 28 Phan Huy Ích
+              - option [ref=e348]: A30 Quốc Lộ 50
+              - option [ref=e349]: 56 Nguyễn Thị Tú
+              - option [ref=e350]: 256 Đỗ Xuân Hợp
+              - option [ref=e351]: 631 Tỉnh Lộ 10
+              - option [ref=e352]: 36 Nguyễn Ảnh Thủ
+              - option [ref=e353]: 36 Phan Văn Hớn
+              - option [ref=e354]: 420 Huỳnh Tấn Phát
+              - option [ref=e355]: 1261 Phạm Hùng
+              - option [ref=e356]: 1519 Phạm Văn Thuận
+              - option [ref=e357]: 133 Hiệp Bình
+              - option [ref=e358]: 694 Âu Cơ
+              - option [ref=e359]: 402 Lê Đức Thọ
+              - option [ref=e360]: 202 Nguyễn An Ninh
+              - option [ref=e361]: 177 Ba Cu
+              - option [ref=e362]: 189 30 Tháng 4
+              - option [ref=e363]: 695 Phạm Văn Thuận
+              - option [ref=e364]: 219 YERSIN
+              - option [ref=e365]: 59 Quang Trung
+              - option [ref=e366]: 311 Tây Thạnh
+              - option [ref=e367]: 11 Cách Mạng Tháng Tám
+              - option [ref=e368]: 136 Phan Trung
+              - option [ref=e369]: 582 Nguyễn Ái Quốc
+              - option [ref=e370]: 407 Nguyễn Trung Trực
+              - option [ref=e371]: 167 Nguyễn Xí
+              - option [ref=e372]: 28 Lê Trọng Tấn
+              - option [ref=e373]: 194 Ấp Bắc
+              - option [ref=e374]: 61 Avenue East
+              - option [ref=e375]: 276 Xô Viết Nghệ Tĩnh
+              - option [ref=e376]: Hawaii
+              - option [ref=e377]: 393 Lê Duẩn
+              - option [ref=e378]: 296 Lãnh Binh Thăng
+              - option [ref=e379]: 96 YJUT
+              - option [ref=e380]: 38 Phạm Thái Bường
+              - option [ref=e381]: 75 Đồng Khởi
+              - option [ref=e382]: 50 Bà Triệu
+              - option [ref=e383]: 58 Lý Thánh Tôn
+              - option [ref=e384]: 401 Trần Hưng Đạo
+              - option [ref=e385]: 96 Nguyễn Huệ
+              - option [ref=e386]: 238 Trần Phú
+              - option [ref=e387]: 1 Hai Bà Trưng
+              - option [ref=e388]: 1395 Trần Hưng Đạo
+              - option [ref=e389]: 168 Trưng Nữ Vương
+              - option [ref=e390]: 261 Lê Quang Định
+              - option [ref=e391]: 12 Nguyễn Đình Chiểu
+              - option [ref=e392]: 499 CACH MANG THANG 8
+              - option [ref=e393]: 197 TRAN HUNG DAO
+              - option [ref=e394]: 31 PHO QUANG
+              - option [ref=e395]: 7 TINH LO 43
+              - option [ref=e396]: 30 PHAN DINH PHUNG
+              - option [ref=e397]: 113 LUONG KHANH
+              - option [ref=e398]: 723 CACH MANG THANG 8
+              - option [ref=e399]: 217 NGUYEN VAN CU
+              - option [ref=e400]: 513 PHU RIENG DO
+              - option [ref=e401]: 39 NGUYEN VAN TANG
+              - option [ref=e402]: 232 PHAN BOI CHAU
+              - option [ref=e403]: 137 NGUYEN TRAI
+              - option [ref=e404]: 112 TRAN NAO
+              - option [ref=e405]: 25 NGUYEN TRAI
+              - option [ref=e406]: 1134 KHA VAN CAN
+              - option [ref=e407]: 219 NGUYEN THI THAP
+              - option [ref=e408]: 17 PHAN HUY ICH
+              - option [ref=e409]: 4 30 THANG 4
+              - option [ref=e410]: 40 BACH MAI
+              - option [ref=e411]: 517 PHU LOI
+              - option [ref=e412]: 350 TAN SON NHI
+              - option [ref=e413]: 246 DUONG BA TRAC
+              - option [ref=e414]: 182 THACH LAM
+              - option [ref=e415]: 22 TAN THOI NHAT
+              - option [ref=e416]: 182 TRAN HUNG DAO
+              - option [ref=e417]: 392 NGUYEN VAN QUA
+              - option [ref=e418]: 68 BUI VAN HOA
+              - option [ref=e419]: 63 LE HONG PHONG
+              - option [ref=e420]: 91 HA HUY GIAP
+              - option [ref=e421]: 146 HUNG VUONG
+              - option [ref=e422]: 304 THONG NHAT
+              - option [ref=e423]: 726 HUYNH TAN PHAT
+              - option [ref=e424]: 363 TO NGOC VAN
+              - option [ref=e425]: 562 THONG NHAT
+              - option [ref=e426]: 34 DT 746
+              - option [ref=e427]: 127 NGUYEN TRAI
+              - option [ref=e428]: 122 TRAN HUNG DAO
+              - option [ref=e429]: 136 PHAN DINH PHUNG
+              - option [ref=e430]: 132 NGUYEN HUU THO
+              - option [ref=e431]: 329 HOANG DIEU
+              - option [ref=e432]: 277 TRAN HUNG DAO
+              - option [ref=e433]: 194 LUONG NGOC QUYEN
+              - option [ref=e434]: 49 PHU LOI
+              - option [ref=e435]: 212 LE LOI
+              - option [ref=e436]: 160 30 THANG 4
+              - option [ref=e437]: 1 22 THANG 12
+              - option [ref=e438]: 422 LE DUAN
+              - option [ref=e439]: 389 HUNG VUONG
+              - option [ref=e440]: 104 PHAN CHU TRINH
+              - option [ref=e441]: 521 NGUYEN T PHUONG
+              - option [ref=e442]: 255 DUONG 30 THANG 4
+              - option [ref=e443]: 447 KHA VAN CAN
+              - option [ref=e444]: 166 HUNG VUONG
+              - option [ref=e445]: 89 3 THANG 2
+              - option [ref=e446]: 49 MAU THAN
+              - option [ref=e447]: 68 TINH LO 8
+              - option [ref=e448]: 346 TRAN HUNG DAO
+              - option [ref=e449]: 18 AU CO
+              - option [ref=e450]: 105 BA HOM
+              - option [ref=e451]: 39 TRAN PHU
+              - option [ref=e452]: 1030 LE VAN LUONG
+              - option [ref=e453]: 240 TINH LO 825
+              - option [ref=e454]: 95 CACH MANG THANG 8
+              - option [ref=e455]: 105 PHAM NGOC THACH
+              - option [ref=e456]: 477 LE VAN THO
+              - option [ref=e457]: 608 NGUYEN DUY TRINH
+              - option [ref=e458]: 75 BA THANG HAI
+              - option [ref=e459]: 57 TRAN PHU
+              - option [ref=e460]: 141 CACH MANG THANG 8
+              - option [ref=e461]: 284 BUI THI XUAN
+              - option [ref=e462]: 1838 HUYNH TAN PHAT
+              - option [ref=e463]: 60 NGUYEN CONG TRU
+              - option [ref=e464]: 895 TRAN HUNG DAO
+              - option [ref=e465]: 78 LE LOI
+              - option [ref=e466]: 124 30 THANG 4
+              - option [ref=e467]: 230 AU CO
+              - option [ref=e468]: 650 NGUYEN ANH THU
+              - option [ref=e469]: 542 QUOC LO 20
+              - option [ref=e470]: 130 NGO QUYEN
+              - option [ref=e471]: 67 DANG THUC VINH
+              - option [ref=e472]: 479 30 THANG 4
+              - option [ref=e473]: 206 NGUYEN TAT THANH
+              - option [ref=e474]: 366 LE DUAN
+              - option [ref=e475]: 362 DONG KHOI
+              - option [ref=e476]: 225 DINH PHONG PHU
+              - option [ref=e477]: 127 DANG VAN BI
+              - option [ref=e478]: C9 VO VAN VAN
+              - option [ref=e479]: 348 NGUYEN CHI CONG
+              - option [ref=e480]: 66 TRUONG DINH
+              - option [ref=e481]: 224 HUNG VUONG
+              - option [ref=e482]: 7 QUOC LO 50
+              - option [ref=e483]: 398 2 THANG 4
+              - option [ref=e484]: 432 CACH MANG THANG 8
+              - option [ref=e485]: 54 PHAM HUU LAU
+              - option [ref=e486]: 36 LE VAN CHI
+              - option [ref=e487]: 129 MAI THI HONG HANH
+              - option [ref=e488]: 199 HUNG VUONG
+              - option [ref=e489]: 369 NGUYEN VAN TANG
+              - option [ref=e490]: 151 QUOC LO 9
+              - option [ref=e491]: 274 GO XOAI
+              - option [ref=e492]: 70 LE VAN KHUONG
+              - option [ref=e493]: 65 DUONG THI MUOI
+              - option [ref=e494]: 10 BEN XE DI LINH
+              - option [ref=e495]: 214 QUOC LO 62
+              - option [ref=e496]: 179 PHAN CHU TRINH
+              - option [ref=e497]: QUOC LO 51
+              - option [ref=e498]: 18 VO THI SAU
+              - option [ref=e499]: 20 NGUYEN HUU THO
+              - option [ref=e500]: 21 QUOC LO 20
+              - option [ref=e501]: 70 TRAN HUNG DAO
+              - option [ref=e502]: 919 HAU GIANG
+              - option [ref=e503]: C6 LY THAI TO
+              - option [ref=e504]: 39 QUOC LO 13
+              - option [ref=e505]: 29 HOANG VIET
+              - option [ref=e506]: 302 NGUYEN TRAI
+              - option [ref=e507]: 90 NGUYEN HUE
+              - option [ref=e508]: 302 NGUYEN TRAI
+              - option [ref=e509]: 191 DO TUONG PHONG
+              - option [ref=e510]: 457 NGUYEN VAN TAO
+              - option [ref=e511]: 106 NGUYEN TAT THANH
+              - option [ref=e512]: 404 HO HOC LAM
+              - option [ref=e513]: 170 QUOC LO 1A
+              - option [ref=e514]: 531 DO XUAN HOP
+              - option [ref=e515]: 125 NGUYEN VAN CU
+              - option [ref=e516]: 219 KHAM THIEN
+              - option [ref=e517]: 109 HUNG VUONG
+              - option [ref=e518]: 62 HOANG HOA THAM
+              - option [ref=e519]: 18 MAN THIEN
+              - option [ref=e520]: 2857 LUONG DINH CUA
+              - option [ref=e521]: 2 QUOC LO 22B
+              - option [ref=e522]: 193 NUI THANH
+              - option [ref=e523]: 49 NGO MAY
+              - option [ref=e524]: 1016 QUOC LO 91
+              - option [ref=e525]: 59 MAI THUC LOAN
+              - option [ref=e526]: 334 DINH BO LINH
+              - option [ref=e527]: 78 DT 835
+              - option [ref=e528]: 118 ONG ICH DUONG
+              - option [ref=e529]: 31 DINH DUC THIEN
+              - option [ref=e530]: A26 NGUYEN DU
+              - option [ref=e531]: 130 AP CHANH
+              - option [ref=e532]: 158 TRAN HUNG DAO
+              - option [ref=e533]: 98 DT 747A
+              - option [ref=e534]: 4 TAY NAM
+              - option [ref=e535]: 11 QUANG TRUNG
+              - option [ref=e536]: 1488 QUOC LO 30
+              - option [ref=e537]: 179 TRAN VAN XA
+              - option [ref=e538]: 300 LY THONG KIET
+              - option [ref=e539]: 442 PHAM HUNG
+              - option [ref=e540]: 384 NGUYEN TAT THANH
+              - option [ref=e541]: 50 TAY LAN
+              - option [ref=e542]: 71 TRAN HUNG DAO
+              - option [ref=e543]: 329 TON DUC THANG
+              - option [ref=e544]: 133 BIEN HOA
+              - option [ref=e545]: 254 VO THI SAU
+              - option [ref=e546]: 1 NGUYEN VAN LINH
+              - option [ref=e547]: 24 NGUYEN VAN THOAI
+              - option [ref=e548]: 26 BUI VAN HOA
+              - option [ref=e549]: 553 DT 767
+              - option [ref=e550]: 137 DIEN BIEN
+              - option [ref=e551]: 108 PHUNG HUNG
+              - option [ref=e552]: 459 NGUYEN DANG
+              - option [ref=e553]: 214 NGUYEN TAT THANH
+              - option [ref=e554]: 276 QUANG TRUNG
+              - option [ref=e555]: 1967 DT 768
+              - option [ref=e556]: 67 THU Y
+              - option [ref=e557]: 49 DOC LAP
+              - option [ref=e558]: 25 NGUYEN VAN TIEN
+              - option [ref=e559]: 5 TRAN HUNG DAO
+              - option [ref=e560]: 447 QUANG TRUNG
+              - option [ref=e561]: 251 THOI HOA
+              - option [ref=e562]: E4 DUONG N9
+              - option [ref=e563]: 303 HUNG VUONG
+              - option [ref=e564]: 22 HUYNH MINH THANH
+              - option [ref=e565]: 933 TRAN HUNG DAO
+              - option [ref=e566]: 142 HAI BA TRUNG
+              - option [ref=e567]: 104 QUANG TRUNG
+              - option [ref=e568]: 88 TRAN PHU
+              - option [ref=e569]: 189 HAI BA TRUNG
+              - option [ref=e570]: 121 BA TRIEU
+              - option [ref=e571]: 79 XUAN LA
+              - option [ref=e572]: 321 CAU GIAY
+              - option [ref=e573]: 1009 TRAN HUNG DAO
+              - option [ref=e574]: 33 LE XOAY
+              - option [ref=e575]: 2184 QUOC LO 20
+              - option [ref=e576]: 129 PHAM NGU LAO
+              - option [ref=e577]: 76 PHAN VAN HON
+              - option [ref=e578]: 475 QUOC LO 91
+              - option [ref=e579]: 635 QUOC LO 14
+              - option [ref=e580]: 349 LE LOI
+              - option [ref=e581]: 244 DONG DA
+              - option [ref=e582]: 22 CAO SON PHAO
+              - option [ref=e583]: 205 QUOC LO 50
+              - option [ref=e584]: 269 PHAM VAN DONG
+              - option [ref=e585]: 545 TRAN NHAN TONG
+              - option [ref=e586]: 44 NGUYEN HUY TUONG
+              - option [ref=e587]: DUONG D6-5A
+              - option [ref=e588]: 2705 QUANG TRUNG
+              - option [ref=e589]: 568 LUY BAN BICH
+              - option [ref=e590]: 125 TRAN PHU
+              - option [ref=e591]: 188 HUNG VUONG
+              - option [ref=e592]: 174 PHAN DINH PHUNG
+              - option [ref=e593]: 554 LE HONG PHONG
+              - option [ref=e594]: 185 NGUYEN TRAI
+              - option [ref=e595]: 274 AU CO
+              - option [ref=e596]: 554 LE HONG PHONG
+              - option [ref=e597]: 191 PHAM VAN DONG
+              - option [ref=e598]: 248 DONG KHOI
+              - option [ref=e599]: 1130 DT 747B
+              - option [ref=e600]: 1 QUOC LO 53
+              - option [ref=e601]: 649 30 THANG 4
+              - option [ref=e602]: 14 NGUYEN DU
+              - option [ref=e603]: 36 THAO DIEN
+              - option [ref=e604]: 582 HUNG VUONG
+              - option [ref=e605]: 34 PHAN VAN HON
+              - option [ref=e606]: DUONG N5 - D9
+              - option [ref=e607]: DT 824
+              - option [ref=e608]: 114 NGO GIA TU
+              - option [ref=e609]: 181 KHANH HOI
+              - option [ref=e610]: 461 TRUONG DINH
+              - option [ref=e611]: 17 VAN DON
+              - option [ref=e612]: 50 DOI CAN
+              - option [ref=e613]: 295 GIAI PHONG
+              - option [ref=e614]: 15 HUNG VUONG
+              - option [ref=e615]: DUONG DB4
+              - option [ref=e616]: 2B BINH CHIEU
+              - option [ref=e617]: 182 THU KHOA HUAN
+              - option [ref=e618]: 78 HAI BA TRUNG
+              - option [ref=e619]: 320 TRAN QUOC TOAN
+              - option [ref=e620]: 2A DT 743B
+              - option [ref=e621]: 57 THONG NHAT
+              - option [ref=e622]: 16 HUNG VUONG
+              - option [ref=e623]: D6 NGUYEN THI TU
+              - option [ref=e624]: 168 AP CHANH
+              - option [ref=e625]: 174 NGUYEN DU
+              - option [ref=e626]: 384 PHAN BOI CHAU
+              - option [ref=e627]: 676 DIEN BIEN
+              - option [ref=e628]: 461 NGUYEN BINH
+              - option [ref=e629]: 12 NGUYEN HUU CANH
+              - option [ref=e630]: 231 TRAN NGUYEN HAN
+              - option [ref=e631]: 815 HA HOANG HO 111
+              - option [ref=e632]: 7903 S ATLANTIC AVE
+              - option [ref=e633]: 7000 ALAMEDA
+              - option [ref=e634]: 62 NGUYEN TAT THANH
+              - option [ref=e635]: 125 NG TRUNG TRUC
+              - option [ref=e636]: 63 NGUYEN TAT THANH
+              - option [ref=e637]: 1234 S. MAGNOLIA AVE.
+              - option [ref=e638]: 392 HA HUY GIAP
+              - option [ref=e639]: 975 DOAN NGUYEN TUAN
+              - option [ref=e640]: 161 TAN HUONG
+              - option [ref=e641]: 1125 QUANG TRUNG
+              - option [ref=e642]: 392 LY THAI TO
+              - option [ref=e643]: 152 QUOC LO 1
+              - option [ref=e644]: 699 QUOC LO 61
+              - option [ref=e645]: 62 NGUYEN PHUOC LAN
+              - option [ref=e646]: 116 QUOC LO 14
+              - option [ref=e647]: 3/166 Thanh Thai
+              - option [ref=e648]: 3/166 Thanh Thai
+            - combobox [ref=e651] [cursor=pointer]:
+              - list
+              - searchbox "Search" [ref=e653]
+          - generic [ref=e654]:
+            - button " Search" [ref=e655] [cursor=pointer]:
+              - generic: 
+              - text: Search
+            - button "Reset" [ref=e656] [cursor=pointer]
+            - button " Export" [ref=e657] [cursor=pointer]:
+              - generic: 
+              - text: Export
+        - table [ref=e660]:
+          - rowgroup [ref=e661]:
+            - row "No City/Location Total PG/PB  Total Inline  Total Not Inline " [ref=e662]:
+              - columnheader [ref=e663]
+              - columnheader "No" [ref=e664]
+              - columnheader "City/Location" [ref=e665]
+              - columnheader "Total PG/PB " [ref=e666] [cursor=pointer]:
+                - text: Total PG/PB
+                - generic [ref=e667]: 
+              - columnheader "Total Inline " [ref=e668] [cursor=pointer]:
+                - text: Total Inline
+                - generic [ref=e669]: 
+              - columnheader "Total Not Inline " [ref=e670] [cursor=pointer]:
+                - text: Total Not Inline
+                - generic [ref=e671]: 
+          - rowgroup [ref=e672]:
+            - row "Loading data..." [ref=e673]:
+              - cell "Loading data..." [ref=e674]: Loading data...
+      - generic [ref=e676]:
+        - generic [ref=e678]:
+          - text: 2022©
+          - link "Hasaki.vn" [ref=e679] [cursor=pointer]:
+            - /url: https://hasaki.vn
+        - text: 
+  - text:  
+  - img

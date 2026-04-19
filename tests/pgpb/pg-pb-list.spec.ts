@@ -74,9 +74,10 @@ test.describe("PG/PB - List (/promoter)", () => {
     await list.expectListShellVisible();
 
     const link2 = list.pagination.getByRole("link", { name: "2", exact: true });
-    if ((await link2.count()) === 0) {
-      test.skip();
-    }
+    test.skip(
+      (await link2.count()) === 0,
+      "List has only one page — no link to page 2",
+    );
 
     await list.clickPaginationPage(2);
     expect(list.currentPageFromUrl()).toBe(2);
@@ -93,6 +94,62 @@ test.describe("PG/PB - List (/promoter)", () => {
     await list.expectListShellVisible();
 
     expect(await list.tableBodyRows.count()).toBeGreaterThan(0);
+  });
+
+  test("TC07 - Filter Search sends keyword in URL @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const list = new PgPbListPage(page);
+
+    await list.goto(baseUrl);
+    await list.expectListShellVisible();
+
+    const token = `smoke-${Date.now()}`;
+    await list.keywordSearchInput.fill(token);
+    await list.submitFilter();
+
+    expect(list.keywordSearchFromUrl()).toBe(token);
+    await expect(list.dataTable).toBeVisible();
+  });
+
+  test("TC08 - Filter Reset clears keyword and URL @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const list = new PgPbListPage(page);
+
+    await list.goto(baseUrl);
+    await list.expectListShellVisible();
+
+    const token = `reset-${Date.now()}`;
+    await list.keywordSearchInput.fill(token);
+    await list.submitFilter();
+    expect(list.keywordSearchFromUrl()).toBe(token);
+
+    await list.resetFilter();
+    await expect(list.keywordSearchInput).toHaveValue("");
+    expect(list.keywordSearchFromUrl()).toBe("");
+    await expect(list.dataTable).toBeVisible();
+  });
+
+  test("TC09 - Download exports PG-PB Excel @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const list = new PgPbListPage(page);
+
+    await list.goto(baseUrl);
+    await list.expectListShellVisible();
+
+    const downloadPromise = page.waitForEvent("download", { timeout: 60_000 });
+    await list.downloadButton.click();
+    const download = await downloadPromise;
+
+    expect(download.suggestedFilename()).toMatch(/PG-PB.*\.xlsx$/i);
   });
 });
 

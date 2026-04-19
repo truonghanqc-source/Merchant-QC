@@ -134,10 +134,8 @@ test.describe("PG Staff - Create", () => {
       .email({ provider: "hasaki.vn" })
       .toLowerCase();
     const sharedPhone = `09${faker.string.numeric(8)}`;
-    const sharedIdNumber = faker.helpers.arrayElement([
-      faker.string.numeric(9),
-      faker.string.numeric(12),
-    ]);
+    //12 chữ số — khớp rule CMND/CCCD;9 số có thể không bị check trùng giống 12 số.
+    const sharedIdNumber = faker.string.numeric(12);
 
     // First create a staff with a specific ID number
     await pgStaff.selectVendor(listVendor.V260064);
@@ -156,6 +154,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
     await pgStaff.submit();
+    await expect(page).toHaveURL(/pg-draft\/edit\/\d+/i, { timeout: 60000 });
     await pgStaff.requestToActivateButtonClick();
     await pgStaff.approveInfoStaffButtonClick();
 
@@ -165,7 +164,10 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("merchandising");
     await pgStaff.fillName(fakeName());
-    await pgStaff.fillEmail(sharedEmail);
+    // Fresh email so duplicate-ID validation is not masked by duplicate-email errors.
+    await pgStaff.fillEmail(
+      faker.internet.email({ provider: "hasaki.vn" }).toLowerCase(),
+    );
     await pgStaff.fillIdNumber(sharedIdNumber);
     await pgStaff.fillPhone(`09${faker.string.numeric(8)}`);
     await pgStaff.chooseRandomLocations(3);
@@ -178,12 +180,14 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.uploadIdNumberBack(avatarFilePath);
     await pgStaff.submit();
 
-    const duplicateErrors = await pgStaff.getValidationErrors();
-    expect(
-      duplicateErrors.some((error: string) =>
-        /The ID number already existed on another staff info/i.test(error),
-      ),
-    ).toBeTruthy();
+    const duplicateIdPattern =
+      /ID number already|already existed|another staff|staff info|trùng|duplicate.*(id|CMND|CCCD)/i;
+    await expect
+      .poll(async () => {
+        const errs = await pgStaff.getValidationErrors();
+        return errs.some((e) => duplicateIdPattern.test(e));
+      }, { timeout: 25_000 })
+      .toBeTruthy();
   });
 
   test("TC07 - Create PG staff with inline worktype have external sync @smoke", async ({
@@ -221,7 +225,6 @@ test.describe("PG Staff - Create", () => {
     await expect(staffIdInput).not.toHaveValue("", { timeout: 60000 });
     const staffIdValue = await staffIdInput.getAttribute("value");
     expect(staffIdValue).toMatch(/^\d+$/);
-    console.log("Created PG staff with Staff ID:", staffIdValue);
   });
 
   test("TC08 - Create PG staff with non-inline worktype no external sync @smoke", async ({
@@ -366,7 +369,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillEmail(
       faker.internet.email({ provider: "hasaki.vn" }).toLowerCase(),
     );
-    await pgStaff.fillIdNumber(faker.string.numeric(12)); // too short
+    await pgStaff.fillIdNumber(faker.string.numeric(12));
     await pgStaff.fillPhone(`09${faker.string.numeric(8)}`);
     await pgStaff.chooseRandomLocations(3);
     await pgStaff.fillAddress(

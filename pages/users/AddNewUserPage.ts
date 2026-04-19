@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Add New User — `/user/detail` ([Add New User](https://test-merchant.hasaki.vn/user/detail)).
@@ -35,8 +38,7 @@ export class AddNewUserPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/user/detail`, {
+    await this.page.goto(`${baseUrl}/user/detail`, {
       waitUntil: "load",
       timeout: 90000,
     });

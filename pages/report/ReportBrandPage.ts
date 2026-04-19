@@ -1,5 +1,8 @@
 import type { Locator, Page } from "@playwright/test";
-import { assertNotOnLoginPage, waitUntilLeftLogin } from "../../utils/navigation-helpers.ts";
+import {
+  assertNotOnLoginPage,
+  waitUntilLeftLogin,
+} from "../../utils/navigation-helpers.ts";
 
 /**
  * Báo cáo thương hiệu — `/report/brands`.
@@ -28,12 +31,13 @@ export class ReportBrandPage {
     this.viewCheckbox = page.locator("input#view");
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
     this.resultsMessage = page.locator(".text-center.mt-12");
-    this.dataTable = page.locator("table.table-rounded.table-striped.gy-3").first();
+    this.dataTable = page
+      .locator("table.table-rounded.table-striped.gy-3")
+      .first();
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/report/brands`, {
+    await this.page.goto(`${baseUrl}/report/brands`, {
       waitUntil: "load",
       timeout: 90000,
     });

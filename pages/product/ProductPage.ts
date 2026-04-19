@@ -99,13 +99,15 @@ export class ProductPage {
   }
 
   async goto(baseUrl: string) {
-    const root = baseUrl.replace(/\/$/, "");
-    await this.page.goto(`${root}/product/detail`, {
+    await this.page.goto(`${baseUrl}/product/detail`, {
       waitUntil: "load",
       timeout: 90000,
     });
     await this.page.waitForURL(/\/product\/detail/i, { timeout: 30000 });
-    await this.addProductCardTitle.waitFor({ state: "visible", timeout: 20000 });
+    await this.addProductCardTitle.waitFor({
+      state: "visible",
+      timeout: 20000,
+    });
   }
 
   /** Form tạo sản phẩm (tab Product Info) đã sẵn sàng nhập liệu. */
