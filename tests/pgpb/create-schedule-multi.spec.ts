@@ -1,10 +1,7 @@
 import type { Page } from "@playwright/test";
 import { CreateScheduleMultiPage } from "../../pages/pgpb/CreateScheduleMultiPage.ts";
 import { test, expect } from "../../fixtures/index.ts";
-
-const listVendor = {
-  V220065: "V220065 - QC Test Vendor 2",
-};
+import { vendorLabelsPgStaff } from "../../playwright/test-data/vendors.ts";
 
 /** Tomorrow → last day of next month (`DD/MM/YYYY - DD/MM/YYYY`), within server “end of next month” rule. */
 function workDateRangeForMultiSchedule(): string {
@@ -127,7 +124,7 @@ test.describe("PG/PB - Add Multi Work Schedule (/promoter/multi-work-schedule)",
   }) => {
     test.setTimeout(180_000);
     const { page } = authenticatedPage;
-    await arrangeMultiScheduleOnReviewStep(page, baseUrl, listVendor.V220065);
+    await arrangeMultiScheduleOnReviewStep(page, baseUrl, vendorLabelsPgStaff.V220065);
     await expect(
       page.getByRole("heading", { name: /Review Work Schedule/i }),
     ).toBeVisible();
@@ -140,7 +137,7 @@ test.describe("PG/PB - Add Multi Work Schedule (/promoter/multi-work-schedule)",
   ) => {
     test.setTimeout(180_000);
     const { page } = authenticatedPage;
-    const multi = await arrangeMultiScheduleOnReviewStep(page, baseUrl, listVendor.V220065);
+    const multi = await arrangeMultiScheduleOnReviewStep(page, baseUrl, vendorLabelsPgStaff.V220065);
 
     await multi.saveAllSchedules();
     await multi.confirmCreateSchedulesSwal();

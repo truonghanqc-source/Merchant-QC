@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { faker } from "@faker-js/faker";
 import { test, expect } from "../../fixtures/index.ts";
 import { ProductPage } from "../../pages/product/ProductPage.ts";
+import { productFormDropdownValues } from "../../playwright/test-data/product.ts";
 import type { Page } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -36,7 +37,6 @@ async function createAndRequestApproval(
   await product.fillBarcode(barcode);
   await product.selectRandomBrand();
   await product.fillVendorProductCode(vendorProductCode);
-  await product.selectProductType("NORMAL");
   await product.fillVendorPrice(vendorPrice);
   await product.fillMarketPrice(marketPrice);
   await product.fillHasakiPrice(hasakiPrice);
@@ -44,9 +44,13 @@ async function createAndRequestApproval(
   await product.fillWidth(faker.number.int({ min: 10, max: 99 }));
   await product.fillHeight(faker.number.int({ min: 10, max: 99 }));
   await product.fillWeight(faker.number.int({ min: 10, max: 99 }));
-  await product.selectShelfLife("36 Month");
-  await product.selectExpirationDateFormatting("DD/MM/YY");
-  await product.selectAllowedShelfLifePO("60%");
+  await product.selectShelfLife(productFormDropdownValues.shelfLife36Months);
+  await product.selectExpirationDateFormatting(
+    productFormDropdownValues.expirationDateFormatDDMMYY,
+  );
+  await product.selectAllowedShelfLifePO(
+    productFormDropdownValues.allowedShelfLifePo60Percent,
+  );
   await product.saveAndNextToImageTab();
 
   // Tab 2: Images
@@ -90,7 +94,10 @@ test.describe("Product - Create new product", () => {
     await createAndRequestApproval(product, page, baseUrl);
   });
 
-  test("TC03 - Approve product @smoke", async ({ authenticatedPage, baseUrl }) => {
+  test("TC03 - Approve product @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
     const { page } = authenticatedPage;
     const product = new ProductPage(page);
 
@@ -138,6 +145,58 @@ test.describe("Product - Create new product", () => {
 
     await product.expectFirstValidationVisible();
   });
+
+  test("TC06 - Create product with product type gift @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const product = new ProductPage(page);
+
+    await product.goto(baseUrl);
+    await product.fillName(`Gift Product ${faker.commerce.productName()}`);
+    await product.fillVendorProductName(
+      `Gift-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.fillBarcode(faker.string.numeric(13));
+    await product.selectRandomBrand();
+    await product.fillVendorProductCode(
+      `VPC-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.fillVendorPrice(
+      faker.number.int({ min: 10000, max: 500000 }),
+    );
+    await product.fillMarketPrice(
+      Math.round(faker.number.int({ min: 10000, max: 500000 })),
+    );
+    await product.fillHasakiPrice(
+      Math.round(faker.number.int({ min: 10000, max: 500000 }) * 1.5),
+    );
+    await product.fillLength(faker.number.int({ min: 10, max: 99 }));
+    await product.fillWidth(faker.number.int({ min: 10, max: 99 }));
+    await product.fillHeight(faker.number.int({ min: 10, max: 99 }));
+    await product.fillWeight(faker.number.int({ min: 10, max: 99 }));
+    await product.selectShelfLife(productFormDropdownValues.shelfLife36Months);
+    await product.selectExpirationDateFormatting(
+      productFormDropdownValues.expirationDateFormatDDMMYY,
+    );
+    await product.selectAllowedShelfLifePO(
+      productFormDropdownValues.allowedShelfLifePo60Percent,
+    );
+    await product.saveAndNextToImageTab();
+    await product.uploadMultipleProductImages([
+      productFilePath,
+      productFilePath,
+    ]);
+    await product.saveAndNextToDocumentTab();
+    await product.declarationDateInputFill();
+    await product.expirationDateInputFill();
+    await product.declarationCodeInputFill(
+      `DC-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.uploadDocument(pdfFilePath);
+    await product.saveAndNextToLinkTab();
+    await product.clickRequestToApprove();
+    await product.expectWaitingApproveBadge();
+  });
 });
-
-

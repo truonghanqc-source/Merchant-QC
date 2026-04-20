@@ -192,5 +192,5 @@ npx tsc --noEmit
   ```
 - Thêm wait load state khi cần:
   ```ts
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("load");
   ```

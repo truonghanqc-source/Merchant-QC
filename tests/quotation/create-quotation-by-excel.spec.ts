@@ -14,11 +14,6 @@ const excelSkuFilePath = path.resolve(
   "../resources/quotation/quotation-import-sku-auto.xlsx",
 );
 
-const listVendor = {
-  V220065: "V220065 - QC Test Vendor 2",
-  V260064: "GLOBAL TRADE",
-};
-
 test.describe("Quotation - Create by Excel", () => {
   test.describe.configure({ timeout: 90 * 1000 });
 

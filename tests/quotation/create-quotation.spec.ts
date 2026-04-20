@@ -1,25 +1,15 @@
 import { test, expect } from "../../fixtures/index.ts";
 import { CreateQuotationPage } from "../../pages/quotation/QuotationPage.ts";
+import {
+  COMPANY,
+  listTypeQuotation,
+  quotationScenarios,
+  selectQuotationVendorIfNeeded,
+} from "../../playwright/test-data/quotation.ts";
 
-// Tên company
-const COMPANY = {
-  HASAKI_VIETNAM: "Cty Hasaki VietNam",
-  GLOBAL_TRADE: "Cty Hasaki Global Trade",
-  HASAKI_LLC: "Cty Hasaki LLC",
-};
-
-const listVendor = {
-  V220065: "V220065 - QC Test Vendor 2",
-  V260064: "GLOBAL TRADE",
-};
-
-const listTypeQuotation = {
-  NORMAL: "Normal",
-  TESTER: "Tester",
-  GIFT: "Gift",
-  ACTIVATION: "Activation",
-  POSM: "POSM",
-};
+const hVN = quotationScenarios.hasakiVietNam;
+const gT = quotationScenarios.globalTrade;
+const llc = quotationScenarios.hasakiLlc;
 
 // test.describe.serial("Quotation — create & detail (serial suite)", () => {
 test.describe("Quotation - Create with Hasaki VietNam", () => {
@@ -44,16 +34,14 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     await quotation.goto(baseUrl);
 
-    //   await quotation.selectVendor(listVendor.V220065); // Role Admin mặc định có Vendor
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("Quotation Auto Test");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
 
-    // Sau khi Save → vào trang Quotation Review
     await expect(page).toHaveURL(
       /quotation\/(review|detail|edit|confirm|view)\/\d+/i,
       {
@@ -61,7 +49,6 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
       },
     );
 
-    // Click Request to confirm để hoàn thành flow
     await quotation.requestToConfirm();
     const totalAfterConfirm = await quotation.getSummaryTotal();
     expect(totalAfterConfirm).toMatch(/\u20ab|VND/i);
@@ -77,10 +64,10 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectQuotationType(listTypeQuotation.TESTER);
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("Tester Quotation Auto Test");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -103,10 +90,10 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectQuotationType(listTypeQuotation.GIFT);
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("Gift Quotation Auto Test");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -131,10 +118,10 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectQuotationType(listTypeQuotation.ACTIVATION);
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("Activation Quotation Auto Test");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -157,10 +144,10 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
     await quotation.goto(baseUrl);
 
     await quotation.selectQuotationType(listTypeQuotation.POSM);
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("POSM Quotation Auto Test");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -182,15 +169,14 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.quotationConfigCLick();
     await quotation.fillNote("Quotion Auto Test - no VAT error");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(6);
 
     const errorText = await quotation.saveQuotationExpectErrorVAT();
-    //Xác nhận hiển thị lỗi "Some products in the quotation require VAT. Please review and verify."
     expect(errorText).toBe(
       "Some products in the quotation require VAT. Please review and verify.",
     );
@@ -205,14 +191,13 @@ test.describe("Quotation - Create with Hasaki VietNam", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote("Quotion Auto Test - required VAT error");
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("205100547");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.skuVatOppositeCase ?? "205100547");
     await quotation.fillQuantity(6);
 
     const errorText = await quotation.saveQuotationExpectErrorVAT();
-    //Xác nhận hiển thị lỗi "Some products in the quotation require VAT. Please review and verify."
     expect(errorText).toBe(
       "Some products in the quotation do not require VAT. Please review and verify.",
     );
@@ -230,16 +215,15 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
-    await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
-    await quotation.selectStore("WH -170 QUOC LO 1A");
+    await selectQuotationVendorIfNeeded(quotation, gT);
+    await quotation.selectCompany(gT.company);
+    await quotation.selectStore(gT.storeLabel);
     await quotation.fillNote("Quotion Global Trade Auto Test");
-    await quotation.selectProduct("422269311");
+    await quotation.selectProduct(gT.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
 
-    // Sau khi Save → vào trang Quotation Review
     await expect(page).toHaveURL(
       /quotation\/(review|detail|edit|confirm|view)\/\d+/i,
       {
@@ -247,7 +231,6 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
       },
     );
 
-    // Click Request to confirm để hoàn thành flow
     await quotation.requestToConfirm();
 
     const totalAfterConfirm = await quotation.getSummaryTotal();
@@ -263,12 +246,12 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, gT);
     await quotation.selectQuotationType(listTypeQuotation.TESTER);
-    await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
-    await quotation.selectStore("WH -170 QUOC LO 1A");
+    await quotation.selectCompany(gT.company);
+    await quotation.selectStore(gT.storeLabel);
     await quotation.fillNote("Tester Quotation Global Trade Auto Test");
-    await quotation.selectProduct("422269311");
+    await quotation.selectProduct(gT.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -290,12 +273,12 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, gT);
     await quotation.selectQuotationType(listTypeQuotation.GIFT);
-    await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
-    await quotation.selectStore("WH -170 QUOC LO 1A");
+    await quotation.selectCompany(gT.company);
+    await quotation.selectStore(gT.storeLabel);
     await quotation.fillNote("Gift Quotation Global Trade Auto Test");
-    await quotation.selectProduct("422269311");
+    await quotation.selectProduct(gT.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -319,12 +302,12 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, gT);
     await quotation.selectQuotationType(listTypeQuotation.ACTIVATION);
-    await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
-    await quotation.selectStore("WH -170 QUOC LO 1A");
+    await quotation.selectCompany(gT.company);
+    await quotation.selectStore(gT.storeLabel);
     await quotation.fillNote("Activation Quotation Global Trade Auto Test");
-    await quotation.selectProduct("422269311");
+    await quotation.selectProduct(gT.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -346,12 +329,12 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, gT);
     await quotation.selectQuotationType(listTypeQuotation.POSM);
-    await quotation.selectCompany(COMPANY.GLOBAL_TRADE);
-    await quotation.selectStore("WH -170 QUOC LO 1A");
+    await quotation.selectCompany(gT.company);
+    await quotation.selectStore(gT.storeLabel);
     await quotation.fillNote("POSM Quotation Global Trade Auto Test");
-    await quotation.selectProduct("422269311");
+    await quotation.selectProduct(gT.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -376,11 +359,11 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
-    await quotation.selectCompany(COMPANY.HASAKI_LLC);
-    await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
+    await selectQuotationVendorIfNeeded(quotation, llc);
+    await quotation.selectCompany(llc.company);
+    await quotation.selectStore(llc.storeLabel);
     await quotation.fillNote("Normal Quotation LLC Auto Test");
-    await quotation.selectProduct("422269314");
+    await quotation.selectProduct(llc.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -405,12 +388,12 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, llc);
     await quotation.selectQuotationType(listTypeQuotation.TESTER);
-    await quotation.selectCompany(COMPANY.HASAKI_LLC);
-    await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
+    await quotation.selectCompany(llc.company);
+    await quotation.selectStore(llc.storeLabel);
     await quotation.fillNote("Tester Quotation LLC Auto Test");
-    await quotation.selectProduct("422269314");
+    await quotation.selectProduct(llc.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -432,12 +415,12 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, llc);
     await quotation.selectQuotationType(listTypeQuotation.GIFT);
-    await quotation.selectCompany(COMPANY.HASAKI_LLC);
-    await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
+    await quotation.selectCompany(llc.company);
+    await quotation.selectStore(llc.storeLabel);
     await quotation.fillNote("Gift Quotation LLC Auto Test");
-    await quotation.selectProduct("422269314");
+    await quotation.selectProduct(llc.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -461,12 +444,12 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, llc);
     await quotation.selectQuotationType(listTypeQuotation.ACTIVATION);
-    await quotation.selectCompany(COMPANY.HASAKI_LLC);
-    await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
+    await quotation.selectCompany(llc.company);
+    await quotation.selectStore(llc.storeLabel);
     await quotation.fillNote("Activation Quotation LLC Auto Test");
-    await quotation.selectProduct("422269314");
+    await quotation.selectProduct(llc.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -488,12 +471,12 @@ test.describe("Quotation - Create with Hasaki LLC", () => {
 
     await quotation.goto(baseUrl);
 
-    await quotation.selectVendor(listVendor.V260064);
+    await selectQuotationVendorIfNeeded(quotation, llc);
     await quotation.selectQuotationType(listTypeQuotation.POSM);
-    await quotation.selectCompany(COMPANY.HASAKI_LLC);
-    await quotation.selectStore("SHOP - 568 LUY BAN BICH - LLC");
+    await quotation.selectCompany(llc.company);
+    await quotation.selectStore(llc.storeLabel);
     await quotation.fillNote("POSM Quotation LLC Auto Test");
-    await quotation.selectProduct("422269314");
+    await quotation.selectProduct(llc.defaultSku);
     await quotation.fillQuantity(6);
 
     await quotation.saveQuotation();
@@ -560,10 +543,10 @@ test.describe("Quotation - Detail page (/quotation/detail)", () => {
     const quotation = new CreateQuotationPage(authenticatedPage.page);
 
     await quotation.goto(baseUrl);
-    await quotation.selectCompany(COMPANY.HASAKI_VIETNAM);
+    await quotation.selectCompany(hVN.company);
     await quotation.fillNote(`Auto detail flow ${Date.now()}`);
-    await quotation.selectStore("SHOP - 71 HOANG HOA THAM");
-    await quotation.selectProduct("100240028");
+    await quotation.selectStore(hVN.storeLabel);
+    await quotation.selectProduct(hVN.defaultSku);
     await quotation.fillQuantity(3);
 
     const total = await quotation.getSummaryTotal();

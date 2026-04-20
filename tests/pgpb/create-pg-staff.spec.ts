@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { test, expect } from "../../fixtures/index.ts";
 import { PgStaffPage } from "../../pages/pgpb/PgStaffPage.ts";
+import { vendorLabelsPgStaff } from "../../playwright/test-data/vendors.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const avatarFilePath = path.resolve(
@@ -17,12 +18,7 @@ const fakeName = () =>
     .replace(/\s+/g, " ")
     .trim();
 
-const listVendor = {
-  V220065: "V220065 - QC Test Vendor 2",
-  V260064: "V260064 - CÔNG TY TNHH HASAKI GLOBAL TRADE",
-  V190064: "V190064 - Thương Mại Song Hằng",
-  V250066: "V250066 - Sông Hồng",
-};
+const fakeNote = () => `${faker.lorem.sentence()} ${String(Date.now())}`;
 
 test.describe("PG Staff - Create", () => {
   test.describe.configure({ timeout: 120 * 1000 });
@@ -82,11 +78,10 @@ test.describe("PG Staff - Create", () => {
       phone: `09${faker.string.numeric(8)}`,
       idNumber: faker.string.numeric(12),
       address: `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
-      note: "Create PG Auto",
       workType: "inline",
     };
 
-    await pgStaff.selectVendor(listVendor.V190064);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V190064);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType(testData.workType);
     await pgStaff.fillName(testData.name);
@@ -95,7 +90,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillPhone(testData.phone);
     await pgStaff.chooseRandomLocations(3);
     await pgStaff.fillAddress(testData.address);
-    await pgStaff.fillNote(testData.note);
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
@@ -138,7 +133,7 @@ test.describe("PG Staff - Create", () => {
     const sharedIdNumber = faker.string.numeric(12);
 
     // First create a staff with a specific ID number
-    await pgStaff.selectVendor(listVendor.V260064);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V260064);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -149,7 +144,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
@@ -160,7 +155,7 @@ test.describe("PG Staff - Create", () => {
 
     // Create another staff with the same ID number
     await pgStaff.goto(baseUrl);
-    await pgStaff.selectVendor(listVendor.V260064);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V260064);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("merchandising");
     await pgStaff.fillName(fakeName());
@@ -174,7 +169,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
@@ -183,10 +178,13 @@ test.describe("PG Staff - Create", () => {
     const duplicateIdPattern =
       /ID number already|already existed|another staff|staff info|trùng|duplicate.*(id|CMND|CCCD)/i;
     await expect
-      .poll(async () => {
-        const errs = await pgStaff.getValidationErrors();
-        return errs.some((e) => duplicateIdPattern.test(e));
-      }, { timeout: 25_000 })
+      .poll(
+        async () => {
+          const errs = await pgStaff.getValidationErrors();
+          return errs.some((e) => duplicateIdPattern.test(e));
+        },
+        { timeout: 25_000 },
+      )
       .toBeTruthy();
   });
 
@@ -198,7 +196,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V250066);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V250066);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -211,7 +209,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
@@ -235,7 +233,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V250066);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V250066);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("Training (Training / Internship)");
     await pgStaff.fillName(fakeName());
@@ -248,7 +246,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
     await pgStaff.uploadIdNumberBack(avatarFilePath);
@@ -270,7 +268,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V260064);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V260064);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -281,7 +279,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.submit();
 
     const errors = await pgStaff.getValidationErrors();
@@ -298,7 +296,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V250066);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V250066);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -311,7 +309,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.submit();
 
     const errors = await pgStaff.getValidationErrors();
@@ -330,7 +328,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V250066);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V250066);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -343,7 +341,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
     await pgStaff.submit();
 
     const errors = await pgStaff.getValidationErrors();
@@ -362,7 +360,7 @@ test.describe("PG Staff - Create", () => {
     const pgStaff = new PgStaffPage(page);
     await pgStaff.goto(baseUrl);
 
-    await pgStaff.selectVendor(listVendor.V250066);
+    await pgStaff.selectVendor(vendorLabelsPgStaff.V250066);
     await pgStaff.chooseRandomBrands(3);
     await pgStaff.selectWorkType("inline");
     await pgStaff.fillName(fakeName());
@@ -375,7 +373,7 @@ test.describe("PG Staff - Create", () => {
     await pgStaff.fillAddress(
       `${faker.location.streetAddress()}, ${faker.location.city()}, Việt Nam`,
     );
-    await pgStaff.fillNote("Create PG Auto");
+    await pgStaff.fillNote(fakeNote());
 
     await pgStaff.uploadAvatar(avatarFilePath);
     await pgStaff.uploadIdNumberFront(avatarFilePath);
@@ -391,5 +389,3 @@ test.describe("PG Staff - Create", () => {
     expect(status).toBe("In-Active");
   });
 });
-
-

@@ -61,19 +61,19 @@ export class CreateQuotationPage {
       waitUntil: "load",
       timeout: 90_000,
     });
-    await this.page.waitForLoadState("networkidle").catch(() => null);
-    for (let i = 0; i < 25; i++) {
-      if (!/\/login(\/|\?|$)/i.test(this.page.url())) break;
-      await this.page.waitForTimeout(200);
+    await this.page.waitForLoadState("load").catch(() => null);
+    try {
+      await this.page.waitForURL(/\/quotation\/detail\/?(\?|#|$)/i, {
+        timeout: 30_000,
+      });
+    } catch {
+      if (/\/login(\/|\?|$)/i.test(this.page.url())) {
+        throw new Error(
+          "Quotation detail: still on /login. Re-run global-setup / check LOGIN_* in .env.local.",
+        );
+      }
+      throw new Error(`Quotation detail: unexpected URL: ${this.page.url()}`);
     }
-    if (/\/login(\/|\?|$)/i.test(this.page.url())) {
-      throw new Error(
-        "Quotation detail: still on /login. Re-run global-setup / check LOGIN_* in .env.local.",
-      );
-    }
-    await this.page.waitForURL(/\/quotation\/detail\/?(\?|#|$)/i, {
-      timeout: 30_000,
-    });
     await this.formBrandDetail.waitFor({ state: "visible", timeout: 25_000 });
   }
 
