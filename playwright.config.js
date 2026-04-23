@@ -22,14 +22,15 @@ export default defineConfig({
   retries: process.env.CI ? 3 : 0,
   /* More workers on CI since tests are independent */
   workers: process.env.CI ? 10 : undefined,
-  /* Reporters: HTML always, JUnit for Jenkins CI */
+  /* Reporters: HTML always, JUnit for Jenkins CI, custom log reporter */
   reporter: process.env.CI
     ? [
         ["html", { open: "never" }],
         ["junit", { outputFile: "test-results/junit.xml" }],
         ["github"],
+        ["./reporters/custom-reporter.ts"],
       ]
-    : [["html"]],
+    : [["html"], ["./reporters/custom-reporter.ts"]],
   use: {
     /* Fixed viewport — works both locally and headless on Linux CI */
     viewport: { width: 1920, height: 1080 },

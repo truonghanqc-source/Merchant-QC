@@ -30,3 +30,7 @@ export const vendorLabelsPgStaff = {
   ),
   V250066: envOr("E2E_VENDOR_V250066_PG_LABEL", "V250066 - Sông Hồng"),
 } as const;
+
+export const vendorLabelsProduct = {
+  GLOBAL_TRADE: envOr("E2E_VENDOR_GLOBAL_TRADE_PRODUCT_LABEL", "Global Trade"),
+} as const;

@@ -5,6 +5,7 @@ import { test, expect } from "../../fixtures/index.ts";
 import { ProductPage } from "../../pages/product/ProductPage.ts";
 import { productFormDropdownValues } from "../../playwright/test-data/product.ts";
 import type { Page } from "@playwright/test";
+import { vendorLabelsProduct } from "../../playwright/test-data/vendors.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const productFilePath = path.resolve(
@@ -21,10 +22,10 @@ async function createAndRequestApproval(
 ) {
   const timestamp = Date.now();
   const name = `Auto Product ${faker.commerce.productName()} ${timestamp}`;
-  const vendorProductName = `VPN-${faker.string.alphanumeric(8).toUpperCase()}-${timestamp}`;
+  const vendorProductName = `VPN-${faker.string.alphanumeric(8).toUpperCase()}`;
   const barcode = faker.string.numeric(13);
   const vendorProductCode = `VPC-${faker.string.alphanumeric(8).toUpperCase()}`;
-  const vendorPrice = faker.number.int({ min: 10000, max: 500000 });
+  const vendorPrice = faker.number.int({ min: 1000, max: 5000 });
   const marketPrice = Math.round(vendorPrice * 1.3);
   const hasakiPrice = Math.round(vendorPrice * 1.2);
   const declarationCode = `DC-${faker.string.alphanumeric(8).toUpperCase()}`;
@@ -40,10 +41,10 @@ async function createAndRequestApproval(
   await product.fillVendorPrice(vendorPrice);
   await product.fillMarketPrice(marketPrice);
   await product.fillHasakiPrice(hasakiPrice);
-  await product.fillLength(faker.number.int({ min: 10, max: 99 }));
-  await product.fillWidth(faker.number.int({ min: 10, max: 99 }));
-  await product.fillHeight(faker.number.int({ min: 10, max: 99 }));
-  await product.fillWeight(faker.number.int({ min: 10, max: 99 }));
+  await product.fillLength(faker.number.int({ min: 10, max: 30 }));
+  await product.fillWidth(faker.number.int({ min: 10, max: 30 }));
+  await product.fillHeight(faker.number.int({ min: 10, max: 30 }));
+  await product.fillWeight(faker.number.int({ min: 10, max: 30 }));
   await product.selectShelfLife(productFormDropdownValues.shelfLife36Months);
   await product.selectExpirationDateFormatting(
     productFormDropdownValues.expirationDateFormatDDMMYY,
@@ -85,7 +86,7 @@ test.describe("Product - Create new product", () => {
     await product.expectAddProductFormReady();
   });
 
-  test("TC02 - Create product successfully (happy path) @smoke", async ({
+  test("TC02 - Create product successfully happy path @smoke", async ({
     authenticatedPage,
     baseUrl,
   }) => {
@@ -154,7 +155,10 @@ test.describe("Product - Create new product", () => {
     const product = new ProductPage(page);
 
     await product.goto(baseUrl);
-    await product.fillName(`Gift Product ${faker.commerce.productName()}`);
+    const timestamp = Date.now();
+    await product.fillName(
+      `Auto Gift Product ${faker.commerce.productName()} ${timestamp}`,
+    );
     await product.fillVendorProductName(
       `Gift-${faker.string.alphanumeric(8).toUpperCase()}`,
     );
@@ -163,19 +167,15 @@ test.describe("Product - Create new product", () => {
     await product.fillVendorProductCode(
       `VPC-${faker.string.alphanumeric(8).toUpperCase()}`,
     );
-    await product.fillVendorPrice(
-      faker.number.int({ min: 10000, max: 500000 }),
-    );
+    await product.selectProductType(productFormDropdownValues.productTypeGift);
+    await product.fillVendorPrice(faker.number.int({ min: 1000, max: 5000 }));
     await product.fillMarketPrice(
-      Math.round(faker.number.int({ min: 10000, max: 500000 })),
+      Math.round(faker.number.int({ min: 1000, max: 5000 })),
     );
-    await product.fillHasakiPrice(
-      Math.round(faker.number.int({ min: 10000, max: 500000 }) * 1.5),
-    );
-    await product.fillLength(faker.number.int({ min: 10, max: 99 }));
-    await product.fillWidth(faker.number.int({ min: 10, max: 99 }));
-    await product.fillHeight(faker.number.int({ min: 10, max: 99 }));
-    await product.fillWeight(faker.number.int({ min: 10, max: 99 }));
+    await product.fillLength(faker.number.int({ min: 10, max: 30 }));
+    await product.fillWidth(faker.number.int({ min: 10, max: 30 }));
+    await product.fillHeight(faker.number.int({ min: 10, max: 30 }));
+    await product.fillWeight(faker.number.int({ min: 10, max: 30 }));
     await product.selectShelfLife(productFormDropdownValues.shelfLife36Months);
     await product.selectExpirationDateFormatting(
       productFormDropdownValues.expirationDateFormatDDMMYY,
@@ -198,5 +198,62 @@ test.describe("Product - Create new product", () => {
     await product.saveAndNextToLinkTab();
     await product.clickRequestToApprove();
     await product.expectWaitingApproveBadge();
+    await product.clickApproveButton();
+    await product.expectApprovedBadge();
+  });
+
+  test("TC07 - Create product with product type Normal Global Trade @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const { page } = authenticatedPage;
+    const product = new ProductPage(page);
+
+    await product.goto(baseUrl);
+    const timestamp = Date.now();
+    await product.selectVendor(vendorLabelsProduct.GLOBAL_TRADE);
+    await product.fillName(
+      `Auto Normal Product ${faker.commerce.productName()} ${timestamp}`,
+    );
+    await product.fillVendorProductName(
+      `Normal-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.fillBarcode(faker.string.numeric(13));
+    await product.selectRandomBrand();
+    await product.fillVendorProductCode(
+      `VPC-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.fillVendorPrice(faker.number.int({ min: 1000, max: 5000 }));
+    await product.fillMarketPrice(
+      Math.round(faker.number.int({ min: 1000, max: 5000 })),
+    );
+    await product.fillLength(faker.number.int({ min: 10, max: 30 }));
+    await product.fillWidth(faker.number.int({ min: 10, max: 30 }));
+    await product.fillHeight(faker.number.int({ min: 10, max: 30 }));
+    await product.fillWeight(faker.number.int({ min: 10, max: 30 }));
+    await product.selectShelfLife(productFormDropdownValues.shelfLife36Months);
+    await product.selectExpirationDateFormatting(
+      productFormDropdownValues.expirationDateFormatDDMMYY,
+    );
+    await product.selectAllowedShelfLifePO(
+      productFormDropdownValues.allowedShelfLifePo60Percent,
+    );
+    await product.saveAndNextToImageTab();
+    await product.uploadMultipleProductImages([
+      productFilePath,
+      productFilePath,
+    ]);
+    await product.saveAndNextToDocumentTab();
+    await product.declarationDateInputFill();
+    await product.expirationDateInputFill();
+    await product.declarationCodeInputFill(
+      `DC-${faker.string.alphanumeric(8).toUpperCase()}`,
+    );
+    await product.uploadDocument(pdfFilePath);
+    await product.saveAndNextToLinkTab();
+    await product.clickRequestToApprove();
+    await product.expectWaitingApproveBadge();
+    await product.clickApproveButton();
+    await product.expectApprovedBadge();
   });
 });

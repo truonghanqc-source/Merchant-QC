@@ -66,6 +66,12 @@ export class ProductListPage {
 
   /** Filter + lưới `#product_list` (không bắt buộc phân trang — có thể ẩn khi filter trả về ít/0 dòng). */
   async expectFilterAndGridVisible() {
+    if (this.page.isClosed()) {
+      throw new Error(
+        "Page is already closed (test timeout, browser closed, or context disposed). " +
+          "This is not a missing locator on /product — raise suite timeout or run with --workers=1.",
+      );
+    }
     await this.pageTitleH1.waitFor({ state: "visible", timeout: 15000 });
     await this.formFilter.waitFor({ state: "visible", timeout: 15000 });
     await this.dataTable.waitFor({ state: "visible", timeout: 20000 });
@@ -86,6 +92,9 @@ export class ProductListPage {
 
   async resetFilter() {
     await this.filterResetButton.click();
+    await this.page.waitForLoadState("domcontentloaded").catch(() => null);
+    await this.page.waitForURL(/\/product\/?/i, { timeout: 30_000 });
+    await this.formFilter.waitFor({ state: "visible", timeout: 20_000 });
     await this.page.waitForLoadState("load").catch(() => null);
   }
 

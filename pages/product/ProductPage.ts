@@ -56,8 +56,9 @@ export class ProductPage {
     this.badgeRejected = page
       .locator("span.badge.badge-danger")
       .filter({ hasText: /^Rejected$/i });
+    // Tránh `i.text-danger.d-none` (icon badge) — `.first()` dễ trúng phần tử ẩn.
     this.validationMessageLocator = page.locator(
-      ".invalid-feedback, .text-danger, #swal2-html-container",
+      ".invalid-feedback, #swal2-html-container, .text-danger:not(.d-none)",
     );
 
     this.nameInput = page.locator("#name");
@@ -137,40 +138,59 @@ export class ProductPage {
     await expect(this.badgeRejected).toHaveText(/^Rejected$/i, { timeout });
   }
 
-  // ─── Select2 helper (static dropdown — options pre-loaded) ───────────────────
-  // selectId: id của native <select> bị Select2 ẩn
-  private async selectSelect2ByText(selectId: string, optionText: string) {
-    const containerByAria = this.page
+  // ─── Select2 helper (AJAX / searchable dropdown) ────────────────────────────
+  /** Mở Select2 Brand, chờ list hiện, click ngẫu nhiên một dòng trong dropdown. */
+  private async pickRandomOptionFromBrandSelect2(): Promise<void> {
+    const selectId = "brand_id";
+    const combobox = this.page
       .locator(
-        `span[aria-owns="select2-${selectId}-results"], ` +
+        `span[aria-labelledby="select2-${selectId}-container"], ` +
+          `span[aria-controls="select2-${selectId}-container"], ` +
           `span[aria-controls="select2-${selectId}-results"], ` +
-          `span[aria-labelledby="select2-${selectId}-container"]`,
+          `span[aria-owns="select2-${selectId}-results"]`,
       )
       .first();
+    const results = this.page.locator(`#select2-${selectId}-results`);
 
-    const fallback = this.page
-      .locator(
-        `.select2-container[data-select2-id="select2-data-${selectId}"], ` +
-          `select#${selectId} + .select2-container span.select2-selection`,
-      )
-      .first();
+    const openAndPickRandom = async () => {
+      await combobox.waitFor({ state: "attached", timeout: 12_000 });
+      await combobox.scrollIntoViewIfNeeded().catch(() => null);
+      await combobox.click({ force: true });
+      await results.waitFor({ state: "visible", timeout: 12_000 });
+      // Chờ trong đúng `#select2-brand_id-results` — tránh chờ `.select2-results__message` toàn trang (dễ tới 15s).
+      const rowLocator = results
+        .locator(".select2-results__option--selectable")
+        .or(
+          results.locator(
+            ".select2-results__option:not(.select2-results__option--disabled)",
+          ),
+        );
+      await rowLocator.first().waitFor({ state: "visible", timeout: 10_000 });
 
-    if ((await containerByAria.count()) > 0) {
-      await containerByAria.waitFor({ state: "visible", timeout: 15000 });
-      await containerByAria.click();
-    } else {
-      await fallback.waitFor({ state: "visible", timeout: 15000 });
-      await fallback.click();
+      const selectable = results.locator(
+        ".select2-results__option--selectable",
+      );
+      const fallback = results.locator(
+        ".select2-results__option:not(.select2-results__option--disabled)",
+      );
+      const rows = (await selectable.count()) > 0 ? selectable : fallback;
+      const n = await rows.count();
+      if (n === 0) {
+        throw new Error("No brand options visible in Select2 dropdown");
+      }
+      const choice = rows.nth(Math.floor(Math.random() * n));
+      await choice.scrollIntoViewIfNeeded().catch(() => null);
+      await choice.click({ force: true });
+    };
+
+    try {
+      await openAndPickRandom();
+    } catch {
+      await this.page.keyboard.press("Escape");
+      await openAndPickRandom();
     }
-
-    const option = this.page
-      .locator(".select2-results__option")
-      .filter({ hasText: optionText });
-    await option.first().waitFor({ state: "visible", timeout: 10000 });
-    await option.first().click();
   }
 
-  // ─── Select2 helper (AJAX / searchable dropdown) ────────────────────────────
   private async selectSelect2WithSearch(
     selectId: string,
     searchText: string,
@@ -214,37 +234,21 @@ export class ProductPage {
     await this.selectSelect2WithSearch("vendor_id", vendorName);
   }
 
-  /** Chọn ngẫu nhiên 1 brand từ danh sách có sẵn (bỏ qua placeholder "All Brand") */
+  /** Chọn ngẫu nhiên 1 brand: mở Select2 → chọn random trong các dòng đang hiển thị. */
   async selectRandomBrand(): Promise<string> {
-    // Chờ options được inject sau khi Vendor đã chọn
-    await this.page.waitForFunction(
-      () => {
-        const sel =
-          document.querySelector<HTMLSelectElement>("select#brand_id");
-        if (!sel) return false;
-        return Array.from(sel.options).some((o) => o.value !== "");
-      },
-      { timeout: 15000 },
-    );
+    const brandSelect = this.page.locator("select#brand_id");
+    await brandSelect
+      .locator('option:not([value=""])')
+      .first()
+      .waitFor({ state: "attached", timeout: 15_000 });
 
-    const options = await this.page.locator("select#brand_id option").all();
-    const validOptions = (
-      await Promise.all(
-        options.map(async (opt) => ({
-          value: await opt.getAttribute("value"),
-          text: (await opt.textContent())?.trim() ?? "",
-        })),
-      )
-    ).filter((o) => o.value && o.value !== "");
+    await this.pickRandomOptionFromBrandSelect2();
 
-    if (validOptions.length === 0) {
-      throw new Error("No Brand options available to select");
-    }
-
-    const picked =
-      validOptions[Math.floor(Math.random() * validOptions.length)]!;
-    await this.selectSelect2ByText("brand_id", picked.text);
-    return picked.text;
+    await expect(brandSelect).not.toHaveValue("", { timeout: 8_000 });
+    return await brandSelect.evaluate((el: HTMLSelectElement) => {
+      const o = el.options[el.selectedIndex];
+      return (o?.textContent ?? "").trim();
+    });
   }
 
   /** Product Type — native select (id="product_type"), e.g. "NORMAL", "GIFT" */
@@ -423,66 +427,80 @@ export class ProductPage {
   }
 
   async expirationDateInputFill() {
-    await this.expirationDateInput.waitFor({
-      state: "visible",
-      timeout: 15000,
-    });
+    const input = this.expirationDateInput;
+    await input.waitFor({ state: "visible", timeout: 15_000 });
+    await input.scrollIntoViewIfNeeded().catch(() => null);
 
-    // Retry cả quá trình: mở picker + chọn preset
-    const picker = this.page.locator(".daterangepicker");
+    // Picker append vào `body`; thường có nhiều `.daterangepicker` trong DOM → dùng `.last()` sau khi vừa mở.
+    const openPicker = () => this.page.locator(".daterangepicker").last();
+
+    const presetLis = (picker: Locator) =>
+      picker
+        .locator('.ranges li:not([data-range-key="Custom Range"])')
+        .filter({ hasNotText: /^\s*custom\s*range\s*$/i });
+
     let lastError: Error | null = null;
 
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        // Retry click đến khi daterangepicker mở
-        for (let i = 0; i < 3; i++) {
-          await this.expirationDateInput.click();
+        let pickerReady = false;
+        for (let i = 0; i < 5; i++) {
+          await input.click({ timeout: 8_000 });
+          const p = openPicker();
           try {
-            await picker.waitFor({ state: "visible", timeout: 3000 });
+            await p.waitFor({ state: "visible", timeout: 4_000 });
+            await p.locator(".ranges li").first().waitFor({
+              state: "visible",
+              timeout: 4_000,
+            });
+            pickerReady = true;
             break;
           } catch {
-            // picker chưa mở → click lại
+            /* picker chưa sẵn sàng */
           }
         }
+        if (!pickerReady) {
+          throw new Error("daterangepicker did not open with preset list");
+        }
 
-        // Chờ picker ổn định
+        const picker = openPicker();
         await waitForNextPaint(this.page);
 
-        // Lấy tất cả preset range, bỏ "Custom Range"
-        const presets = this.page.locator(
-          ".daterangepicker .ranges li:not([data-range-key='Custom Range'])",
-        );
-        const allPresets = await presets.all();
-
-        if (allPresets.length === 0)
+        const items = presetLis(picker);
+        const n = await items.count();
+        if (n === 0) {
           throw new Error("No preset ranges available");
+        }
 
-        // Chọn ngẫu nhiên 1 preset
-        const picked =
-          allPresets[Math.floor(Math.random() * allPresets.length)]!;
-        await picked.click();
+        const choice = items.nth(Math.floor(Math.random() * n));
+        await choice.scrollIntoViewIfNeeded().catch(() => null);
+        await choice.click({ force: true });
 
-        // Chờ picker đóng
-        await picker.waitFor({ state: "hidden", timeout: 5000 });
-        return; // thành công
+        await openPicker()
+          .waitFor({ state: "hidden", timeout: 12_000 })
+          .catch(() => null);
+
+        await expect
+          .poll(async () => (await input.inputValue()).trim(), {
+            timeout: 8_000,
+          })
+          .not.toBe("");
+
+        return;
       } catch (err) {
         lastError = err instanceof Error ? err : new Error(String(err));
-        console.warn(
-          `expirationDateInputFill attempt ${attempt + 1}/3 failed: ${lastError.message}`,
-        );
-
-        // Reset nếu picker còn mở
-        if (await picker.isVisible().catch(() => false)) {
-          await this.page.keyboard.press("Escape").catch(() => null);
-          await picker
-            .waitFor({ state: "hidden", timeout: 3000 })
-            .catch(() => null);
-        }
+        await this.page.keyboard.press("Escape").catch(() => null);
+        await this.page
+          .locator(".daterangepicker")
+          .last()
+          .waitFor({ state: "hidden", timeout: 4_000 })
+          .catch(() => null);
+        await waitForNextPaint(this.page);
       }
     }
 
     throw (
-      lastError || new Error("expirationDateInputFill failed after 3 attempts")
+      lastError ?? new Error("expirationDateInputFill failed after 3 attempts")
     );
   }
 

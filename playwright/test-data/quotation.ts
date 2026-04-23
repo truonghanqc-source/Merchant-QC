@@ -18,13 +18,16 @@ export type QuotationScenario = {
 export const COMPANY = {
   HASAKI_VIETNAM: envOr(
     "E2E_QUOTATION_COMPANY_HASAKI_VN",
-    "Cty Hasaki VietNam",
+    "HASAKI VIETNAM JOINT STOCK COMPANY",
   ),
   GLOBAL_TRADE: envOr(
     "E2E_QUOTATION_COMPANY_GLOBAL_TRADE",
-    "Cty Hasaki Global Trade",
+    "HASAKI GLOBAL TRADE COMPANY LIMITED",
   ),
-  HASAKI_LLC: envOr("E2E_QUOTATION_COMPANY_LLC", "Cty Hasaki LLC"),
+  HASAKI_LLC: envOr(
+    "E2E_QUOTATION_COMPANY_LLC",
+    "HASAKI LIMITED LIABILITY COMPANY",
+  ),
 } as const;
 
 export const listTypeQuotation = {
@@ -54,10 +57,7 @@ export const quotationScenarios = {
   },
   globalTrade: {
     company: COMPANY.GLOBAL_TRADE,
-    storeLabel: envOr(
-      "E2E_QUOTATION_STORE_GLOBAL_TRADE",
-      "WH -170 QUOC LO 1A",
-    ),
+    storeLabel: envOr("E2E_QUOTATION_STORE_GLOBAL_TRADE", "WH -170 QUOC LO 1A"),
     defaultSku: envOr("E2E_QUOTATION_SKU_GLOBAL_TRADE", "422269311"),
     vendorForQuotation: vendorLabelsQuotation.V260064,
   },

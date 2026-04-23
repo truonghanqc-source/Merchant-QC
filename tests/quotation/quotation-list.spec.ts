@@ -70,7 +70,7 @@ test.describe("Quotation - List (/quotation)", () => {
     const headerCells = listPage.tableHeader.locator("th, td");
     expect(await headerCells.count()).toBeGreaterThan(0);
     const headerText = await listPage.tableHeader.innerText();
-    expect(headerText).toMatch(/STT/i);
+    expect(headerText).toMatch(/No/i);
     expect(headerText).toMatch(/Code/i);
     expect(headerText).toMatch(/Vendor/i);
     expect(headerText).toMatch(/Type/i);
@@ -81,7 +81,7 @@ test.describe("Quotation - List (/quotation)", () => {
     expect(headerText).toMatch(/Created At/i);
     expect(headerText).toMatch(/Updated At/i);
     expect(headerText).toMatch(/Status/i);
-    expect(headerText).toMatch(/Actions/i);
+    expect(headerText).toMatch(/Action/i);
   });
 
   test("TC05 - Data rows or empty-state row is present @regression", async ({

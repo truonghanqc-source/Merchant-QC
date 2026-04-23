@@ -35,6 +35,7 @@ pipeline {
       defaultValue: '20',
       description: 'Number of Playwright workers'
     )
+
   }
 
   environment {

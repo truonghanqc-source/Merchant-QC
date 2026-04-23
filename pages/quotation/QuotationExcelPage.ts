@@ -47,8 +47,9 @@ export class QuotationExcelPage {
 
     this.excelFileInput = page.locator("input#excelFile");
 
+    // Tránh `i.text-danger.d-none` (badge) — `.first()` dễ trúng phần tử hidden.
     this.validationFeedback = page.locator(
-      ".alert, .text-success, .text-danger, #swal2-html-container",
+      ".alert, #swal2-html-container, .text-success:not(.d-none), .text-danger:not(.d-none)",
     );
 
     //buttons
