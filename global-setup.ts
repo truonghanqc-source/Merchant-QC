@@ -16,6 +16,7 @@ import {
   authStoragePath,
   getProfileCredentials,
 } from "./playwright/auth-profiles.ts";
+import { cleanAllureResultsAtRepoRoot } from "./clean-allure-results.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 loadEnv({ path: path.resolve(__dirname, ".env.local") });
@@ -153,6 +154,8 @@ async function ensureProfileSession(
 }
 
 export default async function globalSetup() {
+  cleanAllureResultsAtRepoRoot(__dirname, "allure-results");
+
   const baseUrl = process.env.BASE_URL?.trim();
   if (!baseUrl) {
     throw new Error("Missing required env var: BASE_URL");

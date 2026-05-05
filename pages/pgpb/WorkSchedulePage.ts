@@ -69,7 +69,6 @@ export class WorkSchedulePage {
     await this.dataTable.waitFor({ state: "visible", timeout: 20000 });
     await this.tableHeader.waitFor({ state: "visible", timeout: 10000 });
     await this.tableBody.waitFor({ state: "attached", timeout: 10000 });
-    await this.pagination.waitFor({ state: "visible", timeout: 15000 });
   }
 
   async submitFilter() {

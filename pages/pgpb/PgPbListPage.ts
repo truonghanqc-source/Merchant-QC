@@ -9,10 +9,12 @@ export class PgPbListPage {
   readonly inactiveNotice: Locator;
   readonly formFilter: Locator;
   readonly vendorSelect: Locator;
+  readonly selectStatusWorking: Locator;
   /** GET query param `search` — keyword (name, phone, staff code, email, ID). */
   readonly keywordSearchInput: Locator;
   readonly filterSearchButton: Locator;
   readonly filterResetButton: Locator;
+  readonly checkboxViolation: Locator;
   /** Export list as Excel (`#btnDownloadPromoter`). */
   readonly downloadButton: Locator;
   readonly changeSizePageSelect: Locator;
@@ -48,6 +50,8 @@ export class PgPbListPage {
     this.tableBodyRows = this.dataTable.locator("tbody tr");
     this.pagination = page.locator("ul.pagination.float-end");
     this.draftListLink = page.locator('a[href*="/promoter/pg-draft"]').first();
+    this.checkboxViolation = page.locator("#has_violation");
+    this.selectStatusWorking = page.locator("#status");
   }
 
   async goto(baseUrl: string) {
@@ -69,6 +73,26 @@ export class PgPbListPage {
     await this.tableHeader.waitFor({ state: "visible", timeout: 10000 });
     await this.tableBody.waitFor({ state: "attached", timeout: 10000 });
     await this.pagination.waitFor({ state: "visible", timeout: 15000 });
+  }
+
+  async selectRandomStatusWorking() {
+    const n = await this.selectStatusWorking
+      .locator('option[value]:not([value="All status"])')
+      .count();
+    if (n === 0) {
+      throw new Error(
+        'select#status_working has no option besides All Status (value="All status")',
+      );
+    }
+    await this.selectStatusWorking.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+    await this.submitFilter();
+  }
+
+  async clickCheckboxViolation() {
+    await this.checkboxViolation.click();
+    await this.submitFilter();
   }
 
   async submitFilter() {

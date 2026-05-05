@@ -25,6 +25,13 @@ export class ProductListPage {
   readonly tableBody: Locator;
   readonly tableBodyRows: Locator;
   readonly pagination: Locator;
+  readonly navLinkWaitForApproveList: Locator;
+  readonly navLinkNotDisclosureList: Locator;
+  readonly navLinkNotCoaList: Locator;
+  readonly navLinkOutStockList: Locator;
+  readonly navLinkWarningList: Locator;
+  readonly navLinkOutDateList: Locator;
+  readonly navLinkNearExpireList: Locator;
 
   constructor(public readonly page: Page) {
     this.pageTitleH1 = page.getByRole("heading", {
@@ -50,6 +57,33 @@ export class ProductListPage {
     this.tableBody = this.dataTable.locator("tbody");
     this.tableBodyRows = this.dataTable.locator("tbody tr");
     this.pagination = page.locator("ul.pagination.float-end");
+    this.navLinkWaitForApproveList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Wait for approve/i });
+
+    this.navLinkNotDisclosureList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Not Disclosure/i });
+
+    this.navLinkNotCoaList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Not COA/i });
+
+    this.navLinkOutStockList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Out of Stock/i });
+
+    this.navLinkWarningList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Warning/i });
+
+    this.navLinkOutDateList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Out Date/i });
+
+    this.navLinkNearExpireList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Near Expiration Date/i });
   }
 
   async goto(baseUrl: string) {
@@ -127,5 +161,130 @@ export class ProductListPage {
   async searchByName(keyword: string) {
     await this.searchInput.fill(keyword);
     await this.submitFilter();
+  }
+
+  async searchBySku(sku: string) {
+    await this.searchSkuInput.fill(sku);
+    await this.submitFilter();
+  }
+
+  async searchByBarcode(barcode: string) {
+    await this.searchBarcodeInput.fill(barcode);
+    await this.submitFilter();
+  }
+
+  /**
+   * Chọn ngẫu nhiên một brand (bỏ qua option đầu "All brand" `value=""`).
+   * `select#brand` bị Select2 ẩn — Playwright `selectOption` vẫn gán được và đồng bộ UI.
+   */
+  async selectRandomBrand() {
+    const n = await this.brandSelect
+      .locator("option[value]:not([value=''])")
+      .count();
+    if (n === 0) {
+      throw new Error(
+        'select#brand has no option with value (only "All brand"?)',
+      );
+    }
+    await this.brandSelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+    await this.submitFilter();
+  }
+
+  /**
+   * Chọn ngẫu nhiên một loại sản phẩm (bỏ qua "All Type", `value="all"`).
+   * `select#product_type` là native `<select>` (không Select2) — `selectOption` trực tiếp.
+   */
+  async selectRandomTypeProduct() {
+    const n = await this.productTypeSelect
+      .locator('option[value]:not([value="all"])')
+      .count();
+    if (n === 0) {
+      throw new Error(
+        'select#product_type has no option besides All Type (value="all")',
+      );
+    }
+    await this.productTypeSelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+    await this.submitFilter();
+  }
+
+  /**
+   * Chọn ngẫu nhiên một declaration status (bỏ qua dòng đầu `value=""` — label "Declaration Status").
+   * `select#declaration_status` có Select2 — `selectOption` trên `<select>` vẫn hợp lệ như `select#brand`.
+   */
+  async selectRandomDeclarationStatus() {
+    const n = await this.declarationStatusSelect
+      .locator("option[value]:not([value=''])")
+      .count();
+    if (n === 0) {
+      throw new Error(
+        "select#declaration_status has no option with value (only placeholder row?)",
+      );
+    }
+    await this.declarationStatusSelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+    await this.submitFilter();
+  }
+
+  /**
+   * Chọn ngẫu nhiên return policy (bỏ qua placeholder `value=""` — label "Return Policy").
+   * `select#return_policy` có Select2 — `selectOption` trên `<select>` giống `brand` / `declaration_status`.
+   */
+  async selectRandomReturnPolicy() {
+    const n = await this.returnPolicySelect
+      .locator("option[value]:not([value=''])")
+      .count();
+    if (n === 0) {
+      throw new Error(
+        "select#return_policy has no option with value (only placeholder row?)",
+      );
+    }
+    await this.returnPolicySelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+    await this.submitFilter();
+  }
+
+  async clickStockFcCheckbox() {
+    await this.stockFcCheckbox.click();
+  }
+
+  async clickNavLinkWaitForApproveList() {
+    await this.navLinkWaitForApproveList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkNotDisclosureList() {
+    await this.navLinkNotDisclosureList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkNotCoaList() {
+    await this.navLinkNotCoaList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkOutStockList() {
+    await this.navLinkOutStockList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkWarningList() {
+    await this.navLinkWarningList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkOutDateList() {
+    await this.navLinkOutDateList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkNearExpireList() {
+    await this.navLinkNearExpireList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 }

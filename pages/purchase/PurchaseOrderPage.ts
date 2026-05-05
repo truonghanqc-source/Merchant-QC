@@ -28,6 +28,14 @@ export class PurchaseOrderPage {
   readonly tableBodyRows: Locator;
   readonly checkAllCheckbox: Locator;
   readonly pagination: Locator;
+  readonly checkboxPoPending: Locator;
+  readonly checkboxPoVerified: Locator;
+  readonly navLinkAllList: Locator;
+  readonly navLinkConfirmedList: Locator;
+  readonly navLinkApprovedList: Locator;
+  readonly navLinkReceivingList: Locator;
+  readonly navLinkReceivedList: Locator;
+  readonly navLinkRequestCancelList: Locator;
 
   constructor(public readonly page: Page) {
     this.pageTitleBlock = page.locator(".page-title");
@@ -48,6 +56,8 @@ export class PurchaseOrderPage {
     this.filterSearchButton = this.formFilter.locator('button[type="submit"]');
     this.filterResetButton = page.locator("#btnClearFormFilter");
     this.openStockModalButton = page.locator("#btnOpenStockModal");
+    this.checkboxPoPending = page.locator("#filter_po_status_pending");
+    this.checkboxPoVerified = page.locator("#filter_po_status_verified");
 
     this.changeSizePageSelect = page.locator("select#changeSizePage");
     this.dataTable = page.locator("table.table-row-bordered").first();
@@ -56,6 +66,25 @@ export class PurchaseOrderPage {
     this.tableBodyRows = this.dataTable.locator("tbody tr");
     this.checkAllCheckbox = page.locator("input#checkAll");
     this.pagination = page.locator("ul.pagination.float-end");
+
+    this.navLinkAllList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /All/i });
+    this.navLinkConfirmedList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Confirmed/i });
+    this.navLinkApprovedList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Approved/i });
+    this.navLinkReceivingList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Receiving/i });
+    this.navLinkReceivedList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Received/i });
+    this.navLinkRequestCancelList = page
+      .locator("li.nav-item")
+      .getByRole("link", { name: /Request Cancel/i });
   }
 
   /**
@@ -85,8 +114,7 @@ export class PurchaseOrderPage {
     await this.pagination.waitFor({ state: "visible", timeout: 15000 });
   }
 
-  async fillCodeFilter(code: string) {
-    await this.codeInput.waitFor({ state: "visible", timeout: 10000 });
+  async fillCodeInput(code: string) {
     await this.codeInput.fill(code);
   }
 
@@ -132,5 +160,75 @@ export class PurchaseOrderPage {
     const colspan = await first.getAttribute("colspan");
     if (colspan && Number(colspan) > 1) return 0;
     return n;
+  }
+
+  async selectRandomCompany() {
+    const n = await this.poCompanySelect
+      .locator('option[value]:not([value="Select Company"])')
+      .count();
+    if (n === 0) {
+      throw new Error(
+        'select#po_company has no option besides All Company (value="Select Company")',
+      );
+    }
+    await this.poCompanySelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+  }
+
+  async selectRandomPoType() {
+    const n = await this.poTypeSelect
+      .locator('option[value]:not([value="All Type"])')
+      .count();
+    if (n === 0) {
+      throw new Error(
+        'select#po_type has no option besides All Type (value="All Type")',
+      );
+    }
+    await this.poTypeSelect.selectOption({
+      index: 1 + Math.floor(Math.random() * n),
+    });
+  }
+
+  async fillSkuInput(sku: string) {
+    await this.skuInput.fill(sku);
+  }
+
+  async clickCheckboxPoPending() {
+    await this.checkboxPoPending.uncheck();
+  }
+
+  async clickCheckboxPoVerified() {
+    await this.checkboxPoVerified.uncheck();
+  }
+
+  async clickNavLinkAllList() {
+    await this.navLinkAllList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkConfirmedList() {
+    await this.navLinkConfirmedList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkApprovedList() {
+    await this.navLinkApprovedList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkReceivingList() {
+    await this.navLinkReceivingList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkReceivedList() {
+    await this.navLinkReceivedList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
+  }
+
+  async clickNavLinkRequestCancelList() {
+    await this.navLinkRequestCancelList.click();
+    await this.page.waitForLoadState("load").catch(() => null);
   }
 }

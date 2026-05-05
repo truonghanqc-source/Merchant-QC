@@ -303,6 +303,7 @@ test.describe("Quotation - Create with Hasaki Global Trade", () => {
     await quotation.goto(baseUrl);
 
     await selectQuotationVendorIfNeeded(quotation, gT);
+    console.log({ gT });
     await quotation.selectQuotationType(listTypeQuotation.ACTIVATION);
     await quotation.selectCompany(gT.company);
     await quotation.selectStore(gT.storeLabel);

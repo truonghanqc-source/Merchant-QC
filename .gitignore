@@ -4,6 +4,11 @@
 node_modules/
 test-results/
 playwright-report/
+playwright-report-api/
+allure-results/
+allure-results-api/
+allure-report/
+allure-report-api/
 
 # Debug artifacts
 debug-*.png

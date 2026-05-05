@@ -12,7 +12,10 @@ test.describe("Courses — list (/courses)", () => {
    * Lưu ý: URL đúng của list là `/courses`, không phải `/courses/lession/detail` (đó là form thêm bài học).
    */
 
-  test("TC01 - Navigate — URL, title, search and grid @smoke", async ({ authenticatedPage, baseUrl }) => {
+  test("TC01 - Navigate — URL, title, search and grid @smoke", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
     const list = new ListCoursePage(authenticatedPage.page);
 
     await list.goto(baseUrl);
@@ -24,7 +27,10 @@ test.describe("Courses — list (/courses)", () => {
     await expect(list.filterSearchButton).toBeVisible();
   });
 
-  test("TC02 - Results table lists course columns @regression", async ({ authenticatedPage, baseUrl }) => {
+  test("TC02 - Results table lists course columns @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
     const list = new ListCoursePage(authenticatedPage.page);
     await list.goto(baseUrl);
     await list.expectListShellVisible();
@@ -37,7 +43,10 @@ test.describe("Courses — list (/courses)", () => {
     expect(headerText).toMatch(/Actions/i);
   });
 
-  test("TC03 - Search with current filters keeps shell @regression", async ({ authenticatedPage, baseUrl }) => {
+  test("TC03 - Search with current filters keeps shell @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
     const list = new ListCoursePage(authenticatedPage.page);
     await list.goto(baseUrl);
     await list.expectListShellVisible();
@@ -49,7 +58,10 @@ test.describe("Courses — list (/courses)", () => {
     await expect(list.dataTable).toBeVisible();
   });
 
-  test("TC04 - Reset keeps list shell @edge", async ({ authenticatedPage, baseUrl }) => {
+  test("TC04 - Reset keeps list shell @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
     const list = new ListCoursePage(authenticatedPage.page);
     await list.goto(baseUrl);
     await list.expectListShellVisible();
@@ -60,5 +72,3 @@ test.describe("Courses — list (/courses)", () => {
     await list.expectListShellVisible();
   });
 });
-
-

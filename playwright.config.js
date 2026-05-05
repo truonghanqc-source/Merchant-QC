@@ -25,12 +25,19 @@ export default defineConfig({
   /* Reporters: HTML always, JUnit for Jenkins CI, custom log reporter */
   reporter: process.env.CI
     ? [
-        ["html", { open: "never" }],
+        // ["html", { open: "never" }],
         ["junit", { outputFile: "test-results/junit.xml" }],
         ["github"],
         ["./reporters/custom-reporter.ts"],
+        ["allure-playwright", { resultsDir: "allure-results" }],
+        ["./reporters/auto-open-allure-reporter.ts", { resultsDir: "allure-results" }],
       ]
-    : [["html"], ["./reporters/custom-reporter.ts"]],
+    : [
+        // ["html"],
+        ["./reporters/custom-reporter.ts"],
+        ["allure-playwright", { resultsDir: "allure-results" }],
+        ["./reporters/auto-open-allure-reporter.ts", { resultsDir: "allure-results" }],
+      ],
   use: {
     /* Fixed viewport — works both locally and headless on Linux CI */
     viewport: { width: 1920, height: 1080 },

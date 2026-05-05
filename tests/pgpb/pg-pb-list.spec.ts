@@ -151,6 +151,26 @@ test.describe("PG/PB - List (/promoter)", () => {
 
     expect(download.suggestedFilename()).toMatch(/PG-PB.*\.xlsx$/i);
   });
+
+  test("TC10 - Search with checkbox Violation @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const list = new PgPbListPage(authenticatedPage.page);
+    await list.goto(baseUrl);
+    await list.expectListShellVisible();
+    await list.clickCheckboxViolation();
+    expect(await list.tableBodyRows.count()).toBeGreaterThan(0);
+  });
+
+  test("TC11 - Search with Status Working input @regression", async ({
+    authenticatedPage,
+    baseUrl,
+  }) => {
+    const list = new PgPbListPage(authenticatedPage.page);
+    await list.goto(baseUrl);
+    await list.expectListShellVisible();
+    await list.selectRandomStatusWorking();
+    expect(await list.tableBodyRows.count()).toBeGreaterThan(0);
+  });
 });
-
-

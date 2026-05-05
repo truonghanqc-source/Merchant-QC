@@ -8,7 +8,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 loadEnv({ path: path.resolve(__dirname, "../../.env.local") });
 loadEnv();
 
-const hasBaseUrl = Boolean(process.env.BASE_URL?.trim());
 const hasAdminCreds = Boolean(
   process.env.LOGIN_USER_ADMIN?.trim() && process.env.LOGIN_PASS_ADMIN?.trim(),
 );
@@ -17,9 +16,8 @@ const hasAdminCreds = Boolean(
 const successUrlMatcher =
   /.*Dashboard|.*promoter|.*home|.*pg-draft|^https?:\/\/[^/]+\/\s*$/i;
 
-const describeLogin = hasBaseUrl ? test.describe : test.describe.skip;
-
-describeLogin("Login page (skipped when BASE_URL is unset)", () => {
+// Suite skipped by default: cuts traffic to /login (Cloudflare rate limit). Re-enable with test.describe to run login UI tests.
+test.describe.skip("Login page", () => {
   test.beforeEach(async ({ page }) => {
     const base = process.env.BASE_URL!.trim();
     const login = new LoginPage(page);

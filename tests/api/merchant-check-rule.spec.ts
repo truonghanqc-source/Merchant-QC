@@ -2,15 +2,10 @@ import { test, expect, type APIRequestContext } from "@playwright/test";
 import { MerchantCheckRuleApi } from "../../pages/api/MerchantCheckRuleApi.ts";
 import { merchantCheckRuleSamplePayload } from "../../playwright/test-data/merchant-check-rule.ts";
 
-/** Không gửi `MERCHANT_CHECK_RULE_COOKIE` — chỉ kiểm tra `MERCHANT_CHECK_RULE_AUTHORIZATION`. */
-const authBearerOnly = { useEnvCookie: false as const };
-
 /**
- * Staging thường trả 200 + HTML hoặc JSON trong body; nhiều case “REST chuẩn” (401, 415…)
- * có thể không khớp — assert ghi nhận hành vi thực tế.
- *
- * Nhóm "With valid env token" gọi API **chỉ với Bearer** (`useEnvCookie: false`) để token sai
- * không bị session cookie che; probe + TC-P/TC-V/TC-H đều dùng cùng cách.
+ * Endpoint này trên staging **thường cần cả Cookie + Authorization** như Postman.
+ * Không được bỏ cookie (`useEnvCookie: false`) khi probe / smoke — nếu không, token sai vẫn có thể 200
+ * và toàn suite “pass” oan.
  */
 
 /** Prefers `BASE_URL_CHECK_RULE`, falls back to `BASE_URL`. */
@@ -22,6 +17,13 @@ function checkRuleBaseUrl(): string | undefined {
 
 function hasCheckRuleAuth(): boolean {
   return Boolean(process.env.MERCHANT_CHECK_RULE_AUTHORIZATION?.trim());
+}
+
+/** Làm hỏng chuỗi JWT/sign — giống sửa nhẹ token trên Postman; phải vẫn gửi kèm Cookie. */
+function corruptAuthorizationForNegativeTest(raw: string): string {
+  const t = raw.trim();
+  if (t.length < 8) return `${t}___bad`;
+  return `${t.slice(0, -4)}_XXX`;
 }
 
 function failMissingBaseUrl(): void {
@@ -36,7 +38,7 @@ function failMissingToken(): void {
   );
 }
 
-/** Token phải được server chấp nhận (không 401/403) trước các case cần auth. */
+/** Token + Cookie (như Postman): phải 2xx; 401/403 → sai token trong .env.local. */
 async function assertEnvTokenAcceptedByApi(
   request: APIRequestContext,
 ): Promise<void> {
@@ -46,15 +48,14 @@ async function assertEnvTokenAcceptedByApi(
   const response = await api.post(
     baseUrl,
     { ...merchantCheckRuleSamplePayload },
-    { ...authBearerOnly, failOnStatusCode: false },
+    { failOnStatusCode: false },
   );
   const status = response.status();
   const body = await response.text();
 
   if (status === 401 || status === 403) {
     throw new Error(
-      `MERCHANT_CHECK_RULE_AUTHORIZATION was rejected (Bearer-only, no env cookie; HTTP ${status}). ` +
-        `Update the token. Response (truncated): ${body.slice(0, 800)}`,
+      `Auth rejected (HTTP ${status}). Check MERCHANT_CHECK_RULE_AUTHORIZATION and MERCHANT_CHECK_RULE_COOKIE in .env.local — must match Postman. Response (truncated): ${body.slice(0, 800)}`,
     );
   }
   if (status >= 500) {
@@ -88,20 +89,34 @@ test.describe("Merchant API — check-rule", () => {
       expect([200, 401, 403]).toContain(response.status());
     });
 
-    test("TC-A02 — invalid Bearer token: records status (server may still return 200)", async ({
+    test("TC-A02 — mangled Authorization + Cookie (Postman-style: may be 401 or 200 if Cookie alone satisfies session)", async ({
       request,
     }) => {
+      const auth = process.env.MERCHANT_CHECK_RULE_AUTHORIZATION?.trim();
+      const cookie = process.env.MERCHANT_CHECK_RULE_COOKIE?.trim();
+      test.skip(
+        !auth || !cookie,
+        "Set MERCHANT_CHECK_RULE_AUTHORIZATION and MERCHANT_CHECK_RULE_COOKIE — Postman sends both; wrong token alone without Cookie can behave differently.",
+      );
+
+      const validAuth = auth!;
+      const sessionCookie = cookie!;
+
       const api = new MerchantCheckRuleApi(request);
       const response = await api.post(
         checkRuleBaseUrl()!,
         { ...merchantCheckRuleSamplePayload },
         {
           useEnvAuth: false,
-          headers: { Authorization: "Bearer invalid-token-for-test" },
+          headers: {
+            Authorization: corruptAuthorizationForNegativeTest(validAuth),
+            Cookie: sessionCookie,
+          },
           failOnStatusCode: false,
         },
       );
 
+      /** Staging có thể trả 200 khi cookie vẫn hợp lệ dù JWT bị sửa nhẹ (đã thấy HTTP 200). Postman sửa đủ hỏng token thì thường 401. */
       expect([200, 401, 403]).toContain(response.status());
     });
   });
@@ -120,13 +135,9 @@ test.describe("Merchant API — check-rule", () => {
         request,
       }) => {
         const api = new MerchantCheckRuleApi(request);
-        const response = await api.post(
-          checkRuleBaseUrl()!,
-          {
-            ...merchantCheckRuleSamplePayload,
-          },
-          authBearerOnly,
-        );
+        const response = await api.post(checkRuleBaseUrl()!, {
+          ...merchantCheckRuleSamplePayload,
+        });
 
         expect(response.ok(), await response.text()).toBeTruthy();
       });
@@ -135,13 +146,9 @@ test.describe("Merchant API — check-rule", () => {
         request,
       }) => {
         const api = new MerchantCheckRuleApi(request);
-        const response = await api.post(
-          checkRuleBaseUrl()!,
-          {
-            ...merchantCheckRuleSamplePayload,
-          },
-          authBearerOnly,
-        );
+        const response = await api.post(checkRuleBaseUrl()!, {
+          ...merchantCheckRuleSamplePayload,
+        });
 
         expect(response.ok(), await response.text()).toBeTruthy();
         const ct = (response.headers()["content-type"] ?? "").toLowerCase();
@@ -157,7 +164,6 @@ test.describe("Merchant API — check-rule", () => {
         const { sku: _omit, ...rest } = merchantCheckRuleSamplePayload;
         const api = new MerchantCheckRuleApi(request);
         const response = await api.post(checkRuleBaseUrl()!, rest, {
-          ...authBearerOnly,
           failOnStatusCode: false,
         });
 
@@ -170,7 +176,6 @@ test.describe("Merchant API — check-rule", () => {
         const { from_date: _f, ...rest } = merchantCheckRuleSamplePayload;
         const api = new MerchantCheckRuleApi(request);
         const response = await api.post(checkRuleBaseUrl()!, rest, {
-          ...authBearerOnly,
           failOnStatusCode: false,
         });
 
@@ -185,7 +190,6 @@ test.describe("Merchant API — check-rule", () => {
           checkRuleBaseUrl()!,
           {},
           {
-            ...authBearerOnly,
             failOnStatusCode: false,
           },
         );
@@ -206,7 +210,6 @@ test.describe("Merchant API — check-rule", () => {
           checkRuleBaseUrl()!,
           { ...badRange },
           {
-            ...authBearerOnly,
             failOnStatusCode: false,
           },
         );
@@ -224,7 +227,7 @@ test.describe("Merchant API — check-rule", () => {
             ...merchantCheckRuleSamplePayload,
             stock_id: 0,
           },
-          { ...authBearerOnly, failOnStatusCode: false },
+          { failOnStatusCode: false },
         );
 
         expect([200, 400, 422, 404]).toContain(response.status());
@@ -240,7 +243,7 @@ test.describe("Merchant API — check-rule", () => {
             ...merchantCheckRuleSamplePayload,
             sku: "NON_EXISTENT_SKU_000000000",
           },
-          { ...authBearerOnly, failOnStatusCode: false },
+          { failOnStatusCode: false },
         );
 
         expect([200, 400, 404, 422]).toContain(response.status());
@@ -254,7 +257,6 @@ test.describe("Merchant API — check-rule", () => {
       }) => {
         const api = new MerchantCheckRuleApi(request);
         const response = await api.get(checkRuleBaseUrl()!, {
-          ...authBearerOnly,
           failOnStatusCode: false,
         });
 
@@ -269,7 +271,6 @@ test.describe("Merchant API — check-rule", () => {
           checkRuleBaseUrl()!,
           { ...merchantCheckRuleSamplePayload },
           {
-            ...authBearerOnly,
             headers: { "Content-Type": "text/plain" },
             failOnStatusCode: false,
           },
